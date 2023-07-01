@@ -1,10 +1,9 @@
-from contextlib import suppress
-from time import sleep
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.select import Select
 from bose.account_generator import AccountGenerator
 from bose.ip_utils import find_ip_details
 from bose import *
+from contextlib import suppress
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
 from .config import config
 
 class OutlookSignUpTask(BaseTask):
@@ -22,6 +21,8 @@ class OutlookSignUpTask(BaseTask):
         return BrowserConfig(
             profile=data['username'],
             is_tiny_profile=True,
+            window_size=WindowSize.REAL,
+            user_agent=UserAgent.REAL,
         )
 
     def get_data(self):
@@ -64,7 +65,7 @@ class OutlookSignUpTask(BaseTask):
             # Fill in the personal information
             first = driver.get_element_by_id('FirstName', Wait.LONG)
             first.send_keys(first_name)
-            sleep(.3)
+            driver.sleep(.3)
             last = driver.get_element_by_id('LastName', Wait.LONG)
             last.send_keys(last_name)
             press_next_btn()
@@ -119,4 +120,3 @@ class OutlookSignUpTask(BaseTask):
         
         # Uncomment following line if you want to browse things after account is created. 
         # driver.prompt()
-
