@@ -97,6 +97,13 @@ class OutlookSignUpTask(BaseTask):
                     continue_button.click()
                 yes_button = driver.get_element_or_none_by_selector('[value="Yes"]', Wait.LONG)
 
+                if yes_button is None: 
+                    if driver.is_in_page('privacynotice.account.microsoft.com/notice', Wait.LONG):
+                        continue_button = driver.get_element_or_none_by_selector('[id="id__0"]', Wait.LONG)
+                        continue_button.click()
+                    yes_button = driver.get_element_or_none_by_selector('[value="Yes"]', Wait.LONG)
+
+
             # Click "Yes" button if it appears
             yes_button.click()
 
