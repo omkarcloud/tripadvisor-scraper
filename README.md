@@ -2,6 +2,7 @@
   <img src="https://raw.githubusercontent.com/omkarcloud/outlook-account-generator/master/images/outlook.png" alt="outlook" />
 </p>
   <div align="center" style="margin-top: 0;">
+  <h1>✨ Outlook Account Generator 🤖</h1>
   <p>💦 Enjoy the Rain of Outlook Accounts 💦</p>
 </div>
 <em>
