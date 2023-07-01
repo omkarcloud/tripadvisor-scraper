@@ -42,22 +42,27 @@
 
 🖥️ Chrome Profile Storage: Each created account is saved as a profile, enabling you to access your Outlook users anytime without the need for login credentials.
 
-![Profiles](./images/profiles.png)
+![Profiles](https://raw.githubusercontent.com/omkarcloud/outlook-account-generator/master/images/profiles.png)
 
 ## 🚀 Getting Started
 
+_If you are not a techy person or don't know how to use git. You can follow [this video]() to make bot run._
+
 1️⃣ Clone the Magic 🧙‍♀️:
+
 ```shell
 git clone https://github.com/omkarcloud/outlook-account-generator
 cd outlook-account-generator
 ```
 
 2️⃣ Install Dependencies 📦:
+
 ```shell
 python -m pip install -r requirements.txt
 ```
 
 3️⃣ Let the Rain of Outlook Accounts Begin 😎:
+
 ```shell
 python main.py
 ```
@@ -66,25 +71,30 @@ The bot will take care of filling in the required details automatically. You wil
 
 By manually solving the captcha, there's no need to purchase additional captcha-solving services or proxies to run the bot.
 
-![Profiles](./images/solve-captcha.png)
+![Profiles](https://raw.githubusercontent.com/omkarcloud/outlook-account-generator/master/images/solve-captcha.png)
 
-*Once Bot is Completed Running. The Accounts will be saved in `profiles.json`*
+_Once Bot is Completed Running. The Accounts will be saved in `profiles.json`_
 
-## 🎥 Video Demo 
+## 🎥 Video Demo
 
 Watch this video to see the bot in action!
 
-[![Outlook Account Generator](./screenshots/outlook-account-generator.png)](https://www.youtube.com/watch?v=zOlvYakogSU)
+<!-- TODO:
+
+[![Outlook Account Generator](./screenshots/outlook-account-generator.png)](https://www.youtube.com/watch?v=zOlvYakogSU) -->
 
 ## 🤔 FAQs
 
-### ❓ **It is generating only 3 accounts. How can I generate more than 3 accounts?**
+### ❓ **It is generating only 3
+
+ accounts. How can I generate more than 3 accounts?**
 
 Open `src/config.py` and specify the number of accounts you want to generate. For example, to generate 100 accounts, use the following code:
+
 ```python
 config = {
     "number_of_accounts_to_generate": 100
-} 
+}
 ```
 
 ### ❓ **Why are you not using proxies and captcha-solving services to solve captchas?**
@@ -97,19 +107,20 @@ The bot will automatically prompt you when a captcha needs to be solved.
 
 After using the bot to create a few accounts and becoming familiar with how it works, the bot will prompt you to change the IP address after each account creation.
 
-![Change Ip](./images/change-ip.png)
+![Change Ip](https://raw.githubusercontent.com/omkarcloud/outlook-account-generator/master/images/change-ip.png)
 
 The reason we want you to change your IP is that if you create multiple accounts with a single IP, Microsoft will notice that multiple accounts were created from the same IP address. As a result, Microsoft may suspend these accounts after a few days.
 
 To protect your account from being suspended, we prompt you to change the IP address, ensuring that a single account is created from a single IP.
 
-Changing your IP is an easy process. To learn about multiple methods to change your IP address, visit this [link]()
+Changing your IP is an easy process. To learn about multiple methods to change your IP address, visit this [link](https://www.omkar.cloud/bose/docs/guides/change-ip/)
 
 Furthermore, one of the most effective methods for changing the IP is the **Enable and Disable Airplane Mode** technique outlined below:
+
 1. Connect your PC to a mobile hotspot.
 2. On your mobile device, turn airplane mode on and off.
 3. Now, turn the hotspot on again.
-4. You will get a new IP assigned. 
+4. You will get a new IP assigned.
 
 
 
@@ -159,7 +170,7 @@ Your star will send me a Telegram Notification, and it will bring a smile to my 
 
 Certainly! As a professional scraper, I'd be delighted to discuss your requirements further. Feel free to reach out to me at chetan@omkar.cloud.
 
-## *PS: I have a great suggestion for you. You probably use Outlook accounts to log into some website and automate actions, Isn't it? I recommend using the Bose Framework for writing your automation code directly in this repository. This will really save you a large chunk of development time.* 
+## _PS: I have a great suggestion for you. You probably use Outlook accounts to log into some website and automate actions, Isn't it? I recommend using the Bose Framework for writing your automation code directly in this repository. This will really save you a large chunk of development time._
 
 ---
 
