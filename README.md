@@ -46,7 +46,7 @@
 
 ## 🚀 Getting Started
 
-_If you are not a techy person or don't know how to use git. You can follow [this video]() to make bot run._
+_If you are not a techy person or don't know how to use git. You can follow [this video](https://www.youtube.com/watch?v=RwCWcaKBahI) to make bot run._
 
 1️⃣ Clone the Magic 🧙‍♀️:
 
@@ -79,9 +79,7 @@ _Once Bot is Completed Running. The Accounts will be saved in `profiles.json`_
 
 Watch this video to see the bot in action!
 
-<!-- TODO:
-
-[![Outlook Account Generator](./screenshots/outlook-account-generator.png)](https://www.youtube.com/watch?v=zOlvYakogSU) -->
+[![Outlook Account Generator](https://raw.githubusercontent.com/omkarcloud/outlook-account-generator/master/images/youtube-video.png)](https://www.youtube.com/watch?v=RwCWcaKBahI)
 
 ## 🤔 FAQs
 
@@ -113,7 +111,7 @@ The reason we want you to change your IP is that if you create multiple accounts
 
 To protect your account from being suspended, we prompt you to change the IP address, ensuring that a single account is created from a single IP.
 
-Changing your IP is an easy process. To learn about multiple methods to change your IP address, visit this [link](https://www.omkar.cloud/bose/docs/guides/change-ip/)
+Changing your IP is an easy process. To learn about multiple methods to change your IP address, visit this [link](https://www.omkar.cloud/bose/docs/guides/change-ip/#methods-for-changing-ip)
 
 Furthermore, one of the most effective methods for changing the IP is the **Enable and Disable Airplane Mode** technique outlined below:
 
