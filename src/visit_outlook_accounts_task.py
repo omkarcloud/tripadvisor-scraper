@@ -2,7 +2,7 @@ from bose import *
 
 class VisitOutlookAccountsTask(BaseTask):
     def get_data(self):
-        return Profile.get_profiles()
+        return Profile.get_profiles(random=True)
 
     def get_task_config(self):
         return TaskConfig(
@@ -18,5 +18,4 @@ class VisitOutlookAccountsTask(BaseTask):
 
     def run(self, driver: BoseDriver, data):
         driver.organic_get('https://account.microsoft.com/')
-        driver.get_cookies
         driver.prompt()

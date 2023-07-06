@@ -84,7 +84,7 @@ Watch this video to see the bot in action!
 
 ## 🤔 FAQs
 
-### ❓ **It is generating only 3
+### ❓ It is generating only 3
 
  accounts. How can I generate more than 3 accounts?**
 
@@ -96,13 +96,13 @@ config = {
 }
 ```
 
-### ❓ **Why are you not using proxies and captcha-solving services to solve captchas?**
+### ❓ Why are you not using proxies and captcha-solving services to solve captchas?
 
 I attempted to solve the captcha using 2captcha, but unfortunately, it proved to be unsolvable. This issue arises because the location where the account is being created differs from the location where the captcha is being solved. The captcha system detects this mismatch, causing the captcha prompt to appear repeatedly in a loop.
 
 The bot will automatically prompt you when a captcha needs to be solved.
 
-### ❓ **Why am I prompted to change my IP address?**
+### ❓ Why am I prompted to change my IP address?
 
 After using the bot to create a few accounts and becoming familiar with how it works, the bot will prompt you to change the IP address after each account creation.
 
@@ -123,7 +123,7 @@ Furthermore, one of the most effective methods for changing the IP is the **Enab
 
 
 
-### ❓ **The code is well-structured and organized. Most Selenium codebases are messy. How did you do it?**
+### ❓ The code is well-structured and organized. Most Selenium codebases are messy. How did you do it?
 
 I use the Bose Framework, a Bot Development Framework that greatly simplifies the process of creating bots.
 
@@ -143,7 +143,7 @@ You can see `outlook_sign_up_task.py` to understand the simplicity Bose Brings.
 
 Explore the Bose Framework [here](https://www.omkar.cloud/bose/).
 
-### ❓ **What is the purpose of the "visit_outlook_accounts_task"?**
+### ❓ What is the purpose of the "visit_outlook_accounts_task"?
 
 After creating each account, it is saved as a profile.
 
@@ -159,13 +159,13 @@ tasks_to_be_run = [
 ]
 ```
 
-### ❓ **How can I thank you?**
+### ❓ How can I thank you?
 
 Star ⭐ the repository.
 
 Your star will send me a Telegram Notification, and it will bring a smile to my face :)
 
-### ❓ **I'm interested in creating more bots. Can you assist me?**
+### ❓ I'm interested in creating more bots. Can you assist me?
 
 Certainly! As a professional scraper, I'd be delighted to discuss your requirements further. Feel free to reach out to me at chetan@omkar.cloud.
 

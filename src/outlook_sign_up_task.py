@@ -21,7 +21,7 @@ class OutlookSignUpTask(BaseTask):
         return BrowserConfig(
             profile=data['username'],
             is_tiny_profile=True,
-            window_size=WindowSize.REAL,
+            window_size=WindowSize.RANDOM,
             user_agent=UserAgent.REAL,
         )
 
@@ -51,43 +51,74 @@ class OutlookSignUpTask(BaseTask):
             # Fill in the email and check if it's already taken
             emailInput = driver.get_element_by_id('MemberName', Wait.LONG)
             emailInput.send_keys(email)
+
+            driver.long_random_sleep()
             press_next_btn()
+            
+            
+            
+            # with suppress(Exception):
+            if driver.get_element_by_id('MemberNameError', Wait.SHORT) is not None:
+                print(driver.get_element_by_id('MemberNameError', Wait.SHORT).text)
+                print("Username is already taken. So this account was not craeated.")
+                raise Exception()
 
-            with suppress(Exception):
-                print(driver.get_element_by_id('MemberNameError', Wait.LONG).text)
-                print("Username is already taken. So this account was not created.")
 
+            driver.short_random_sleep()
             # Fill in the password and proceed
             passwordinput = driver.get_element_by_id('PasswordInput', Wait.LONG)
             passwordinput.send_keys(password)
+
+            driver.long_random_sleep()
             press_next_btn()
+
+
+            driver.short_random_sleep()
 
             # Fill in the personal information
             first = driver.get_element_by_id('FirstName', Wait.LONG)
             first.send_keys(first_name)
-            driver.sleep(.3)
+            
+            driver.short_random_sleep()
+
             last = driver.get_element_by_id('LastName', Wait.LONG)
             last.send_keys(last_name)
+
+            driver.short_random_sleep()
             press_next_btn()
+
+            driver.short_random_sleep()
+            
+            birthMonth = driver.get_element_by_id('BirthMonth', Wait.LONG)
+            objectMonth = Select(birthMonth)
+            objectMonth.select_by_value(str(dob_month))
+            
+            driver.short_random_sleep()
+
+
+            # Fill in the date of birth
+            birthYear = driver.get_element_by_id('BirthYear', Wait.LONG)
+            birthYear.send_keys(str(dob_year))
+
+            driver.short_random_sleep()
 
             # Select the country from the dropdown
             dropdown = driver.get_element_by_id('Country', Wait.LONG)
             dropdown.find_element(By.XPATH, f"//option[. = '{country_name}']").click()
 
-            # Fill in the date of birth
-            birthYear = driver.get_element_by_id('BirthYear', Wait.LONG)
-            birthYear.send_keys(str(dob_year))
-            birthMonth = driver.get_element_by_id('BirthMonth', Wait.LONG)
-            objectMonth = Select(birthMonth)
-            objectMonth.select_by_value(str(dob_month))
+            driver.short_random_sleep()
+
+
             birthDay = driver.get_element_by_id('BirthDay', Wait.LONG)
             objectDay = Select(birthDay)
             objectDay.select_by_value(str(dob_day))
+
+            driver.short_random_sleep()
             press_next_btn()
             
 
             # Prompt to solve the CAPTCHA
-            driver.prompt_to_solve_captcha()
+            driver.prompt_to_solve_captcha(more_rules = [' - If you are using Residential IP AND Microsoft Captcha is too Tough. Solve via Audio Captcha.'])
 
             yes_button = driver.get_element_or_none_by_selector('[value="Yes"]', Wait.LONG)
             if yes_button is None:
@@ -112,9 +143,9 @@ class OutlookSignUpTask(BaseTask):
             return blocked_el is not None
 
         # Open the sign-up page via Google
-        driver.organic_get("https://signup.live.com/signup?lic=1&mkt=en-gb")
+        driver.organic_get("https://signup.live.com/")
 
-            
+                        
         if is_bot_detected():
             print('Bot is Blocked by Microsoft. Possibly because Microsoft has flagged the IP. You can try runnning the Bot after few minutes or you change your IP address to bypass the IP Ban.')
             driver.long_random_sleep()
