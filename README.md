@@ -121,7 +121,13 @@ Furthermore, one of the most effective methods for changing the IP is the **Enab
 3. Now, turn the hotspot on again.
 4. You will get a new IP assigned.
 
+### ❓ Can I buy Outlook accounts from you?
 
+In addition to the free Outlook Account Generator Bot, we also offer fairly priced Outlook Accounts to streamline the process of account creation and save you valuable development time.
+
+These accounts are mature, uses humane name and email and are trusted by hundreds of peope, enabling them to bypass the hassle of generating Outlook accounts manually.
+
+Save your Time and buy Outlook Accounts here [here](https://www.omkar.cloud/l/buy-outlook-accounts/)
 
 ### ❓ The code is well-structured and organized. Most Selenium codebases are messy. How did you do it?
 
