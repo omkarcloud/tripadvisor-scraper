@@ -125,7 +125,7 @@ Furthermore, one of the most effective methods for changing the IP is the **Enab
 
 In addition to the free Outlook Account Generator Bot, we also offer fairly priced Outlook Accounts to streamline the process of account creation and save you valuable development time.
 
-These accounts are mature, uses humane name and email and are trusted by hundreds of peope, enabling them to bypass the hassle of generating Outlook accounts manually.
+These accounts are mature, uses humane name and email and are trusted by hundreds of peope, enabling people to bypass the hassle of generating Outlook accounts manually.
 
 Save your Time and buy Outlook Accounts here [here](https://www.omkar.cloud/l/buy-outlook-accounts/)
 
