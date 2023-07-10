@@ -84,9 +84,7 @@ Watch this video to see the bot in action!
 
 ## 🤔 FAQs
 
-### ❓ It is generating only 3
-
- accounts. How can I generate more than 3 accounts?**
+### ❓ It is generating only 3 accounts. How can I generate more than 3 accounts?
 
 Open `src/config.py` and specify the number of accounts you want to generate. For example, to generate 100 accounts, use the following code:
 
