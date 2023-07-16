@@ -31,23 +31,35 @@
 
 🌟 Create Multiple Outlook Accounts with Ease! 🤖
 
-## ✨ Why Choose This Bot?
+## 🌟 Overview
+
+Welcome to the Outlook Account Generator, written to generate Real Looking Outlook Accounts easily.
+
+If you've experienced disappointments with other outlook account generator bots, **facing failures**, **crashes** and **detection** from Microsoft, don't worry! Your search for a reliable Outlook Account Generator Bot ends right here.
+
+This Outlook Account Generator operates at a slow humane pace, generating accounts with names and usernames that resemble real users, ensuring the bot remains undetected by Microsoft and leading to successful Outlook Account creation.
+
+Below is an example of what the Generated Account looks like:
+
+![Profiles](https://raw.githubusercontent.com/omkarcloud/outlook-account-generator/master/images/profiles.png)
+
+
+## ✨ Benefits of Outlook Account Generator
 
 🌍 Generate Realistic Account Details: Obtain authentic names, usernames, and passwords based on your country of residence.
 
 💾 Save Account Details as JSON: Every created account is conveniently saved in JSON format, making it easy to access and manage the account information.
 
-⚡ Lightning Fast: This bot is designed for speed, allowing you to generate multiple Outlook accounts quickly and efficiently.
-
 🔒 Anti Bot Detection: The bot incorporates measures to bypass detection, ensuring a smooth account creation process.
 
 🖥️ Chrome Profile Storage: Each created account is saved as a profile, enabling you to access your Outlook users anytime without the need for login credentials.
 
-![Profiles](https://raw.githubusercontent.com/omkarcloud/outlook-account-generator/master/images/profiles.png)
 
 ## 🚀 Getting Started
 
 _If you are not a techy person or don't know how to use git. You can follow [this video](https://www.youtube.com/watch?v=RwCWcaKBahI) to make bot run._
+
+Let's get started creating your first first Outlook Accounts within 5 minutes by following these simple steps
 
 1️⃣ Clone the Magic 🧙‍♀️:
 
