@@ -173,9 +173,9 @@ Star ⭐ the repository.
 
 Your star will send me a Telegram Notification, and it will bring a smile to my face :)
 
-### ❓ I'm interested in creating more bots. Can you assist me?
+<!-- ### ❓ I'm interested in creating more bots. Can you assist me?
 
-Certainly! As a professional scraper, I'd be delighted to discuss your requirements further. Feel free to reach out to me at chetan@omkar.cloud.
+Certainly! As a professional scraper, I'd be delighted to discuss your requirements further. Feel free to reach out to me at chetan@omkar.cloud. -->
 
 ## _PS: I have a great suggestion for you. You probably use Outlook accounts to log into some website and automate actions, Isn't it? I recommend using the Bose Framework for writing your automation code directly in this repository. This will really save you a large chunk of development time._
 
