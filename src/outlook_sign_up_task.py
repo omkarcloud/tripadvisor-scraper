@@ -1,10 +1,10 @@
 from bose.account_generator import AccountGenerator
 from bose.ip_utils import find_ip_details
 from bose import *
-from contextlib import suppress
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from .config import config
+
 
 class OutlookSignUpTask(BaseTask):
     def get_task_config(self):
@@ -13,7 +13,7 @@ class OutlookSignUpTask(BaseTask):
 
         return TaskConfig(
             target_website='microsoft.com',
-            prompt_to_close_browser= is_min_3_accounts_created,
+            prompt_to_close_browser=is_min_3_accounts_created,
             change_ip=is_min_3_accounts_created,
         )
 
@@ -44,7 +44,7 @@ class OutlookSignUpTask(BaseTask):
         country_name = ip_details['country_name']
 
         def press_next_btn():
-                driver.get_element_by_id('iSignupAction', Wait.LONG).click()
+            driver.get_element_by_id('iSignupAction', Wait.LONG).click()
 
         def sign_up():
 
@@ -54,24 +54,22 @@ class OutlookSignUpTask(BaseTask):
 
             driver.long_random_sleep()
             press_next_btn()
-            
-            
-            
+
             # with suppress(Exception):
             if driver.get_element_by_id('MemberNameError', Wait.SHORT) is not None:
                 print(driver.get_element_by_id('MemberNameError', Wait.SHORT).text)
                 print("Username is already taken. So this account was not craeated.")
                 raise Exception()
-
+            print(f"Email: {email}")
 
             driver.short_random_sleep()
             # Fill in the password and proceed
             passwordinput = driver.get_element_by_id('PasswordInput', Wait.LONG)
             passwordinput.send_keys(password)
+            print(f"Password: {password}")
 
             driver.long_random_sleep()
             press_next_btn()
-
 
             driver.short_random_sleep()
 
@@ -95,7 +93,6 @@ class OutlookSignUpTask(BaseTask):
             
             driver.short_random_sleep()
 
-
             # Fill in the date of birth
             birthYear = driver.get_element_by_id('BirthYear', Wait.LONG)
             birthYear.send_keys(str(dob_year))
@@ -108,17 +105,15 @@ class OutlookSignUpTask(BaseTask):
 
             driver.short_random_sleep()
 
-
             birthDay = driver.get_element_by_id('BirthDay', Wait.LONG)
             objectDay = Select(birthDay)
             objectDay.select_by_value(str(dob_day))
 
             driver.short_random_sleep()
             press_next_btn()
-            
 
             # Prompt to solve the CAPTCHA
-            driver.prompt_to_solve_captcha(more_rules = [' - If you are using Residential IP AND Microsoft Captcha is too Tough. Solve via Audio Captcha.'])
+            driver.prompt_to_solve_captcha(more_rules=[' - If you are using Residential IP AND Microsoft Captcha is too Tough. Solve via Audio Captcha.'])
 
             yes_button = driver.get_element_or_none_by_selector('[value="Yes"]', Wait.LONG)
             if yes_button is None:
@@ -132,8 +127,7 @@ class OutlookSignUpTask(BaseTask):
                     if driver.is_in_page('privacynotice.account.microsoft.com/notice', Wait.LONG):
                         continue_button = driver.get_element_or_none_by_selector('[id="id__0"]', Wait.LONG)
                         continue_button.click()
-                    yes_button = driver.get_element_or_none_by_selector('[value="Yes"]', Wait.LONG)
-
+                    yes_button = driver.get_element_or_none_by_selector('[type="submit"]', Wait.LONG)
 
             # Click "Yes" button if it appears
             yes_button.click()
@@ -145,7 +139,6 @@ class OutlookSignUpTask(BaseTask):
         # Open the sign-up page via Google
         driver.organic_get("https://signup.live.com/")
 
-                        
         if is_bot_detected():
             print('Bot is Blocked by Microsoft. Possibly because Microsoft has flagged the IP. You can try runnning the Bot after few minutes or you change your IP address to bypass the IP Ban.')
             driver.long_random_sleep()
