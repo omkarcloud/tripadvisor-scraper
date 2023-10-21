@@ -107,3 +107,12 @@ venv.bak/
 tasks/
 
 profiles/
+.idea/misc.xml
+.idea/vcs.xml
+local_storage.json
+src/config.py
+profiles.json
+profiles.json
+local_storage.json
+.idea/inspectionProfiles/Project_Default.xml
+.idea/inspectionProfiles/profiles_settings.xml

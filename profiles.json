@@ -1,1 +1,26 @@
-{}
+{
+    "radogosttomkiv1945": {
+        "id": 1,
+        "name": "Radogost Tomkiv",
+        "first_name": "Radogost",
+        "last_name": "Tomkiv",
+        "username": "radogosttomkiv1945",
+        "email": "radogosttomkiv1945@outlook.com",
+        "password": "charlene|5T",
+        "uuid": "bd351b71-a711-41b7-a32c-f0aadc397fb3",
+        "profile_picture": "https://randomuser.me/api/portraits/men/68.jpg",
+        "phone": "(099) T25-4972",
+        "address": "3635, Bondarskiy provulok, Romni, Kirovogradska, Ukraine",
+        "gender": "male",
+        "country": "UA",
+        "dob": {
+            "year": 1945,
+            "month": 1,
+            "day": 24,
+            "date": "1945-01-24T09:16:23.848Z",
+            "age": 78
+        },
+        "created_at": "2023-10-20 12:54:25",
+        "updated_at": "2023-10-20 12:54:25"
+    }
+}
