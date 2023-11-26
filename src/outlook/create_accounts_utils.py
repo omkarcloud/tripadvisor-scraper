@@ -1,0 +1,263 @@
+import json
+from botasaurus.ip_utils import find_ip_details
+import time
+from botasaurus import *
+from selenium.webdriver.firefox.service import Service
+from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.support.select import Select
+from botasaurus.drivers import AntiDetectFirefoxDriverSeleniumWire, AntiDetectFirefoxDriver
+from src.outlook.solve_captcha import solve_captcha
+from urllib.parse import urlparse, urlunparse
+
+def remove_query_params(url):
+    # Parse the URL
+    parsed_url = urlparse(url)
+
+    # Reconstruct the URL without query parameters
+    clean_url = urlunparse((parsed_url.scheme, parsed_url.netloc, parsed_url.path, '', '', ''))
+
+    return clean_url
+
+def keep_getting_element(driver:AntiDetectDriver, selector):
+        btn = driver.get_element_or_none_by_selector(selector, bt.Wait.SHORT )
+    
+        while btn is None:
+            btn = driver.get_element_or_none_by_selector(selector, bt.Wait.SHORT )
+            print('regetting element: ', selector, )
+        return btn
+
+
+def wait_till_in_page(driver:AntiDetectDriver, page):
+    while not ( page in remove_query_params(driver.current_url)):
+        time.sleep(0.5)
+
+
+
+def wait_till_signup_page(driver):
+    return wait_till_in_page(driver, 'signup.live.com')
+
+
+
+def wait_till_accounts_page(driver):
+    wait_till_in_page(driver, 'account.microsoft.com')
+
+    keep_getting_element(driver, '[data-bi-id="sh-sharedshell-profile"]')
+
+
+
+def keep_clicking_till_page_not_change(driver:AntiDetectDriver, selector):
+        btn = driver.get_element_or_none_by_selector(selector, bt.Wait.LONG )
+    
+        while btn is None:
+            btn = driver.get_element_or_none_by_selector(selector, bt.Wait.LONG )
+
+        currenturl = driver.current_url
+
+        changed = False
+        while not changed:
+            btn = driver.get_element_or_none_by_selector(selector, bt.Wait.LONG )
+            if btn:
+                driver.js_click(btn)
+                driver.sleep(2)
+            if currenturl != driver.current_url:
+                changed = True
+            driver.sleep(0.1)
+
+
+def lisa_move(driver, element):
+                return
+
+
+def lisa_click(driver, element):
+                element.click()
+
+
+def lisa_type(driver:AntiDetectDriver, el, text):
+            el.send_keys(text)
+
+
+def press_next_btn(driver):
+                element = driver.get_element_by_id('iSignupAction', bt.Wait.LONG)
+                lisa_click(driver, element)
+
+
+def type_email(driver, email):
+            # Fill in the email and check if it's already taken
+            emailInput = driver.get_element_by_id('MemberName', bt.Wait.LONG * 3)
+            
+            if emailInput is None:
+                emailInput = driver.get_element_by_id('MemberName', bt.Wait.LONG)
+            lisa_type(driver,emailInput, email)
+            
+            
+
+
+def type_password(driver, password):
+
+            passwordinput = driver.get_element_by_id('PasswordInput', bt.Wait.LONG * 3)
+            lisa_type(driver,passwordinput, password)
+
+def verify_username_is_unique(driver):
+        pass
+
+
+
+def type_first_name(driver, first_name):
+            first = driver.get_element_by_id('FirstName', bt.Wait.LONG)
+            lisa_type(driver,first, first_name)
+
+
+def type_last_name(driver, last_name):
+            last = driver.get_element_by_id('LastName', bt.Wait.LONG)
+            lisa_type(driver,last, last_name)
+
+
+
+def type_birth_month(driver, dob_month):
+            birthMonth = driver.get_element_by_id('BirthMonth', bt.Wait.LONG)
+            lisa_move(driver, birthMonth)
+
+            objectMonth = Select(birthMonth)
+            objectMonth.select_by_value(str(dob_month))
+
+def type_birth_year(driver,dob_year):
+            birthYear = driver.get_element_by_id('BirthYear', bt.Wait.LONG)
+            lisa_type(driver,birthYear, str(dob_year))
+
+def enter_birth_day(driver, dob_day):
+            birthDay = driver.get_element_by_id('BirthDay', bt.Wait.LONG)
+            lisa_move(driver, birthDay)
+
+            objectDay = Select(birthDay)
+            objectDay.select_by_value(str(dob_day))
+
+def accept_notice(driver):
+        keep_clicking_till_page_not_change(driver, '[id="id__0"]')
+    
+def stay_signed_in(driver:AntiDetectDriver):
+        accpetid = '.inline-block.button-item.ext-button-item  .primary'
+        keep_getting_element(driver, accpetid)
+    
+        dontshowbtn = keep_getting_element(driver, '[name="DontShowAgain"]')
+        dontshowbtn.click()
+        
+        keep_clicking_till_page_not_change(driver, accpetid)
+
+        
+        
+
+def give_consent(driver:AntiDetectDriver):
+
+    while driver.is_in_page('signup.live.com'):
+        driver.sleep(0.1)
+
+    notice_page = 'privacynotice.account.microsoft.com/notice'
+    
+    
+    will_be_redirected_to_login_page = False
+
+    if driver.is_in_page(notice_page, bt.Wait.LONG):
+        will_be_redirected_to_login_page = "login.live.com" in driver.current_url # https://privacynotice.account.microsoft.com/notice?ru=https://login.live.com/login.srf%3fid%3d292666%26opid%3d7636FF0C85603292%26opidt%3d1700994730#/
+        accept_notice(driver)
+
+    print(will_be_redirected_to_login_page)
+    if will_be_redirected_to_login_page:
+        stay_signed_in(driver)
+    
+    wait_till_accounts_page()
+        
+def create_firefox(data):
+            service = Service(executable_path=GeckoDriverManager().install())
+
+            proxy = data.get('proxy') 
+            if proxy:
+                selwireOptions = {'proxy': {'http': proxy, 'https': proxy}}
+                driver = AntiDetectFirefoxDriverSeleniumWire(
+                                            service=service,
+                                            seleniumwire_options=selwireOptions, 
+                                        )
+            
+            
+
+            else:
+                driver = AntiDetectFirefoxDriver(
+                                            service=service,
+                                        )
+
+            return driver
+
+
+def submittoken(driver, token):
+    return driver.execute_file("submit_token.js", token)
+
+def waittillnextbtnloded(driver):
+    sl = "button[data-theme='home.verifyButton']"
+    el = driver.get_element_or_none_by_selector(sl, bt.Wait.LONG)
+    while el is None:
+        el = driver.get_element_or_none_by_selector(sl, bt.Wait.LONG)
+    return el
+
+
+def printblob(driver):
+    print(driver.execute_file("get_blob.js"))
+
+
+
+def getblob(driver):
+    blob = driver.execute_file("get_blob.js")
+    while type(blob) is not str:
+        blob = driver.execute_file("get_blob.js")
+        time.sleep(1)
+        # driver.sleep(1)
+    return blob
+
+def getua(driver):
+    return driver.execute_script("return navigator.userAgent;")
+       
+
+def makeblob( blob):
+        data = {"blob":blob} 
+        return json.dumps(data)       
+
+def solvecaptcha(driver:AntiDetectDriver ):
+    
+    bt.prompt("Kindly Solve Captcha, Press Enter to Retry ")
+    # Thread based solution perform todo:
+
+
+def solvecaptcha_with_captcha_solver(driver:AntiDetectDriver, proxy = None, captcha=None):
+
+    blob = makeblob(getblob(driver))
+    
+    bt.prompt("Press Enter When Next Button is Visible")
+    
+    # first check if token submit works
+    # then next check
+    # can be simple get source of frame till we can find the home.verifyButton string
+
+    # todo: next btn wait, for now just see console
+
+    iframe = driver.get_element_or_none_by_selector('iframe#enforcementFrame', bt.Wait.LONG)     
+    driver.switch_to.frame(iframe)
+
+    token = solve_captcha("B7D8911C-5CC8-A9A3-35B0-554ACEE604DA",  "https://signup.live.com/?lic=1", "https://client-api.arkoselabs.com",blob, getua(driver), proxy)    
+
+    submittoken(driver, token)
+    driver.switch_to.default_content()
+
+    bt.prompt()    
+
+
+
+
+def create_user(proxy):
+            country_code = find_ip_details(proxy=proxy)['country']
+            number_of_accounts_to_generate =  1
+            # config['number_of_accounts_to_generate']
+            account = bt.generate_user(number_of_accounts_to_generate, country=country_code)
+            account['country'] = country_code
+            return account        
+
+def is_bot_detected(driver):
+            blocked_el = driver.get_element_or_none_by_text('The request is blocked.', None)
+            return blocked_el is not None
