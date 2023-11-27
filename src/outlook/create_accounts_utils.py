@@ -64,6 +64,7 @@ def keep_clicking_till_page_not_change(driver:AntiDetectDriver, selector):
             driver.sleep(0.1)
 
 
+
 def lisa_move(driver, element):
                 return
 
@@ -92,9 +93,18 @@ def type_email(driver, email):
             
 
 
+def has_username_error(driver):
+    return driver.get_element_by_id('MemberNameError', bt.Wait.SHORT) is not None
+        
 def type_password(driver, password):
 
-            passwordinput = driver.get_element_by_id('PasswordInput', bt.Wait.LONG * 3)
+            passwordinput = driver.get_element_by_id('PasswordInput', bt.Wait.SHORT )
+            if passwordinput is None:
+                   if has_username_error(driver):
+                          raise Exception('Username is already taken. Retrying with new Account.')
+                   
+                   passwordinput = driver.get_element_by_id('PasswordInput', bt.Wait.LONG * 3)
+            
             lisa_type(driver,passwordinput, password)
 
 def verify_username_is_unique(driver):
@@ -135,7 +145,7 @@ def accept_notice(driver):
         keep_clicking_till_page_not_change(driver, '[id="id__0"]')
     
 def stay_signed_in(driver:AntiDetectDriver):
-        accpetid = '.inline-block.button-item.ext-button-item  .primary'
+        accpetid = '.inline-block.button-item.ext-button-item .primary, #acceptButton'
         keep_getting_element(driver, accpetid)
     
         dontshowbtn = keep_getting_element(driver, '[name="DontShowAgain"]')
@@ -146,25 +156,35 @@ def stay_signed_in(driver:AntiDetectDriver):
         
         
 
+
+def isinnoticepage(driver:AntiDetectDriver):
+
+      notice_page = 'privacynotice.account.microsoft.com/notice'
+      return driver.is_in_page(notice_page)
+
+
+
+def isinnoticepagewait(driver:AntiDetectDriver):
+      notice_page = 'privacynotice.account.microsoft.com/notice'
+      return driver.is_in_page(notice_page, bt.Wait.LONG)
+
 def give_consent(driver:AntiDetectDriver):
 
     while driver.is_in_page('signup.live.com'):
         driver.sleep(0.1)
 
-    notice_page = 'privacynotice.account.microsoft.com/notice'
     
     
     will_be_redirected_to_login_page = False
 
-    if driver.is_in_page(notice_page, bt.Wait.LONG):
+    if isinnoticepagewait(driver):
         will_be_redirected_to_login_page = "login.live.com" in driver.current_url # https://privacynotice.account.microsoft.com/notice?ru=https://login.live.com/login.srf%3fid%3d292666%26opid%3d7636FF0C85603292%26opidt%3d1700994730#/
         accept_notice(driver)
 
-    print(will_be_redirected_to_login_page)
     if will_be_redirected_to_login_page:
         stay_signed_in(driver)
     
-    wait_till_accounts_page()
+    wait_till_accounts_page(driver)
         
 def create_firefox(data):
             service = Service(executable_path=GeckoDriverManager().install())
@@ -219,10 +239,15 @@ def makeblob( blob):
         data = {"blob":blob} 
         return json.dumps(data)       
 
-def solvecaptcha(driver:AntiDetectDriver ):
-    
-    bt.prompt("Kindly Solve Captcha, Press Enter to Retry ")
-    # Thread based solution perform todo:
+
+def getiframeelement(driver):
+    return driver.get_element_or_none_by_selector('iframe#enforcementFrame', bt.Wait.SHORT)
+
+def getphoneverificationelement(driver:AntiDetectDriver):
+    return driver.get_element_or_none_by_selector('.text-title.forSmsHip', None)   
+
+def getphoneverificationelementwithwait(driver):
+    return driver.get_element_or_none_by_selector('.text-title.forSmsHip', bt.Wait.SHORT)   
 
 
 def solvecaptcha_with_captcha_solver(driver:AntiDetectDriver, proxy = None, captcha=None):
@@ -237,7 +262,7 @@ def solvecaptcha_with_captcha_solver(driver:AntiDetectDriver, proxy = None, capt
 
     # todo: next btn wait, for now just see console
 
-    iframe = driver.get_element_or_none_by_selector('iframe#enforcementFrame', bt.Wait.LONG)     
+    iframe = getiframeelement(driver)     
     driver.switch_to.frame(iframe)
 
     token = solve_captcha("B7D8911C-5CC8-A9A3-35B0-554ACEE604DA",  "https://signup.live.com/?lic=1", "https://client-api.arkoselabs.com",blob, getua(driver), proxy)    
@@ -245,9 +270,22 @@ def solvecaptcha_with_captcha_solver(driver:AntiDetectDriver, proxy = None, capt
     submittoken(driver, token)
     driver.switch_to.default_content()
 
-    bt.prompt()    
+    bt.prompt() 
 
+PHONE_VERIFICATION = 'phone_verification_required'
+RETRY = 'RETRY'
+DETECTED = 'detected'
 
+def check_for_phone_verification_or_captcha(driver:AntiDetectDriver):
+     while True:
+          if getiframeelement(driver):
+             if getphoneverificationelement(driver):
+                return PHONE_VERIFICATION
+             else:
+                return None   
+
+          if getphoneverificationelementwithwait(driver):
+                return PHONE_VERIFICATION
 
 
 def create_user(proxy):
@@ -261,3 +299,43 @@ def create_user(proxy):
 def is_bot_detected(driver):
             blocked_el = driver.get_element_or_none_by_text('The request is blocked.', None)
             return blocked_el is not None
+
+
+def get_unique_cookies(driver:AntiDetectDriver, links):
+    unique_cookies = set()
+
+    # Get cookies from the initial page the driver is opened with
+    unique_cookies.update({frozenset(cookie.items()) for cookie in driver.get_cookies()})
+
+    # Iterate through each link and collect cookies
+    for link in links:
+        driver.get(link)
+        # time.sleep(5)  # Wait for 5 seconds for the page to load
+        cookies = driver.get_cookies()
+        
+        # Convert each cookie (which is a dictionary) to a frozenset for immutability and then add to the set
+        for cookie in cookies:
+            unique_cookies.add(frozenset(cookie.items()))
+
+    # Convert the frozensets back to dictionaries
+    unique_cookies_dicts = [dict(cookie) for cookie in unique_cookies]
+
+    return unique_cookies_dicts
+
+
+def waitforretryorsolved(driver):
+        print('')
+        print('   __ _ _ _    _                          _       _           ')
+        print('  / _(_) | |  (_)                        | |     | |          ')
+        print(' | |_ _| | |   _ _ __      ___ __ _ _ __ | |_ ___| |__   __ _ ')
+        print(' |  _| | | |  | | `_ \    / __/ _` | `_ \| __/ __| `_ \ / _` |')
+        print(' | | | | | |  | | | | |  | (_| (_| | |_) | || (__| | | | (_| |')
+        print(' |_| |_|_|_|  |_|_| |_|   \___\__,_| .__/ \__\___|_| |_|\__,_|')
+        print('                                   | |                        ')
+        print('                                   |_|                        ')
+        print('')
+        print('1. Press "R" to Retry Account Creation')
+        print('2. Press "Enter" Once Captcha is Solved')
+        ipt = bt.prompt("Your Input: ", )
+        if ipt == 'r' or ipt == 'R':
+            return RETRY

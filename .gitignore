@@ -107,3 +107,6 @@ venv.bak/
 tasks/
 
 profiles/
+temp/
+error_logs/
+cache/
