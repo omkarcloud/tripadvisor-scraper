@@ -5,7 +5,7 @@ from .create_accounts_utils import DETECTED, PHONE_VERIFICATION, RETRY
 from .send_email import send_emails
 from .get_emails import get_emails
 from .check import check
-from .outlook_utils import get_random_delay, prompt_change_ip
+from .outlook_utils import get_random_delay, prompt_change_ip, ensure_unique_ip
 from .back import Back
 from botasaurus import *
 import time
@@ -96,6 +96,8 @@ class Outlook:
         :param body: The body content of the email.
         :param proxy: Optional proxy server for sending the email.
         """
+        if not proxy:
+            ensure_unique_ip(username)
         Outlook.send_emails(username, [{"to": to, "subject": subject, "body": body}], proxy=proxy)
 
     @staticmethod
@@ -107,6 +109,8 @@ class Outlook:
         :param emails: A list of email data including 'to', 'subject', and 'body'.
         :param proxy: Optional proxy server for sending the emails.
         """
+        if not proxy:
+            ensure_unique_ip(username)
         data ={"username":username, "emails":emails, "get_random_delay": get_random_delay, "proxy":proxy} 
         send_emails(data)
     @staticmethod
@@ -119,6 +123,8 @@ class Outlook:
         :param proxy: Optional proxy server for retrieving the email.
         :return: A dictionary containing details of the latest email or None if no email is found.
         """
+        if not proxy:
+            ensure_unique_ip(username)
         attempts = 4
         while attempts > 0:
             latest_email = Outlook.get_latest_email(username, received=received, proxy=proxy)
@@ -137,6 +143,8 @@ class Outlook:
         :param proxy: Optional proxy server for retrieving the email.
         :return: A dictionary containing details of the latest email.
         """
+        if not proxy:
+            ensure_unique_ip(username)
         email = Outlook.get_emails(username, received=received, max=1, proxy=proxy)
         if len(email) == 0:
             return None
@@ -151,6 +159,8 @@ class Outlook:
         :param proxy: Optional proxy server for retrieving the emails.
         :return: A list of dictionaries, each containing details of an email.
         """
+        if not proxy:
+            ensure_unique_ip(username)
         data ={"username":username, "received":received, "max":max, "unread": True, "proxy":proxy} 
         return get_emails(data)
 
@@ -163,6 +173,8 @@ class Outlook:
         :param proxy: Optional proxy server for retrieving the emails.
         :return: A list of dictionaries, each containing details of an email.
         """
+        if not proxy:
+            ensure_unique_ip(username)
         data ={"username":username, "received":received, "max":max, "unread" :None, "proxy":proxy} 
         return get_emails(data)
 
@@ -174,6 +186,9 @@ class Outlook:
 
         :param username: The username of the account to check.
         """
+        
+        if not proxy:
+            ensure_unique_ip(username)
         data = {"username":username, "proxy":proxy} 
         check(data)
 

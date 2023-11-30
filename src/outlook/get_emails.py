@@ -89,8 +89,11 @@ def perform_get_emails(driver:AntiDetectDriver, received=None, max=None, is_unre
     def sort_dict_by_keys(dictionary, keys):
         new_dict = {}
         for key in keys:
+            dictkey = key[0]
+            newdictkey = key[1]
+
             try:
-                new_dict[key] = dictionary[key]
+                new_dict[newdictkey] = dictionary[dictkey]
             except KeyError:
                 pass
         return new_dict
@@ -101,27 +104,39 @@ def perform_get_emails(driver:AntiDetectDriver, received=None, max=None, is_unre
         es =  driver.execute_script("return window.getEmails(arguments[0])", convids)
 
         keys = [
-            "email_id",
-            "email_subject",
-            "email_body_text",
-            "email_links",
-            "sender",
-            "received_date",
-            "read",
-            "email_verification_link",
-            "email_otp",
-            "is_draft",
-            "to",
-            "replies",
-            "email_body_content",
-            "email_body_format",
+            ["email_id",   "id"],
+            ["email_subject",   "subject"],
+            ["email_body_text",   "body_plain_text"],
+            ["email_links",   "links"],
+            ["sender",   "from"],
+            ["received_date",   "received_at"],
+            ["read",   "is_read"],
+            ["email_verification_link",   "verification_link"],
+            ["email_otp",   "otp_code"],
+            ["is_draft",   "is_draft"],
+            ["to",   "recipients"],
+            ["replies",   "reply_messages"],
+            ["attachments",   "attachments"],
+            ["email_body_format",   "body_format"],
+            ["email_body_content",   "body_content"],
+        ]
+
+        attachments_keys = [
+            ["attachment_id", "attachment_id"],
+            ["name", "name"],
+            ["content_id", "content_id"],
+            ["content_type", "content_type"],
+            ["size", "size"],
+            ["last_modified_time", "last_modified_time"],
         ]
 
         for e in es:
-            e['received_date'] = toiso(convert_to_utc(e['received_date']))
             for repl in e['replies']:
                 repl['received_date'] = toiso(convert_to_utc(repl['received_date']))
+                repl['attachments'] = [sort_dict_by_keys(at, attachments_keys) for at in repl['attachments']]    
             
+            e['received_date'] = toiso(convert_to_utc(e['received_date']))
+            e['attachments'] = [sort_dict_by_keys(at, attachments_keys) for at in e['attachments']]    
             e['replies'] = [sort_dict_by_keys( enrich_email(repl) , keys) for repl in e['replies']]    
 
         rst = [sort_dict_by_keys(enrich_email(e), keys) for e in es]   
@@ -237,5 +252,4 @@ def get_emails(driver:AntiDetectDriver, data):
     load_outlook(driver, username, spy_emails=True)
     
     els  = perform_get_emails(driver, received=now_utc, max=data['max'], is_unread=data['unread'])    
-    
     return els

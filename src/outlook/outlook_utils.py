@@ -7,7 +7,6 @@ from random import uniform
 def get_random_delay():
   return uniform(3, 5) # random delay
 
-#   return uniform(27, 37) # random delay
 
 def prompt_change_ip(should_beep):
     current_ip = get_valid_ip()
@@ -28,3 +27,29 @@ def prompt_change_ip(should_beep):
         else:
             LocalStorage.set_item("seen_ips", LocalStorage.get_item("seen_ips", []) + [current_ip])
             return new_ip
+
+
+
+def ensure_unique_ip(username):
+    """
+    Confirms that no two users have the same IP.
+
+    Args:
+    username (str): The username to check the IP against.
+    ip (str): The IP address to be checked.
+
+    Returns:
+    bool: True if the IP is unique to the user, False otherwise.
+    """
+    ip = get_valid_ip()
+    ip_user_mapping = LocalStorage.get_item("ip_user_mapping", {})
+
+    # Check if the IP exists in the mapping and if it's associated with a different user
+    if ip in ip_user_mapping and ip_user_mapping[ip] != username:
+        prompt_change_ip(True)
+        return False
+
+    # Update the mapping with the new user-IP association
+    ip_user_mapping[ip] = username
+    LocalStorage.set_item("ip_user_mapping", ip_user_mapping)
+    return True
