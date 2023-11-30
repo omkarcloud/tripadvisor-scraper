@@ -1,37 +1,22 @@
 from itertools import cycle
-from typing import List, Optional, Union, Dict
+from typing import List, Optional, Union, Dict, Callable
 from .create_accounts import  create_accounts
 from .create_accounts_utils import DETECTED, PHONE_VERIFICATION, RETRY
-
-from botasaurus.ip_utils import get_valid_ip
-from botasaurus.beep_utils import beep_input
-from botasaurus.local_storage import LocalStorage
-
-
-def prompt_change_ip(should_beep):
-    current_ip = get_valid_ip()
-    seen_ips =  LocalStorage.get_item("seen_ips", [])
-    
-    next_prompt = "Please change your IP and press Enter to continue..."
-    
-    while True:
-        beep_input(next_prompt, should_beep)
-        new_ip = get_valid_ip()
-
-        # TODO: url needs to be change to help them learn to change ip.
-        if new_ip == current_ip:
-            next_prompt = """In order to proceed, it is necessary to change your IP address as a precautionary measure against Bot Detection. Please visit https://github.com/omkarcloud/botasaurus/blob/master/github-docs/change-ip.md to learn how to change your IP. Once you have successfully changed your IP address, please press Enter to continue..."""
-
-        elif new_ip in seen_ips:
-            next_prompt = "Your computer previously had this IP address. Please change your IP and press Enter to continue..."
-        else:
-            LocalStorage.set_item("seen_ips", LocalStorage.get_item("seen_ips", []) + [current_ip])
-            return new_ip
+from .send_email import send_emails
+from .get_emails import get_emails
+from .check import check
+from .outlook_utils import get_random_delay, prompt_change_ip
+from .back import Back
+from botasaurus import *
+import time
         
+BackObject = Back()
+
 class Outlook:
     """
     Provides Outlook email functionalities including account creation, sending and retrieving emails.
     """
+    Back = BackObject 
 
     @staticmethod
     def create_accounts(count: int = 1, proxies: Union[None, str, List[str]] = None, enable_captcha_solving=False) -> None:
@@ -42,8 +27,8 @@ class Outlook:
         :param proxies: Optional proxy server or list of proxy servers to be used for account creation.
         """
         if isinstance(proxies, str):
-            proxies = [proxies]  # Wrap the string in a list
-        
+            proxies = [proxies]  
+            
 
         createdaccounts = []
         if proxies:
@@ -70,11 +55,10 @@ class Outlook:
                 # print in method only
                 prompt_change_ip(True)
             else:
-                # createTempProfile(account)
                 createdaccounts.append(account)
                  
                 if not proxies:
-                    if len(createdaccounts) > 0 and len(createdaccounts) % 2 == 0:
+                    if len(createdaccounts) > 0 and len(createdaccounts) % 3 == 0:
                         prompt_change_ip(True)
 
         
@@ -87,12 +71,22 @@ class Outlook:
 
         :return: List of accounts
         """
-        # Implementation of retrieving accounts
-        # Return a list of usernames (dummy data or real data depending on your application)
-        return ["username1", "username2"]  # Example return value
+        
+        return bt.Profile.get_profiles()
+
 
     @staticmethod
-    def send_email(username: str, to: str, subject: str, body: str, proxy: Optional[str] = None) -> None:
+    def get_account_usernames() -> List[str]:
+        """
+        Retrieves a list of created Outlook accounts usernames.
+
+        :return: List of accounts
+        """
+        
+        return [account['username'] for account in Outlook.get_accounts()]
+
+    @staticmethod
+    def send_email(username: str, to: str, subject:Optional[str], body: str, proxy: Optional[str] = None ) -> None:
         """
         Sends an email from a specified account.
 
@@ -102,23 +96,40 @@ class Outlook:
         :param body: The body content of the email.
         :param proxy: Optional proxy server for sending the email.
         """
-        # Implementation of sending email
-        pass
+        Outlook.send_emails(username, [{"to": to, "subject": subject, "body": body}], proxy=proxy)
 
     @staticmethod
-    def send_emails(emails: List[Dict[str, str]], username: str, proxy: Optional[str] = None) -> None:
+    def send_emails(username: str, emails: List[Dict[str, str]], proxy: Optional[str] = None, get_random_delay: Callable = get_random_delay) -> None:
         """
         Sends multiple emails from a specified account.
 
-        :param emails: A list of email data including 'to', 'subject', and 'body'.
         :param username: The username of the sender's account.
+        :param emails: A list of email data including 'to', 'subject', and 'body'.
         :param proxy: Optional proxy server for sending the emails.
         """
-        # Implementation of sending multiple emails
-        pass
+        data ={"username":username, "emails":emails, "get_random_delay": get_random_delay, "proxy":proxy} 
+        send_emails(data)
+    @staticmethod
+    def get_latest_email_for_verification(username: str, received=BackObject.JustNow, proxy: Optional[str] = None) -> Optional[Dict[str, str]]:
+        """
+        Retrieves the latest email for verification from the specified account.
+
+        :param username: The username of the account.
+        :param received: Time filter for received emails.
+        :param proxy: Optional proxy server for retrieving the email.
+        :return: A dictionary containing details of the latest email or None if no email is found.
+        """
+        attempts = 4
+        while attempts > 0:
+            latest_email = Outlook.get_latest_email(username, received=received, proxy=proxy)
+            if latest_email:
+                return latest_email
+            time.sleep(10)  # Wait for 10 seconds before retrying
+            attempts -= 1
+        return None
 
     @staticmethod
-    def get_latest_email(username: str, proxy: Optional[str] = None) -> Dict[str, str]:
+    def get_latest_email(username: str, received=None, proxy: Optional[str] = None) -> Dict[str, str]:
         """
         Retrieves the latest email from the specified account.
 
@@ -126,20 +137,44 @@ class Outlook:
         :param proxy: Optional proxy server for retrieving the email.
         :return: A dictionary containing details of the latest email.
         """
-        # Implementation of retrieving the latest email
-        return {"to": "example@example.com", "subject": "Sample Subject", "body": "Sample body"}  # Example return value
+        email = Outlook.get_emails(username, received=received, max=1, proxy=proxy)
+        if len(email) == 0:
+            return None
+        return email[0]
 
     @staticmethod
-    def get_emails(username: str, proxy: Optional[str] = None) -> List[Dict[str, str]]:
+    def get_unread_emails(username: str, received=None, max=None, proxy: Optional[str] = None) -> List[Dict[str, str]]:
         """
-        Retrieves all emails from the specified account.
+        Retrieves unread emails from the specified account. Please note that this method will mark the unread emails as read.
 
         :param username: The username of the account.
         :param proxy: Optional proxy server for retrieving the emails.
         :return: A list of dictionaries, each containing details of an email.
         """
-        # Implementation of retrieving all emails
-        return [
-            {"to": "example@example.com", "subject": "Email 1", "body": "Body of email 1"},
-            {"to": "example2@example.com", "subject": "Email 2", "body": "Body of email 2"}
-        ]  # Example return value
+        data ={"username":username, "received":received, "max":max, "unread": True, "proxy":proxy} 
+        return get_emails(data)
+
+    @staticmethod
+    def get_emails(username: str, received=None, max=None, proxy: Optional[str] = None) -> List[Dict[str, str]]:
+        """
+        Retrieves emails from the specified account.
+
+        :param username: The username of the account.
+        :param proxy: Optional proxy server for retrieving the emails.
+        :return: A list of dictionaries, each containing details of an email.
+        """
+        data ={"username":username, "received":received, "max":max, "unread" :None, "proxy":proxy} 
+        return get_emails(data)
+
+
+    @staticmethod
+    def check(username: str, proxy: Optional[str] = None) -> None:
+        """
+        Allows manual checking of emails for a given account.
+
+        :param username: The username of the account to check.
+        """
+        data = {"username":username, "proxy":proxy} 
+        check(data)
+
+

@@ -55,6 +55,18 @@
     window.emails = []
     window.scrolledEmails = []
 
+    function getEmail(emailId) {
+        return window.emails.find(email => email.email_id === emailId);
+    }
+    
+    function getEmails(emailIds) {
+        return emailIds.map(email_id => getEmail(email_id));
+    }
+    
+    // Attach the functions to the window object
+    window.getEmail = getEmail;
+    window.getEmails = getEmails;
+    
     window.fetch = async function(...args) {
         // Check if the URL contains 'ConversationItems'
         if (args[0].includes('service.svc?action=GetConversationItems')) {
@@ -72,29 +84,6 @@
                     window.emails = [...window.emails, data] 
                     // delete
                     console.log('Captured JSON for URL containing ConversationItems:', data);
-                });
-
-                // Return the original response
-                return response;
-            } catch (error) {
-                console.error('Error in fetch interceptor:', error);
-                throw error; // Re-throw the error for proper error handling
-            }
-        } else if (args[0].includes('service.svc?action=FindConversation')) {
-            try {
-                // Call the original fetch function
-                const response = await originalFetch.apply(this, args);
-
-                // Clone the response to not interfere with the original processing
-                const clonedResponse = response.clone();
-
-                // Read the response as JSON and log it
-                clonedResponse.json().then(json => {
-
-                    const data = json['Body']['Conversations']
-                    window.scrolledEmails = [...window.scrolledEmails, ...data] 
-                    // delete
-                    console.log('Captured JSON for URL containing FindConversation:', data);
                 });
 
                 // Return the original response

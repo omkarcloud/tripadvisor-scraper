@@ -45,7 +45,7 @@ def wait_till_accounts_page(driver):
 
 
 
-def keep_clicking_till_page_not_change(driver:AntiDetectDriver, selector):
+def keep_clicking_till_page_not_change(driver:AntiDetectDriver, selector, to = None):
         btn = driver.get_element_or_none_by_selector(selector, bt.Wait.LONG )
     
         while btn is None:
@@ -58,10 +58,14 @@ def keep_clicking_till_page_not_change(driver:AntiDetectDriver, selector):
             btn = driver.get_element_or_none_by_selector(selector, bt.Wait.LONG )
             if btn:
                 driver.js_click(btn)
-                driver.sleep(2)
+                time.sleep(2)
             if currenturl != driver.current_url:
-                changed = True
-            driver.sleep(0.1)
+                if to:
+                    if to in driver.current_url:
+                        changed = True
+                else:
+                    changed = True
+            time.sleep(0.1)
 
 
 
@@ -144,8 +148,19 @@ def enter_birth_day(driver, dob_day):
 def accept_notice(driver):
         keep_clicking_till_page_not_change(driver, '[id="id__0"]')
     
+def getaccpetbtnselector():
+    accpetid = '.inline-block.button-item.ext-button-item .primary, #acceptButton'
+    return accpetid
+
+        
+
+def getaccpetbtn(driver:AntiDetectDriver):
+    accpetid = getaccpetbtnselector()
+    return driver.get_element_or_none_by_selector(accpetid, bt.Wait.LONG)
+
+                
 def stay_signed_in(driver:AntiDetectDriver):
-        accpetid = '.inline-block.button-item.ext-button-item .primary, #acceptButton'
+        accpetid = getaccpetbtnselector()
         keep_getting_element(driver, accpetid)
     
         dontshowbtn = keep_getting_element(driver, '[name="DontShowAgain"]')
@@ -153,7 +168,6 @@ def stay_signed_in(driver:AntiDetectDriver):
         
         keep_clicking_till_page_not_change(driver, accpetid)
 
-        
         
 
 
@@ -171,7 +185,7 @@ def isinnoticepagewait(driver:AntiDetectDriver):
 def give_consent(driver:AntiDetectDriver):
 
     while driver.is_in_page('signup.live.com'):
-        driver.sleep(0.1)
+        time.sleep(0.1)
 
     
     
@@ -228,7 +242,6 @@ def getblob(driver):
     while type(blob) is not str:
         blob = driver.execute_file("get_blob.js")
         time.sleep(1)
-        # driver.sleep(1)
     return blob
 
 def getua(driver):

@@ -15,7 +15,6 @@ def convert_cookie_format(cookie):
     default_attributes = {
         "domain": "",
         "expires": None,
-        # "expiry": None,
         "httpOnly": False,
         "name": "",
         "path": "/",
@@ -32,7 +31,6 @@ def convert_cookie_format(cookie):
     # Update default attributes with the input cookie attributes
     transformed_cookie = default_attributes.copy()
     
-    # if cookie.get("expiry", None) is None:
     expires = cookie.get("expiry", cookie.get("expires", None))
     transformed_cookie.update({
         "domain": cookie.pop("domain", ""),
@@ -77,11 +75,8 @@ def create_accounts(driver: AntiDetectDriver, data):
         account['email'] = username + '@outlook.com'
         email = account['email']
 
-        # ip_details = find_ip_details()
-        # country_name = ip_details['country_name']
 
         def sign_up():
-            # global proxy            
 
             type_email(driver, email)
             
@@ -107,11 +102,9 @@ def create_accounts(driver: AntiDetectDriver, data):
             enter_birth_day(driver, dob_day)
 
             if captcha:
-                driver.execute_file("spytoken.js")
+                driver.execute_file("spy-token.js")
 
             press_next_btn(driver)
-            
-            # check for phone verification or captcha
             
             rst = check_for_phone_verification_or_captcha(driver)
             if rst:
@@ -152,18 +145,17 @@ def create_accounts(driver: AntiDetectDriver, data):
             unique_cookies = convert_cookie_formats(get_unique_cookies(driver, links))
 
             createTempProfile(username, unique_cookies)
-            account['cookies'] = unique_cookies
-            # get cks starting from current page etc
-            # get cks ...
-            # https://outlook.live.com/
+            bt.Profile.profile = username
+            bt.Profile.set_profile(account)
+            bt.Profile.profile = None
+
             bt.prompt("Created Account Close Me")
             return account
 
         except Exception:
             if has_username_error(driver):
-                # print(driver.get_element_by_id('MemberNameError', Wait.SHORT).text)
                 print("Username is already taken. Retrying with new Account.")
-                return create_accounts(driver, data)
+                return create_accounts( data)
 
             traceback.print_exc()
             return None

@@ -110,3 +110,4 @@ profiles/
 temp/
 error_logs/
 cache/
+profiles.json
