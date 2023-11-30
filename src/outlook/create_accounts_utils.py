@@ -23,7 +23,7 @@ def keep_getting_element(driver:AntiDetectDriver, selector):
     
         while btn is None:
             btn = driver.get_element_or_none_by_selector(selector, bt.Wait.SHORT )
-            print('regetting element: ', selector, )
+            # print('regetting element: ', selector, )
         return btn
 
 

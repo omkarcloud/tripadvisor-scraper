@@ -38,7 +38,7 @@ def load_outlook(driver:AntiDetectDriver, username, spy_emails):
     if spy_emails: 
         run_till_get_emails(driver)
     if btn is None:
-        account =bt.Profile.get_item(username)  
+        account = bt.Profile.get_profile(username)  
         if driver.is_in_page("login.live.com/login.srf"):
             login_outlook(driver, account['password'])
             print("logged in")

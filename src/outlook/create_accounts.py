@@ -75,7 +75,7 @@ def create_accounts(driver: AntiDetectDriver, data):
         account['email'] = username + '@outlook.com'
         email = account['email']
 
-
+        
         def sign_up():
 
             type_email(driver, email)

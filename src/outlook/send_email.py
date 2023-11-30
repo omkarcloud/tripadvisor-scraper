@@ -3,10 +3,12 @@ import time
 from botasaurus import *
 from .mail_utils import * 
 from bs4 import BeautifulSoup
+from botasaurus.decorator_helpers import retry_on_stale_element
 
 def is_html(html):
     return bool(BeautifulSoup(html, "html.parser").find())
 
+@retry_on_stale_element
 def send_email(driver:AntiDetectDriver, to, subject, body):
     
     el = driver.get_element_or_none_by_selector('[role="main"] [role="textbox"]')

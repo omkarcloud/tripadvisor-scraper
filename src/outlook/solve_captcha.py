@@ -24,9 +24,9 @@ def solve_captcha(websitePublicKey, websiteURL, funcaptchaApiJSSubdomain, blob_d
                         'userAgent': useragent,
                 }
 
-        print(data)
+        print("data", data)
         solution = capsolver.solve(data)
         
         token = solution['token']
-        print(solution)
+        print("solution",solution)
         return token

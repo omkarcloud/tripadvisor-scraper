@@ -4,7 +4,7 @@ from datetime import datetime, timezone, timedelta
 from time import time, sleep
 from .enrich_email import enrich_email 
 from .mail_utils import  load_outlook 
-
+from botasaurus.decorator_helpers import retry_on_stale_element
 def convert_to_utc(time_str):
     # Parse the string to a datetime object
     local_time = datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%S%z')
@@ -30,6 +30,8 @@ def perform_get_emails(driver:AntiDetectDriver, received=None, max=None, is_unre
     def getspinner():
         return driver.get_element_or_none_by_selector("#MailList .customScrollBar .ms-Spinner ", 2 )
 
+
+    @retry_on_stale_element
     def getcons():
         els = getconsels()
         if els:
@@ -45,6 +47,8 @@ def perform_get_emails(driver:AntiDetectDriver, received=None, max=None, is_unre
         return not driver.can_element_be_scrolled(el)
 
     seen_conversations = set()
+
+    @retry_on_stale_element()
     def get_new_links():
         nonlocal seen_conversations
 
@@ -99,18 +103,18 @@ def perform_get_emails(driver:AntiDetectDriver, received=None, max=None, is_unre
         keys = [
             "email_id",
             "email_subject",
-            "email_body_content",
-            "email_body_format",
-            "email_verification_link",
-            "email_otp",
             "email_body_text",
             "email_links",
             "sender",
-            "to",
             "received_date",
             "read",
+            "email_verification_link",
+            "email_otp",
             "is_draft",
-            "replies"
+            "to",
+            "replies",
+            "email_body_content",
+            "email_body_format",
         ]
 
         for e in es:

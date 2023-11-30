@@ -2,6 +2,10 @@ from bs4 import BeautifulSoup
 import re
 
 
+def unique_strings(lst):
+    # Use a set to remove duplicates, then convert back to a list
+    return list(dict.fromkeys(lst))
+
 def sort_links(links):
     return sorted(links, key=lambda l: any(token in l for token in ['token', 'verify', 'pass', 'reset']), reverse=True)
 
@@ -20,6 +24,7 @@ def enrich_email(email):
         email_body_text = email_body.strip()
         links = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', email_body)
 
+    links = unique_strings(links)
     # Add extracted or original email body text
     email['email_body_text'] = email_body_text
 
