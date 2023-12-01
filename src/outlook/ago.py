@@ -27,6 +27,30 @@ class Ago:
         return timedelta(hours=1)
 
     @property
+    def TwoHourAgo(self):
+        return timedelta(hours=2)
+
+
+    @property
+    def ThreeHourAgo(self):
+        return timedelta(hours=3)
+
+
+    @property
+    def FourHourAgo(self):
+        return timedelta(hours=4)
+
+
+    @property
+    def FiveHourAgo(self):
+        return timedelta(hours=5)
+
+
+    @property
+    def SixHourAgo(self):
+        return timedelta(hours=6)
+
+    @property
     def OneDayAgo(self):
         return timedelta(days=1)
 

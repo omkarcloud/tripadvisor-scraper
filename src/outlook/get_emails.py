@@ -3,7 +3,7 @@ from botasaurus import *
 from datetime import datetime, timezone, timedelta
 from time import time, sleep
 from .enrich_email import enrich_email 
-from .mail_utils import  load_outlook 
+from .mail_utils import  load_outlook, open_junk_mail 
 from botasaurus.decorator_helpers import retry_on_stale_element
 def convert_to_utc(time_str):
     # Parse the string to a datetime object
@@ -171,7 +171,7 @@ def perform_get_emails(driver:AntiDetectDriver, received=None, max=None, is_unre
 
         start_time = time()
                 
-        WAIT_TIME = 10 # WAIT 40 SECONDS
+        WAIT_TIME = 20 # WAIT 40 SECONDS
 
         while True:
             # Execute JavaScript to get all emails
@@ -187,8 +187,8 @@ def perform_get_emails(driver:AntiDetectDriver, received=None, max=None, is_unre
         # can raise exception which will be caught by the caller and all be redone
         # seen > 18                
                 is_first_page = len(seen_conversations) < 18
-
-                # print(is_first_page, f"waited {elapsed_time} seconds for email {convid} to load")
+                print(is_first_page, f"waited {elapsed_time} seconds for email {convid} to load")
+                WAIT_TIME = WAIT_TIME + 20
                 # TODO: raise later
                     # IF ANY CASE PRINTED
                     # ELSE REMOVE
@@ -259,5 +259,19 @@ def get_emails(driver:AntiDetectDriver, data):
     username = data['username']
     load_outlook(driver, username, spy_emails=True)
     
-    els  = perform_get_emails(driver, received=now_utc, max=data['max'], is_unread=data['unread'])    
+    unread = data['unread']
+    get_spam_email = data['get_spam_email']
+
+    # els = []
+
+    els  = perform_get_emails(driver, received=now_utc, max=data['max'], is_unread=unread)    
+
+    if get_spam_email:
+        mx = data['max']
+        if mx is not None:
+            mx = mx - len(els)
+
+        open_junk_mail(driver, username, spy_emails=True)
+
+        els  = els + perform_get_emails(driver, received=now_utc, max=mx, is_unread=unread)
     return els

@@ -44,3 +44,48 @@ def load_outlook(driver:AntiDetectDriver, username, spy_emails):
             login_outlook(driver, account['password'])
             print("logged in")
             return load_outlook(driver, account)
+
+def open_junk_mail(driver:AntiDetectDriver, username, spy_emails):
+    # driver.get_by_current_page_referrer("https://outlook.live.com/mail/0/junkemail")
+    
+    keep_clicking_till_page_not_change(driver, '[data-icon-name="FolderProhibitedRegular"]')
+
+    # document.querySelector().click()
+
+    # if spy_emails: 
+    #     run_till_get_emails(driver)
+
+    # btn = None
+    # while btn is None:
+    #     btn = driver.get_element_or_none_by_selector("#MailList", 0.4)
+    #     if spy_emails: 
+    #         run_till_get_emails(driver)
+
+    #     if driver.is_in_page("login.live.com/login.srf"):
+    #         account = bt.Profile.get_profile(username)  
+    #         login_outlook(driver, account['password'])
+    #         print("logged in")
+    #         return load_outlook(driver, account)
+
+
+
+# def open_junk_mail(driver:AntiDetectDriver, username, spy_emails):
+#     driver.execute_script(f"""
+#                 document.body.innerHTML = "<div/>"
+#                 window.location.href = "https://outlook.live.com/mail/0/junkemail";
+#             """)
+
+#     if spy_emails: 
+#         run_till_get_emails(driver)
+
+#     btn = None
+#     while btn is None:
+#         btn = driver.get_element_or_none_by_selector("#MailList", 0.4)
+#         if spy_emails: 
+#             run_till_get_emails(driver)
+
+#         if driver.is_in_page("login.live.com/login.srf"):
+#             account = bt.Profile.get_profile(username)  
+#             login_outlook(driver, account['password'])
+#             print("logged in")
+#             return load_outlook(driver, account)

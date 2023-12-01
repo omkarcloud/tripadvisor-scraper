@@ -72,6 +72,8 @@ def prompt_change_ip2(should_beep, user):
             return new_ip
 
 
+def clean_username(username):
+    return username if "@" not in username else username.split("@")[0]
 
 def ensure_unique_ip(username):
     """

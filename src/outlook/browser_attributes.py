@@ -1,7 +1,7 @@
 from botasaurus import *
 from .mail_utils import get_profile, get_proxy
 
-headless = True
+headless = False
 def get_headless(_):
     global headless
     return headless

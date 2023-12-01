@@ -2,12 +2,19 @@
 
 ## Short Time
 
-- JustNow
+- JustNow (2 Minutes)
 - OneMinuteAgo
 - TwoMinutesAgo
 - FiveMinutesAgo
 - TenMinutesAgo
+
 - OneHourAgo
+- TwoHourAgo
+- ThreeHourAgo
+- FourHourAgo
+- FiveHourAgo
+- SixHourAgo
+
 - OneDayAgo
 - TwoDaysAgo
 - OneWeekAgo

@@ -27,10 +27,10 @@
     }
     
     
-    function extractMail(node) {
-        let email = node.Items[0]
+    function extractMailContent(node) {
+        let email = node
         let attachments = extractAttachments(email)
-
+        let bdy = email.UniqueBody ?? email.NormalizedBody 
         return {
             "attachments": attachments,
             email_id: email.ConversationId.Id,
@@ -46,24 +46,27 @@
             }),
             read: email.IsRead,
             is_draft: email.IsDraft,
-            email_body_format: email.UniqueBody.BodyType,
-            email_body_content: email.UniqueBody.Value,
+            email_body_format: bdy.BodyType,
+            email_body_content: bdy.Value,
             email_subject: email.Subject,
             received_date: email.DateTimeReceived
         }
     }
 
 
-    function extractEmail(data) {
+    function extractNormalEmail(data) {
+
+        try {
+            
         const nodes = data[0].Conversation.ConversationNodes
         // Assuming the first item in the Items array is the target email
 
         // nextReplies: newLocal,
 
-        const node = extractMail(nodes[0])
+        const node = extractMailContent(nodes[0].Items[0])
         if (nodes.length > 1) {
             node['replies'] = nodes.slice(1).map((node) => {
-                const { email_id, ...newLocal } = extractMail(node)
+                const { email_id, ...newLocal } = extractMailContent(node.Items[0])
                 return ({ ...newLocal, })
             })
         } else {
@@ -71,6 +74,18 @@
             node['replies'] = []
         }
         return node
+        } catch (error) {
+            console.error(error)
+            console.log(data)
+        }
+    }
+
+    
+
+    function extractJunkEmail(data) {
+        const x= extractMailContent(data[0].Items[0])
+        x['replies'] = []
+        return x
     }
 
     // Override the window.fetch function
@@ -90,8 +105,16 @@
     window.getEmails = getEmails
 
     window.fetch = async function (...args) {
+        const isConv = args[0].includes('service.svc?action=GetConversationItems')
+        const isJunkConv = args[0].includes('service.svc?action=GetItem')
+        // const isJunkFindConv = args[0].includes('service.svc?action=FindItem')
+        
+        
         // Check if the URL contains 'ConversationItems'
-        if (args[0].includes('service.svc?action=GetConversationItems')) {
+        if (isConv||isJunkConv
+            // ||isJunkFindConv
+            ) {
+            // console.log('Intercepted fetch call for URL containing ConversationItems:', args[0])
             try {
                 // Call the original fetch function
                 const response = await originalFetch.apply(this, args)
@@ -101,11 +124,22 @@
 
                 // Read the response as JSON and log it
                 clonedResponse.json().then(json => {
+                    if(isJunkConv) {
+                        const data = extractJunkEmail(json['Body']['ResponseMessages']['Items'])
+                                            
+                        if (data){
+                            window.emails = [...window.emails, data]
+                        }
 
-                    const data = extractEmail(json['Body']['ResponseMessages']['Items'])
-                    window.emails = [...window.emails, data]
-                    // delete
-                    // console.log('Captured JSON for URL containing ConversationItems:', data)
+                    }else {
+                        const data = extractNormalEmail(json['Body']['ResponseMessages']['Items'])
+                    
+                    
+                        if (data){
+                            window.emails = [...window.emails, data]
+                        }
+                    }
+
                 })
 
                 // Return the original response
@@ -120,4 +154,7 @@
             return originalFetch.apply(this, args)
         }
     }
+
+
+    
 })()
