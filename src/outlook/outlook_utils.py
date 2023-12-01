@@ -12,7 +12,50 @@ def prompt_change_ip(should_beep):
     current_ip = get_valid_ip()
     seen_ips =  LocalStorage.get_item("seen_ips", [])
     
-    next_prompt = "Please change your IP and press Enter to continue..."
+    
+    next_prompt = "Microsoft allows a maximum of 3 accounts per IP address. To create more accounts, kindly change your IP and press Enter to continue..."
+    
+    while True:
+        beep_input(next_prompt, should_beep)
+        new_ip = get_valid_ip()
+
+        # TODO: url needs to be change to help them learn to change ip.
+        if new_ip == current_ip:
+            next_prompt = """In order to proceed, it is necessary to change your IP address as a precautionary measure against Bot Detection. Please visit https://github.com/omkarcloud/botasaurus/blob/master/github-docs/change-ip.md to learn how to change your IP. Once you have successfully changed your IP address, please press Enter to continue..."""
+
+        elif new_ip in seen_ips:
+            next_prompt = "Your computer previously had this IP address. Please change your IP and press Enter to continue..."
+        else:
+            LocalStorage.set_item("seen_ips", LocalStorage.get_item("seen_ips", []) + [current_ip])
+            return new_ip
+
+def prompt_change_ip3(should_beep):
+    current_ip = get_valid_ip()
+    seen_ips =  LocalStorage.get_item("seen_ips", [])
+    
+    
+    next_prompt = "The Bot has been detected. To create more accounts, kindly change your IP and press Enter to continue..."
+    
+    while True:
+        beep_input(next_prompt, should_beep)
+        new_ip = get_valid_ip()
+
+        # TODO: url needs to be change to help them learn to change ip.
+        if new_ip == current_ip:
+            next_prompt = """In order to proceed, it is necessary to change your IP address as a precautionary measure against Bot Detection. Please visit https://github.com/omkarcloud/botasaurus/blob/master/github-docs/change-ip.md to learn how to change your IP. Once you have successfully changed your IP address, please press Enter to continue..."""
+
+        elif new_ip in seen_ips:
+            next_prompt = "Your computer previously had this IP address. Please change your IP and press Enter to continue..."
+        else:
+            LocalStorage.set_item("seen_ips", LocalStorage.get_item("seen_ips", []) + [current_ip])
+            return new_ip
+
+
+def prompt_change_ip2(should_beep, user):
+    current_ip = get_valid_ip()
+    seen_ips =  LocalStorage.get_item("seen_ips", [])
+    
+    next_prompt = f"{user}, previously used this IP. To avoid Microsoft phone verification, Kindly change your IP and press Enter to continue..."
     
     while True:
         beep_input(next_prompt, should_beep)
@@ -46,7 +89,7 @@ def ensure_unique_ip(username):
 
     # Check if the IP exists in the mapping and if it's associated with a different user
     if ip in ip_user_mapping and ip_user_mapping[ip] != username:
-        prompt_change_ip(True)
+        prompt_change_ip2(True, ip_user_mapping[ip])
         return False
 
     # Update the mapping with the new user-IP association

@@ -7,18 +7,18 @@ from .create_accounts_utils import DETECTED, PHONE_VERIFICATION, RETRY
 from .send_email import send_emails
 from .get_emails import get_emails
 from .check import check
-from .outlook_utils import get_random_delay, prompt_change_ip, ensure_unique_ip
-from .back import Back
+from .outlook_utils import get_random_delay, prompt_change_ip, ensure_unique_ip, prompt_change_ip3
+from .ago import Ago
 from botasaurus import *
 import time
         
-BackObject = Back()
+AgoObject = Ago()
 
 class Outlook:
     """
     Provides Outlook email functionalities including account creation, sending and retrieving emails.
     """
-    Back = BackObject 
+    Ago = AgoObject 
 
     @staticmethod
     def create_accounts(count: int = 1, proxies: Union[None, str, List[str]] = None, enable_captcha_solving=False) -> None:
@@ -36,7 +36,7 @@ class Outlook:
         if proxies:
             proxies_cycle = cycle(proxies)
 
-
+        prompt_change_ip(True)
         while len(createdaccounts) < count:
             if proxies:
                 proxy = next(proxies_cycle)
@@ -55,7 +55,7 @@ class Outlook:
                 pass
             elif account == PHONE_VERIFICATION or account == DETECTED:
                 # print in method only
-                prompt_change_ip(True)
+                prompt_change_ip3(True)
             else:
                 createdaccounts.append(account)
                  
@@ -116,7 +116,7 @@ class Outlook:
         data ={"username":username, "emails":emails, "get_random_delay": get_random_delay, "proxy":proxy} 
         send_emails(data)
     @staticmethod
-    def get_latest_email_for_verification(username: str, received=BackObject.JustNow, proxy: Optional[str] = None) -> Optional[Dict[str, str]]:
+    def get_latest_email_for_verification(username: str, received=AgoObject.JustNow, proxy: Optional[str] = None) -> Optional[Dict[str, str]]:
         """
         Retrieves the latest email for verification from the specified account.
 

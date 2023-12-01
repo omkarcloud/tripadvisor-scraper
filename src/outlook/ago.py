@@ -1,60 +1,60 @@
 from datetime import timedelta
 
-class Back:
+class Ago:
 
     @property
     def JustNow(self):
         return timedelta(minutes=2)
 
     @property
-    def OneMinuteBack(self):
+    def OneMinuteAgo(self):
         return timedelta(minutes=1)
 
     @property
-    def TwoMinutesBack(self):
+    def TwoMinutesAgo(self):
         return timedelta(minutes=2)
 
     @property
-    def FiveMinutesBack(self):
+    def FiveMinutesAgo(self):
         return timedelta(minutes=5)
 
     @property
-    def TenMinutesBack(self):
+    def TenMinutesAgo(self):
         return timedelta(minutes=10)
 
     @property
-    def OneHourBack(self):
+    def OneHourAgo(self):
         return timedelta(hours=1)
 
     @property
-    def OneDayBack(self):
+    def OneDayAgo(self):
         return timedelta(days=1)
 
     @property
-    def TwoDaysBack(self):
+    def TwoDaysAgo(self):
         return timedelta(days=2)
 
     @property
-    def OneWeekBack(self):
+    def OneWeekAgo(self):
         return timedelta(weeks=1)
 
     @property
-    def OneMonthBack(self):
+    def OneMonthAgo(self):
         # Roughly approximate a month as 30 days
         return timedelta(days=30)
 
     @property
-    def ThreeMonthsBack(self):
+    def ThreeMonthsAgo(self):
         # Roughly approximate three months as 90 days
         return timedelta(days=90)
 
     @property
-    def SixMonthsBack(self):
+    def SixMonthsAgo(self):
         # Roughly approximate six months as 180 days
         return timedelta(days=180)
 
     @property
-    def OneYearBack(self):
+    def OneYearAgo(self):
         # Roughly approximate a year as 365 days
         return timedelta(days=365)
 

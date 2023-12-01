@@ -149,13 +149,12 @@ def create_accounts(driver: AntiDetectDriver, data):
             bt.Profile.set_profile(account)
             bt.Profile.profile = None
 
-            bt.prompt("Created Account Close Me")
             return account
 
         except Exception:
             if has_username_error(driver):
                 print("Username is already taken. Retrying with new Account.")
-                return create_accounts( data)
+                return RETRY
 
             traceback.print_exc()
             return None

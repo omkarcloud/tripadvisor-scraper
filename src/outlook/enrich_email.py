@@ -1,5 +1,13 @@
 from bs4 import BeautifulSoup
 import re
+from unidecode import unidecode
+
+def unicode_to_ascii(text):
+    """
+    Convert unicode text to ASCII, replacing special characters.
+    """
+    # Replacing 'ë' with 'e' and return the ASCII text
+    return unidecode(text).replace("ë", "e")
 
 
 def unique_strings(lst):
@@ -16,7 +24,7 @@ def enrich_email(email):
     if body_type.upper() == 'HTML'.upper():
         # Parse HTML to extract text and links
         soup = BeautifulSoup(email_body, 'html.parser')
-        email_body_text = soup.get_text().strip()
+        email_body_text = unicode_to_ascii(soup.get_text().strip()).strip()
         links = [a['href'] for a in soup.find_all('a', href=True)]
 #      body_type == 'TEXT'
     else:
