@@ -65,7 +65,7 @@ def send_emails(driver:AntiDetectDriver, data):
         
         # Check if the current email is not the last one in the list
         if index < len(emails) - 1:
-            time.sleep(get_random_delay())
+            driver.sleep(get_random_delay())
         else:
             pass
             # The last email has been sent, wait just a little more.

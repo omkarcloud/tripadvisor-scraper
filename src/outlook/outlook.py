@@ -1,5 +1,7 @@
 from itertools import cycle
 from typing import List, Optional, Union, Dict, Callable
+
+from src.outlook.browser_attributes import set_headless
 from .create_accounts import  create_accounts
 from .create_accounts_utils import DETECTED, PHONE_VERIFICATION, RETRY
 from .send_email import send_emails
@@ -180,9 +182,9 @@ class Outlook:
 
 
     @staticmethod
-    def check(username: str, proxy: Optional[str] = None) -> None:
+    def open(username: str, proxy: Optional[str] = None) -> None:
         """
-        Allows manual checking of emails for a given account.
+        Allows manually opening outlook for a given account.
 
         :param username: The username of the account to check.
         """
@@ -192,4 +194,23 @@ class Outlook:
         data = {"username":username, "proxy":proxy} 
         check(data)
 
+    @staticmethod
+    def show_in_action() -> None:
+        """
+        Shows Browser when sending recieving emails.
+        """
+        
+        set_headless(False)
 
+
+    @staticmethod
+    def disable_show_in_action() -> None:
+        """
+        Hides Browser when sending recieving emails.
+        """
+        
+        set_headless(True)
+
+
+
+    

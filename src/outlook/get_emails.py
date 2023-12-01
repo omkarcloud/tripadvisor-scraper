@@ -7,7 +7,13 @@ from .mail_utils import  load_outlook
 from botasaurus.decorator_helpers import retry_on_stale_element
 def convert_to_utc(time_str):
     # Parse the string to a datetime object
-    local_time = datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%S%z')
+    
+    try:
+        local_time = datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%S%z')
+    except ValueError:
+        local_time = datetime.strptime(time_str, '%Y-%m-%d')
+        dt_utc = local_time.replace(tzinfo=timezone.utc)
+        return dt_utc
 
     # Convert to UTC
     utc_time = local_time.astimezone(timezone.utc)
@@ -181,7 +187,8 @@ def perform_get_emails(driver:AntiDetectDriver, received=None, max=None, is_unre
         # can raise exception which will be caught by the caller and all be redone
         # seen > 18                
                 is_first_page = len(seen_conversations) < 18
-                print(is_first_page, f"waited {elapsed_time} seconds for email {convid} to load")
+
+                # print(is_first_page, f"waited {elapsed_time} seconds for email {convid} to load")
                 # TODO: raise later
                     # IF ANY CASE PRINTED
                     # ELSE REMOVE
@@ -243,8 +250,9 @@ def get_now_utc(data):
 
 
 @browser(
-        **browser_attributes
-        )
+        **browser_attributes, 
+        is_eager=True, # This Is Important, because we must start email spying before anything is loaded
+)
 def get_emails(driver:AntiDetectDriver, data):
     
     now_utc = get_now_utc(data['received'])

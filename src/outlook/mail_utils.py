@@ -33,15 +33,14 @@ def load_outlook(driver:AntiDetectDriver, username, spy_emails):
     if spy_emails: 
         run_till_get_emails(driver)
 
-    btn = driver.get_element_or_none_by_selector("#MailList", bt.Wait.SHORT  * 2)
+    btn = None
+    while btn is None:
+        btn = driver.get_element_or_none_by_selector("#MailList", 0.4)
+        if spy_emails: 
+            run_till_get_emails(driver)
 
-    if spy_emails: 
-        run_till_get_emails(driver)
-    if btn is None:
-        account = bt.Profile.get_profile(username)  
         if driver.is_in_page("login.live.com/login.srf"):
+            account = bt.Profile.get_profile(username)  
             login_outlook(driver, account['password'])
             print("logged in")
             return load_outlook(driver, account)
-        else:
-            wait_till_load(driver)
