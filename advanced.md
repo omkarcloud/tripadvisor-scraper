@@ -108,7 +108,9 @@ No. It's meant for legitimate uses like business, testing, and personal accounts
 
 ### ❓ Need More Help or Have Additional Questions?
 
-For further help, create a Github Discussion [here](https://github.com/omkarcloud/outlook-account-generator/discussions). We'll be happy to help you out.
+For further help, ask your question in GitHub Discussions. We'll be happy to help you out.
+
+[![ask github](https://raw.githubusercontent.com/omkarcloud/google-maps-scraper/master/screenshots/ask-on-github.png)](https://github.com/omkarcloud/google-maps-scraper/discussions)
 
 
 ## Love It? [Star It ⭐!](https://github.com/omkarcloud/outlook-account-generator)

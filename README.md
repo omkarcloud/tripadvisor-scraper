@@ -55,16 +55,16 @@ Watch this video to see the bot in action!
 
 ## 🚀 Getting Started
 
-1️⃣ **Clone the repository:**
+1️⃣ **Clone the Magic 🧙‍♀:**
    ```shell
    git clone https://github.com/omkarcloud/outlook-account-generator
    cd outlook-account-generator
    ```
-2️⃣ **Install Dependencies:**
+2️⃣ **Install Dependencies 📦:**
    ```shell
    python -m pip install -r requirements.txt
    ```
-3️⃣ **Start Generating Accounts:**
+3️⃣ **Let the Rain of Outlook Accounts Begin 😎:**
    ```shell
    python main.py
    ```
@@ -427,7 +427,9 @@ You may choose to explore the following questions based on your interests:
 
 ### ❓ Need More Help or Have Additional Questions?
 
-For further help, create a Github Discussion [here](https://github.com/omkarcloud/outlook-account-generator/discussions). We'll be happy to help you out.
+For further help, ask your question in GitHub Discussions. We'll be happy to help you out.
+
+[![ask github](https://raw.githubusercontent.com/omkarcloud/google-maps-scraper/master/screenshots/ask-on-github.png)](https://github.com/omkarcloud/google-maps-scraper/discussions)
 
 
 ## Love It? [Star It ⭐!](https://github.com/omkarcloud/outlook-account-generator)
