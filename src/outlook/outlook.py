@@ -117,7 +117,7 @@ class Outlook:
         data ={"username":username, "emails":emails, "get_random_delay": get_random_delay, "proxy":proxy} 
         send_emails(data)
     @staticmethod
-    def get_latest_email_for_verification(username: str, received=AgoObject.JustNow, get_spam_email=True, proxy: Optional[str] = None) -> Optional[Dict[str, str]]:
+    def get_latest_email_for_verification(username: str, received=AgoObject.JustNow, with_spam=True, proxy: Optional[str] = None) -> Optional[Dict[str, str]]:
         """
         Retrieves the latest email for verification from the specified account.
 
@@ -131,7 +131,7 @@ class Outlook:
             ensure_unique_ip(username)
         attempts = 4
         while attempts > 0:
-            latest_email = Outlook.get_latest_email(username, received=received, get_spam_email=get_spam_email, proxy=proxy)
+            latest_email = Outlook.get_latest_email(username, received=received, with_spam=with_spam, proxy=proxy)
             if latest_email:
                 return latest_email
             time.sleep(10)  # Wait for 10 seconds before retrying
@@ -139,7 +139,7 @@ class Outlook:
         return None
 
     @staticmethod
-    def get_latest_email(username: str, received=None, get_spam_email=False, proxy: Optional[str] = None) -> Dict[str, str]:
+    def get_latest_email(username: str, received=None, with_spam=False, proxy: Optional[str] = None) -> Dict[str, str]:
         """
         Retrieves the latest email from the specified account.
 
@@ -150,13 +150,13 @@ class Outlook:
         username = clean_username(username)
         if not proxy:
             ensure_unique_ip(username)
-        email = Outlook.get_emails(username, received=received,get_spam_email=get_spam_email, max=1, proxy=proxy)
+        email = Outlook.get_emails(username, received=received,with_spam=with_spam, max=1, proxy=proxy)
         if len(email) == 0:
             return None
         return email[0]
 
     @staticmethod
-    def get_unread_emails(username: str, received=None, max=None,  get_spam_email=False, proxy: Optional[str] = None) -> List[Dict[str, str]]:
+    def get_unread_emails(username: str, received=None, max=None,  with_spam=False, proxy: Optional[str] = None) -> List[Dict[str, str]]:
         """
         Retrieves unread emails from the specified account. Please note that this method will mark the unread emails as read.
 
@@ -167,11 +167,11 @@ class Outlook:
         username = clean_username(username)
         if not proxy:
             ensure_unique_ip(username)
-        data ={"username":username, "received":received, "max":max, "unread": True, "proxy":proxy, "get_spam_email":get_spam_email} 
+        data ={"username":username, "received":received, "max":max, "unread": True, "proxy":proxy, "with_spam":with_spam} 
         return get_emails(data)
 
     @staticmethod
-    def get_emails(username: str, received=None, max=None, get_spam_email=False, proxy: Optional[str] = None) -> List[Dict[str, str]]:
+    def get_emails(username: str, received=None, max=None, with_spam=False, proxy: Optional[str] = None) -> List[Dict[str, str]]:
         """
         Retrieves emails from the specified account.
 
@@ -182,7 +182,7 @@ class Outlook:
         username = clean_username(username)
         if not proxy:
             ensure_unique_ip(username)
-        data ={"username":username, "received":received, "max":max, "unread" :None, "proxy":proxy, "get_spam_email":get_spam_email} 
+        data ={"username":username, "received":received, "max":max, "unread" :None, "proxy":proxy, "with_spam":with_spam} 
         return get_emails(data)
 
 

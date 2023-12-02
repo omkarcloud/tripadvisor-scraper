@@ -1,3 +1,3 @@
-from src.outlook import Outlook
+from src import Outlook
 
-Outlook.create_accounts(enable_captcha_solving=True)
+Outlook.create_accounts()

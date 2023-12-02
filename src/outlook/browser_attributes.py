@@ -17,6 +17,6 @@ browser_attributes = {
         "proxy":get_proxy ,
         "profile":get_profile, 
         "tiny_profile":True, 
-        "output":None, 
+        # "output":None, 
         "block_images":True
 }

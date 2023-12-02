@@ -250,7 +250,8 @@ def get_now_utc(data):
 
 
 @browser(
-        **browser_attributes, 
+        **browser_attributes,
+        output="emails", 
         is_eager=True, # This Is Important, because we must start email spying before anything is loaded
 )
 def get_emails(driver:AntiDetectDriver, data):
@@ -260,13 +261,13 @@ def get_emails(driver:AntiDetectDriver, data):
     load_outlook(driver, username, spy_emails=True)
     
     unread = data['unread']
-    get_spam_email = data['get_spam_email']
+    with_spam = data['with_spam']
 
     # els = []
 
     els  = perform_get_emails(driver, received=now_utc, max=data['max'], is_unread=unread)    
 
-    if get_spam_email:
+    if with_spam:
         mx = data['max']
         if mx is not None:
             mx = mx - len(els)

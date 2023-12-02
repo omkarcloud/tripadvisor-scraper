@@ -50,7 +50,8 @@ def send_email(driver:AntiDetectDriver, to, subject, body):
         modal_content = driver.get_element_or_none_by_selector('.ms-Modal-scrollableContent', 2)
 
 @browser(
-        **browser_attributes
+        **browser_attributes,
+        output=None
         )
 def send_emails(driver:AntiDetectDriver, data):
     # print(driver.about.profile)

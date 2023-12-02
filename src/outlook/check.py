@@ -5,6 +5,7 @@ from .mail_utils import load_outlook
 
 att = {**browser_attributes }
 att["headless"]=False
+att["output"]=None
 
 @browser(**att)
 def check(driver:AntiDetectDriver, data):
