@@ -1,4 +1,4 @@
-![Outlook Account Generator Featured Image](https://raw.githubusercontent.com/omkarcloud/outlook-account-generator/master/screenshots/outlook-account-generator-featured-image.png)
+![Outlook Account Generator Featured Image](https://raw.githubusercontent.com/omkarcloud/outlook-account-generator/master/images/outlook-account-generator-featured-image.png)
 
 <div align="center" style="margin-top: 0;">
   <h1>🚀 Outlook Account Generator 📧</h1>
@@ -24,6 +24,7 @@
 <p align="center">
   <img src="https://views.whatilearened.today/views/github/omkarcloud/outlook-account-generator.svg" width="80px" height="28px" alt="View" />
 </p>
+
 ---
 
 ⚡ Create Unlimited Accounts for Free! ⚡
@@ -42,7 +43,7 @@ Below is an example of what the created Outlook Account looks like:
 
 1. **Unlimited Outlook Accounts for Free:** Say goodbye to buying accounts at high prices.
 2. **Realistic Account Names:** Accounts are created with human-like names, reducing the chances of getting banned.
-3. **Easy Email Sending and Receiving:** Send and receive emails with just one line of code.
+3. **Easy Email Sending and Receiving:** *Send* and *receive emails* with just one line of code.
 
 Ready to Rock n Roll? Let's get started!
 
@@ -70,11 +71,14 @@ Watch this video to see the bot in action!
 
 The bot will take care of filling in the required details automatically. You will only be prompted to solve the captcha manually.
 
-![Profiles](https://raw.githubusercontent.com/omkarcloud/outlook-account-generator/master/images/solve-captcha.png)
+![solve captcha](https://raw.githubusercontent.com/omkarcloud/outlook-account-generator/master/images/solve-captcha.png)
 
-_Note: Accounts will be saved in `profiles.json`. You will need to have Firefox to use this Bot as it bypasses Microsoft's Anti-Detection Measures._
+Note:
+  1. Accounts will be saved in `profiles.json`.
+  ![Outlook Account](https://raw.githubusercontent.com/omkarcloud/outlook-account-generator/master/images/profiles.png)
 
-[Download Firefox Here](https://www.mozilla.org/en-US/firefox/new/)
+  2. This Bot requires Firefox, as firefox is able to bypass Microsoft's Anti-Detection Measures. If you don't have Firefox, download it from the Mozilla website [here](https://www.mozilla.org/en-US/firefox/new/).
+  
 
 ## 🤔 FAQs
 
@@ -99,7 +103,7 @@ The sky's the limit! However, Outlook will prompt you for phone verification aft
 
 But don't worry! Bypassing the photo verification prompt is very easy. All you need to do is change your IP address.
 
-While there are numerous ways to change your IP, such as using VPNs and proxies, we'll share with you the **fastest**, **simplest**, and best of all, the **free** way:
+While there are numerous ways to change your IP, such as using VPNs and proxies, we'll share with you the **fastest**, **simplest**, and best of all, the **free** way which is as follows:
 
 1. **Connect your PC to the Internet via a Mobile Hotspot.**
 2. **Toggle airplane mode off and on on your mobile device.** This will assign you a new IP address.
@@ -127,7 +131,7 @@ To get emails, you need first have some emails in your inbox.
 
 So, Start by sending an email from your personal email to one of the accounts you created, which will have an address like `username@outlook.com`. 
 
-```
+```shell
 To: username@outlook.com
 Subject: Agenda for Team Meeting
 Body: What is the agenda for the upcoming meeting on Monday?
@@ -142,9 +146,9 @@ username = "username123"
 Outlook.get_latest_email(username)
 ```
 
-Printing and viewing emails in the console can be inconvenient. Therefore, we create a JSON file containing the emails at `output/emails.json`.
+Printing and viewing emails in the console is cumbersome. So, we create `output/emails.json` containing the emails. Please open `output/emails.json` to view the emails.
 
-Additionally, your emails will be displayed in a format similar to this:
+Also, your emails will be displayed in a format similar to this:
 ![sample email](https://raw.githubusercontent.com/omkarcloud/outlook-account-generator/master/images/sample-email.png)
 
 ### ❓ How to Get the Email Verification Link When Using Outlook Accounts to Create Accounts on Other Websites?
@@ -176,7 +180,7 @@ Outlook.get_emails(username)
 
 ### How to Use Outlook Accounts to Sign Up on Other Websites?
 
-In the following example, we will guide you through creating multiple accounts on the Omkar Cloud website with email verification, using Outlook Accounts.
+In the following section, we will guide you through creating multiple accounts on the Omkar Cloud website with email verification, using Outlook Accounts.
 
 ![sign up bot running](https://raw.githubusercontent.com/omkarcloud/botasaurus/master/images/sign-up-bot-running.gif)
 
@@ -294,21 +298,21 @@ Some popular options for the `received` parameter are:
 
 See the list of all supported timeframes [here](https://github.com/omkarcloud/outlook-account-generator/blob/master/agos.md)
 
-### How to Send Email?
+### ❓ How to Send Email?
 
-To send an email, you can use the `Outlook.send_email` method as follows:
+To send an email, you can use the `Outlook.send_email` method. Replace the `to` with your personal email.
 
 ```python
 username = "username123"
 
-to = "my-email@gmail.com" # For testing, replace with your own email
+to = "my-email@gmail.com" # For testing, replace with your personal email
 subject = "Product Roadmap Discussion"
 body = "We will discuss the product roadmap."
 
 Outlook.send_email(username, to, subject, body)
 ```
 
-After executing this, check your personal email to see the sent message.
+After executing this, check your personal email *primary*/*spam* box to see the sent message.
 
 You can also send emails with HTML content. The following example shows how to send an email with a hyperlink embedded in the body:
 
@@ -323,7 +327,7 @@ body = """I recommend reading <a href='https://www.atlassian.com/work-management
 Outlook.send_email(username, to, subject, body)
 ```
 
-### How to Send Multiple Emails with It?
+### ❓ How to Send Multiple Emails with It?
 
 To send multiple emails, use the `Outlook.send_emails` method as follows:
 
@@ -348,7 +352,7 @@ Outlook.send_emails(username, emails)
 
 This method will automatically insert a random delay between each email to make the sending process appear more human-like and avoid account suspension.
 
-### How to Manually Open the Outlook Website for an Account?
+### ❓ How to Manually Open the Outlook Website for an Account?
 
 To manually open the Outlook website for a specific account to review emails, use the `Outlook.open` method as follows:
 
@@ -377,18 +381,18 @@ After running, the specified Outlook account will be open in `outlook.live.com`.
 
 ### ❓ What precautions should be followed to avoid getting banned while sending and receiving emails?
 
-1. Use different IP addresses for each email account. Use rotating residential proxies. 
+1. Use different IP addresses for each email account by using rotating residential proxies. 
 
-Also that Ensure the proxy's country matches the account's creation country. 
+Also ensure that the proxy's country matches the account's creation country. 
 
-You can use proxies as follows:
+You can use pass proxies as follows:
 ```python
 Outlook.send_email(username, to=to, subject=subject, body=body, proxy="http://username:password@ip:port")
 Outlook.get_latest_email(username, proxy="http://username:password@ip:port")
 ```
 2. Personalize your emails. Include the recipient's name and company in the subject and body.
 
-3. Don't send excessive emails from a single account, as this can the phone verification process. Instead, distribute the email load across multiple accounts.
+3. Avoid sending excessive emails from a single account, as this can trigger the phone verification process. Instead distribute the email load across multiple accounts.
 
 ### ❓ Do you have any recommendations on how many emails to send per day?
 
@@ -407,14 +411,12 @@ You may choose to explore the following questions based on your interests:
 #### For Technical Usage
 
 1. [How to Get Emails Received After a Certain Date?](https://github.com/omkarcloud/outlook-account-generator/blob/master/advanced.md#-how-to-get-emails-received-after-a-certain-date)
-
 2. [How to Get a Maximum of 10 Emails?](https://github.com/omkarcloud/outlook-account-generator/blob/master/advanced.md#-how-to-get-a-maximum-of-10-emails)
 3. [How to Get Unread Emails?](https://github.com/omkarcloud/outlook-account-generator/blob/master/advanced.md#-how-to-get-unread-emails)
 4. [How to Get Spam Emails Along with Primary Emails?](https://github.com/omkarcloud/outlook-account-generator/blob/master/advanced.md#-how-to-get-spam-emails-along-with-primary-emails)
 5. [How to Use Proxies for Account Creation?](https://github.com/omkarcloud/outlook-account-generator/blob/master/advanced.md#-how-to-use-proxies-for-account-creation)
 
 #### For Knowledge
-
 
 1. [Which Proxy Provider to Choose?](https://github.com/omkarcloud/outlook-account-generator/blob/master/advanced.md#-which-proxy-provider-to-choose)
 2. [Why did you use Firefox for Account Creation instead of Chrome?](https://github.com/omkarcloud/outlook-account-generator/blob/master/advanced.md#-why-did-you-use-firefox-for-account-creation-instead-of-chrome)
