@@ -150,7 +150,7 @@ The bot, when provided with a CapSolver key, will run upto 3 accounts in paralle
 
 ---
 
-Also, Special thanks to [Diego](https://github.com/diegoooooooooooooooo) for integrating Captcha Solving functionality, saving all of us time and effort.
+Also, Special thanks to [Diego](https://github.com/diegoooooooooooooooo) for integrating Captcha Solving functionality, saving all of us time and effort 😌.
 
 
 ### ❓ How to View All Created Accounts?
