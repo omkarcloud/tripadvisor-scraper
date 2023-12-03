@@ -1,4 +1,5 @@
-![Outlook Account Generator Featured Image](https://raw.githubusercontent.com/omkarcloud/outlook-account-generator/master/images/outlook-account-generator-featured-image.png)
+![Outlook Account Generator Demo](https://raw.githubusercontent.com/outlook-account-generator/master/images/outlook-account-generator-demo.gif)
+
 
 <div align="center" style="margin-top: 0;">
   <h1>🚀 Outlook Account Generator 📧</h1>
@@ -44,12 +45,14 @@ Below is an example of what the created Outlook Account looks like:
 1. **Unlimited Outlook Accounts for Free:** Say goodbye to buying accounts at high prices.
 2. **Realistic Account Names:** Accounts are created with human-like names, reducing the chances of getting banned.
 3. **Easy Email Sending and Receiving:** *Send* and *receive emails* with just one line of code.
+4. **Automatic Captcha Solving:** Save Time and Effort with Automatic Captcha Solving
 
 Ready to Rock n Roll? Let's get started!
 
-## 🎥 Video Demo
+## 🎥 Demo
 
 Watch this video to see the bot in action!
+
 
 [![Outlook Account Generator](https://raw.githubusercontent.com/omkarcloud/outlook-account-generator/master/images/youtube-video.png)](https://www.youtube.com/watch?v=RwCWcaKBahI)
 
@@ -109,9 +112,46 @@ While there are numerous ways to change your IP, such as using VPNs and proxies,
 2. **Toggle airplane mode off and on on your mobile device.** This will assign you a new IP address.
 3. **Turn the hotspot back on.**
 
-Please note that you need to repeat this process after every 3 accounts. We will automatically prompt you when it's needed like so.
+Please note that you need to repeat this process after every 3 accounts. We will automatically prompt you with a beep sound when it's needed like so.
 
 ![Prompt Image](https://raw.githubusercontent.com/omkarcloud/outlook-account-generator/master/images/prompt-image.png)
+
+### ❓ Can We Solve Captchas Automatically, as Manually Solving Them Is Really Exhausting?
+
+Yes, you can use Captcha Solvers like CapSolver to automatically solve captchas, saving yourself time and effort.
+
+![Captcha Solved](https://raw.githubusercontent.com/outlook-account-generator/master/images/outlook-account-generator-demo.gif)
+
+To set up automatic Captcha solving, follow these steps:
+
+1. Create a CapSolver account at [capsolver.com](https://dashboard.capsolver.com/passport/register).
+
+  ![Sign Up](https://raw.githubusercontent.com/outlook-account-generator/master/images/captcha-sign-up.png)
+
+2. Add funds to your CapSolver account using PayPal, cryptocurrencies, or other payment methods. Note that the minimum deposit is $6, and additional taxes (around 12% for most countries) will apply.
+
+  ![Add Funds](https://raw.githubusercontent.com/omkarcloud/puppeter-captcha-solving-tutorial/master/images/add-funds.gif)
+
+3. Copy your API Key.
+
+  ![Store API Key](https://raw.githubusercontent.com/omkarcloud/puppeter-captcha-solving-tutorial/master/images/store-api-key.png)
+
+4. Pass the API Key to `Outlook.create_accounts`:
+
+   ```python
+   Outlook.create_accounts(key="CAP-MY_KEY")
+   ```
+
+5. Now, Run `python main.py` and the captchas will be automatically solved.
+
+  ![Captcha Solved](https://raw.githubusercontent.com/outlook-account-generator/master/images/outlook-account-generator-demo.gif)
+
+The bot, when provided with a CapSolver key, will run upto 3 accounts in parallel. We limit running accounts to a maximum of 3 in parallel, as running more leads to detection.
+
+---
+
+Also, Special thanks to [Diego](https://github.com/diegoooooooooooooooo) for integrating Captcha Solving functionality, saving all of us time and effort.
+
 
 ### ❓ How to View All Created Accounts?
 

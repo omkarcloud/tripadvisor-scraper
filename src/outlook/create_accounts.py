@@ -58,9 +58,10 @@ def convert_cookie_formats(cookies):
 
 @browser(
     create_driver= create_firefox, 
-    output=None,
+    output=None
 )
 def create_accounts(driver: AntiDetectDriver, data):
+        
         proxy = data['proxy']
         captcha = data.get('captcha')
         capsolver_apikey = data.get('capsolver_apikey')
@@ -112,11 +113,12 @@ def create_accounts(driver: AntiDetectDriver, data):
                 return rst
 
             if captcha:
-                solvecaptcha_with_captcha_solver(driver, proxy, captcha, capsolver_apikey)
+                rst = solvecaptcha_with_captcha_solver(driver, proxy, captcha, capsolver_apikey)
             else:
                 rst = waitforretryorsolved(driver, )
-                if rst:
-                    return rst
+
+            if rst:
+                return rst
 
             give_consent(driver)
             
@@ -133,12 +135,17 @@ def create_accounts(driver: AntiDetectDriver, data):
                 return DETECTED
             
             rst = sign_up()
-            if rst == PHONE_VERIFICATION:
-                print('Skipping Account Creation due to phone verification.')
-                return PHONE_VERIFICATION
-            if rst == RETRY:
-                print('Retring Account Creation.')
-                return RETRY
+            
+            if rst:
+                if rst == PHONE_VERIFICATION:
+                    print('Skipping Account Creation due to phone verification.')
+                if rst == RETRY:
+                    print('Retring Account Creation.')
+                if rst == DETECTED:
+                    print('Skipping Account Creation due to Detection.')
+
+                return rst
+
             links = [
                 'https://signup.live.com/',
                 'https://login.live.com/'
@@ -149,7 +156,7 @@ def create_accounts(driver: AntiDetectDriver, data):
             bt.Profile.profile = username
             bt.Profile.set_profile(account)
             bt.Profile.profile = None
-
+            print(f"Created Account for {username}")
             return account
 
         except Exception:

@@ -18,5 +18,5 @@ def solve_captcha(websitePublicKey, websiteURL, funcaptchaApiJSSubdomain, blob_d
         
         token = solution['token']
         #print("solution",solution)
-        print("Captha Solved")
+        # print("Captha Solved")
         return token

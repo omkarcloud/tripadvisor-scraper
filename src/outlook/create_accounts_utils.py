@@ -1,4 +1,7 @@
 import json
+import traceback
+
+from capsolver import UnknownError
 from botasaurus.ip_utils import find_ip_details
 import time
 from botasaurus import *
@@ -200,25 +203,34 @@ def give_consent(driver:AntiDetectDriver):
     
     wait_till_accounts_page(driver)
         
+
 def create_firefox(data):
-            service = Service(executable_path=GeckoDriverManager().install())
-
-            proxy = data.get('proxy') 
-            if proxy:
-                selwireOptions = {'proxy': {'http': proxy, 'https': proxy}}
-                driver = AntiDetectFirefoxDriverSeleniumWire(
-                                            service=service,
-                                            seleniumwire_options=selwireOptions, 
-                                        )
             
             
+            try:
+                service = Service(executable_path=GeckoDriverManager().install())
 
-            else:
-                driver = AntiDetectFirefoxDriver(
-                                            service=service,
-                                        )
+                proxy = data.get('proxy') 
+                if proxy:
+                    selwireOptions = {'proxy': {'http': proxy, 'https': proxy}}
+                    driver = AntiDetectFirefoxDriverSeleniumWire(
+                                                service=service,
+                                                seleniumwire_options=selwireOptions, 
+                                            )
+                
+                
 
-            return driver
+                else:
+                    driver = AntiDetectFirefoxDriver(
+                                                service=service,
+                                            )
+                return driver
+            except:
+              traceback.print_exc()
+              print('Failed to open Firefox. Retrying...')
+              time.sleep(1)
+              return create_firefox(data)
+            
 
 
 def submittoken(driver, token):
@@ -263,6 +275,13 @@ def getphoneverificationelementwithwait(driver):
     return driver.get_element_or_none_by_selector('.text-title.forSmsHip', bt.Wait.SHORT)   
 
 
+def get_captcha_id(driver:AntiDetectDriver):
+      id = driver.get_element_or_none_by_selector('iframe[data-e2e="enforcement-frame"]', None)
+      if id:
+            id = id.get_attribute('src')
+      
+      return id
+
 def solvecaptcha_with_captcha_solver(driver:AntiDetectDriver, proxy = None, captcha=None, capsolver_apikey=None):
 
     blob = makeblob(getblob(driver))
@@ -279,11 +298,47 @@ def solvecaptcha_with_captcha_solver(driver:AntiDetectDriver, proxy = None, capt
     iframe.is_displayed()
     driver.switch_to.frame(iframe)
 
-    token = solve_captcha("B7D8911C-5CC8-A9A3-35B0-554ACEE604DA",  "https://signup.live.com/?lic=1", "https://client-api.arkoselabs.com",blob, getua(driver), proxy, capsolver_apikey)
-
+    
+    try:
+        token = solve_captcha("B7D8911C-5CC8-A9A3-35B0-554ACEE604DA",  "https://signup.live.com/?lic=1", "https://client-api.arkoselabs.com",blob, getua(driver), proxy, capsolver_apikey)
+    except UnknownError:
+        return DETECTED
+    except Exception as e:
+        traceback.print_exc()
+        return DETECTED
+    
     submittoken(driver, token)
+    captcha_id_before_solved = get_captcha_id(driver)
     driver.switch_to.default_content()
 
+
+    while driver.is_in_page('signup.live.com'):
+
+        if getphoneverificationelement(driver):
+            return PHONE_VERIFICATION
+        
+        def do():
+            try:
+                iframe = getiframeelement(driver)  
+                if iframe:
+                    
+                    driver.switch_to.frame(getiframeelement(driver))
+
+                    captcha_id_after_solve = get_captcha_id(driver)
+
+                    if captcha_id_after_solve and captcha_id_after_solve != captcha_id_before_solved:
+                        # asking to resolve by giving new captcha given
+                        return DETECTED
+                    
+                    driver.switch_to.default_content()
+            except:
+              pass
+        
+        r = do()
+        if r:
+            return r
+        
+        time.sleep(1)
     #bt.prompt() 
 
 PHONE_VERIFICATION = 'phone_verification_required'
@@ -342,9 +397,9 @@ def waitforretryorsolved(driver):
         print('   __ _ _ _    _                          _       _           ')
         print('  / _(_) | |  (_)                        | |     | |          ')
         print(' | |_ _| | |   _ _ __      ___ __ _ _ __ | |_ ___| |__   __ _ ')
-        print(' |  _| | | |  | | `_ \    / __/ _` | `_ \| __/ __| `_ \ / _` |')
+        print(r' |  _| | | |  | | `_ \    / __/ _` | `_ \| __/ __| `_ \ / _` |')
         print(' | | | | | |  | | | | |  | (_| (_| | |_) | || (__| | | | (_| |')
-        print(' |_| |_|_|_|  |_|_| |_|   \___\__,_| .__/ \__\___|_| |_|\__,_|')
+        print(r' |_| |_|_|_|  |_|_| |_|   \___\__,_| .__/ \__\___|_| |_|\__,_|')
         print('                                   | |                        ')
         print('                                   |_|                        ')
         print('')

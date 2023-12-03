@@ -21,7 +21,7 @@ class Outlook:
     Ago = AgoObject 
 
     @staticmethod
-    def create_accounts(count: int = 1, proxies: Union[None, str, List[str]] = None, enable_captcha_solving=False, capsolver_apikey=None) -> None:
+    def create_accounts(count: int = 1, key=None, proxies: Union[None, str, List[str]] = None, ) -> None:
         """
         Creates Outlook email accounts.
 
@@ -31,42 +31,89 @@ class Outlook:
         if isinstance(proxies, str):
             proxies = [proxies]  
             
-
-        createdaccounts = []
         if proxies:
             proxies_cycle = cycle(proxies)
 
-        while len(createdaccounts) < count:
+        def create_data(key):
+            nonlocal proxies_cycle
             if proxies:
                 proxy = next(proxies_cycle)
                 data = {"proxy": proxy}
             else:
                 data = {"proxy": None}
 
-            if enable_captcha_solving:
+            if key:
                 data['captcha'] = True
-
-            if capsolver_apikey:
-                data['capsolver_apikey'] = capsolver_apikey
-            
-            account = create_accounts(data)
-            
-            if account is None:
-                pass
-            elif account == RETRY:
-                pass
-            elif account == PHONE_VERIFICATION or account == DETECTED:
-                # print in method only
-                prompt_change_ip3(True)
+                data['capsolver_apikey'] = key
             else:
-                createdaccounts.append(account)
-                 
+                data['captcha'] = False
+                data['capsolver_apikey'] = None
+
+            return data            
+
+        createdaccounts = []
+
+        MICROSOFT_ACCOUNT_CREATION_LIMIT = 3
+        
+        if key:
+            if not proxies:
+                parallel = MICROSOFT_ACCOUNT_CREATION_LIMIT
+            else:
+                parallel = bt.calc_max_parallel_browsers(min=MICROSOFT_ACCOUNT_CREATION_LIMIT)
+
+            while len(createdaccounts) < count:
+
+
                 if not proxies:
-                    if len(createdaccounts) > 0 and len(createdaccounts) % 3 == 0:
-                        prompt_change_ip(True)
+                    tobecreated =  min(parallel,  count - len(createdaccounts))
+                else:
+                    tobecreated =  count - len(createdaccounts)
+
+                temp =  [None] *  tobecreated
+                ls = [create_data(key) for i in temp]
+
+                ctd = create_accounts(ls, parallel = parallel)
+                
+                pmt = prompt_change_ip
+                for i in ctd:
+                    if type(i) is dict:
+                        createdaccounts.append(i)        
+                    if i == PHONE_VERIFICATION or i == DETECTED:
+                        pmt = prompt_change_ip3
+                
+                if not proxies:
+                    if len(createdaccounts) < count:
+                        pmt(True)
+
+            return createdaccounts
+
+        else:
+            rantimes = 0
+            while len(createdaccounts) < count:
+                data = create_data(key)
+
+                account = create_accounts(data)
+                rantimes+=1   
+                if account is None:
+                    pass
+                elif account == RETRY:
+                    pass
+                elif account == PHONE_VERIFICATION or account == DETECTED:
+                    # print in method only
+
+                    if len(createdaccounts) < count:
+                        prompt_change_ip3(True)
+                else:
+                    createdaccounts.append(account)
+                    
+                    if not proxies:
+                        if rantimes==MICROSOFT_ACCOUNT_CREATION_LIMIT:
+                            rantimes=0
+                            if len(createdaccounts) < count:
+                                prompt_change_ip(True)
 
         
-        return createdaccounts
+            return createdaccounts
 
     @staticmethod
     def get_accounts() -> List[str]:

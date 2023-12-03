@@ -40,12 +40,7 @@ print(emails)
 ```
 
 ### ❓ How to Use Proxies for Account Creation?
-We suggest using a mobile hotspot over proxies for these reasons:
-1. **Faster, More Stable Internet:** Mobile hotspots offer better speed and stability.
-2. **Simpler Captchas:** Captchas are easier with mobile hotspots.
-3. **Cost-Effective:** Mobile hotspots are free; proxies can be expensive.
-
-However, if you prefer proxies, here's how to implement them:
+You may use proxies as follows:
 
 ```python
 proxies = [
@@ -54,7 +49,7 @@ proxies = [
 ]
 Outlook.create_accounts(count=4, proxies=proxies)
 ```
-We will rotate the proxies automatically.
+Also, we will rotate the proxies automatically.
 
 ### ❓ Which Proxy Provider to Choose?
 
@@ -77,26 +72,6 @@ Chrome was getting detected, and we were facing the following problems:
 
 So, we used Firefox, which doesn't cause these issues, and Captchas are much easier to solve.
 
-### ❓ How to Use Captcha Solvers like Capsolver and 2Captcha for Automatically Solving Captchas?
-
-We attempted to use various captcha solvers like Capsolver, 2Captcha, and 1stCaptcha, but none of them worked.
-
-Finally, we found a [Capsolver Chrome Extension](https://chromewebstore.google.com/detail/captcha-solver-auto-bypas/pgojnojmmhpofjgdmaebadhbocahppod) that successfully solved the captcha.
-
-Unfortunately, the extension is not available on Firefox. We are waiting for the Capsolver team to release a Firefox extension (as mentioned on their [Chrome Web Store page](https://chromewebstore.google.com/detail/captcha-solver-auto-bypas/pgojnojmmhpofjgdmaebadhbocahppod)). Once it's released, we will update the tool to use it, allowing you to solve captchas automatically.
-
-In the meantime, you will have to manually solve captchas. You can check back on this repository in three months to see if the Firefox extension has been released.
-
-### ❓ I am an experienced Web Scraper and can integrate Captcha Solving in Bot, where to start?
-
-Follow these steps to get started with Captcha Solving Integration:
-
-1.  Enable Captcha Solving by using the following code:
-```python
-Outlook.create_accounts(enable_captcha_solving=True)
-```
-2.  Implement the `solve_captcha` function in the `solve_captcha.py` file and make sure it returns the Captcha Token.
-3.  If case, you are successful in solving the Captcha, please share your solution in the Github Discussions [here](https://github.com/omkarcloud/outlook-account-generator/discussions).
 
 
 ### ❓ Is the Tool Safe for Account Creation?
