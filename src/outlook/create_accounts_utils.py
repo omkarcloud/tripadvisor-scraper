@@ -222,7 +222,7 @@ def create_firefox(data):
 
 
 def submittoken(driver, token):
-    return driver.execute_file("submit_token.js", token)
+    return driver.execute_script('parent.postMessage(JSON.stringify({eventId:"challenge-complete",payload:{sessionToken:"' + token + '"}}),"*")')
 
 def waittillnextbtnloded(driver):
     sl = "button[data-theme='home.verifyButton']"
@@ -263,11 +263,11 @@ def getphoneverificationelementwithwait(driver):
     return driver.get_element_or_none_by_selector('.text-title.forSmsHip', bt.Wait.SHORT)   
 
 
-def solvecaptcha_with_captcha_solver(driver:AntiDetectDriver, proxy = None, captcha=None):
+def solvecaptcha_with_captcha_solver(driver:AntiDetectDriver, proxy = None, captcha=None, capsolver_apikey=None):
 
     blob = makeblob(getblob(driver))
     
-    bt.prompt("Press Enter When Next Button is Visible")
+    #bt.prompt("Press Enter When Next Button is Visible")
     
     # first check if token submit works
     # then next check
@@ -275,15 +275,16 @@ def solvecaptcha_with_captcha_solver(driver:AntiDetectDriver, proxy = None, capt
 
     # todo: next btn wait, for now just see console
 
-    iframe = getiframeelement(driver)     
+    iframe = getiframeelement(driver)  
+    iframe.is_displayed()
     driver.switch_to.frame(iframe)
 
-    token = solve_captcha("B7D8911C-5CC8-A9A3-35B0-554ACEE604DA",  "https://signup.live.com/?lic=1", "https://client-api.arkoselabs.com",blob, getua(driver), proxy)    
+    token = solve_captcha("B7D8911C-5CC8-A9A3-35B0-554ACEE604DA",  "https://signup.live.com/?lic=1", "https://client-api.arkoselabs.com",blob, getua(driver), proxy, capsolver_apikey)
 
     submittoken(driver, token)
     driver.switch_to.default_content()
 
-    bt.prompt() 
+    #bt.prompt() 
 
 PHONE_VERIFICATION = 'phone_verification_required'
 RETRY = 'RETRY'
