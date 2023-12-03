@@ -4,18 +4,7 @@ def solve_captcha(websitePublicKey, websiteURL, funcaptchaApiJSSubdomain, blob_d
         # Read https://www.capsolver.com/blog/FunCaptcha/funcaptcha-data-blob to learn about blob_data
 
         capsolver.api_key = capsolver_apikey # Add Your Capsolver API key here
-        if proxy:
-                data = {
-                        "type":"FunCaptchaTask",
-                        "websitePublicKey":  websitePublicKey,
-                        "websiteURL": websiteURL,
-                        "funcaptchaApiJSSubdomain": funcaptchaApiJSSubdomain ,
-                        "data": blob_data,
-                        'userAgent': useragent,
-                        "proxy": proxy,
-                }
-        else:
-                data = {
+        data = {
                         "type":"FunCaptchaTaskProxyLess", 
                         "websitePublicKey":  websitePublicKey,
                         "websiteURL": websiteURL,
@@ -23,7 +12,7 @@ def solve_captcha(websitePublicKey, websiteURL, funcaptchaApiJSSubdomain, blob_d
                         "data": blob_data,
                         'userAgent': useragent,
                 }
-
+        
         #print("data", data)
         solution = capsolver.solve(data)
         
