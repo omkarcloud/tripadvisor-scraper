@@ -63,6 +63,7 @@ def convert_cookie_formats(cookies):
 def create_accounts(driver: AntiDetectDriver, data):
         proxy = data['proxy']
         captcha = data.get('captcha')
+        capsolver_apikey = data.get('capsolver_apikey')
         account = create_user(proxy)
 
         first_name = account['first_name']
@@ -111,7 +112,7 @@ def create_accounts(driver: AntiDetectDriver, data):
                 return rst
 
             if captcha:
-                solvecaptcha_with_captcha_solver(driver, proxy, captcha)
+                solvecaptcha_with_captcha_solver(driver, proxy, captcha, capsolver_apikey)
             else:
                 rst = waitforretryorsolved(driver, )
                 if rst:

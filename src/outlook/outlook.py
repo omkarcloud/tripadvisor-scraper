@@ -21,7 +21,7 @@ class Outlook:
     Ago = AgoObject 
 
     @staticmethod
-    def create_accounts(count: int = 1, proxies: Union[None, str, List[str]] = None, enable_captcha_solving=False) -> None:
+    def create_accounts(count: int = 1, proxies: Union[None, str, List[str]] = None, enable_captcha_solving=False, capsolver_apikey=None) -> None:
         """
         Creates Outlook email accounts.
 
@@ -45,6 +45,9 @@ class Outlook:
 
             if enable_captcha_solving:
                 data['captcha'] = True
+
+            if capsolver_apikey:
+                data['capsolver_apikey'] = capsolver_apikey
             
             account = create_accounts(data)
             
