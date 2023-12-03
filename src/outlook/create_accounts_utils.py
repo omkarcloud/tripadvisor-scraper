@@ -228,8 +228,8 @@ def create_firefox(data):
                 return driver
             except ValueError as e:
                 if "You have to add GH_TOKEN".lower() in str(e).lower():
-                    print(e)
-                    print('Visit ')
+                    traceback.print_exc()
+                    print('See https://github.com/omkarcloud/outlook-account-generator/blob/master/advanced.md#-i-am-facing-errors for solution.')
                     sys.exit(1)
                     # return create_firefox(data)
 

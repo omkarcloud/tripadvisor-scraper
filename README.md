@@ -453,7 +453,7 @@ You may choose to explore the following questions based on your interests:
 3. [How to Get Unread Emails?](https://github.com/omkarcloud/outlook-account-generator/blob/master/advanced.md#-how-to-get-unread-emails)
 4. [How to Get Spam Emails Along with Primary Emails?](https://github.com/omkarcloud/outlook-account-generator/blob/master/advanced.md#-how-to-get-spam-emails-along-with-primary-emails)
 5. [How to Use Proxies for Account Creation?](https://github.com/omkarcloud/outlook-account-generator/blob/master/advanced.md#-how-to-use-proxies-for-account-creation)
-6. [I am facing Errors?](https://github.com/omkarcloud/outlook-account-generator/blob/master/advanced.md#-how-i-am-facing-errors)
+6. [I am facing Errors?](https://github.com/omkarcloud/outlook-account-generator/blob/master/advanced.md#-i-am-facing-errors)
 
 #### For Knowledge
 
