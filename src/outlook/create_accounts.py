@@ -153,9 +153,14 @@ def create_accounts(driver: AntiDetectDriver, data):
             unique_cookies = convert_cookie_formats(get_unique_cookies(driver, links))
 
             createTempProfile(username, unique_cookies)
+
+            prevprofile = bt.Profile.profile
+
             bt.Profile.profile = username
             bt.Profile.set_profile(account)
-            bt.Profile.profile = None
+
+            bt.Profile.profile = prevprofile
+
             print(f"Created Account for {username}")
             return account
 
