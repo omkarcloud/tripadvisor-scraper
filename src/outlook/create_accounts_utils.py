@@ -3,7 +3,6 @@ import traceback
 
 from capsolver import UnknownError
 from botasaurus.ip_utils import find_ip_details
-from selenium.webdriver.firefox.options import Options
 import time
 from botasaurus import *
 from selenium.webdriver.firefox.service import Service
@@ -12,6 +11,7 @@ from selenium.webdriver.support.select import Select
 from botasaurus.drivers import AntiDetectFirefoxDriverSeleniumWire, AntiDetectFirefoxDriver
 from src.outlook.solve_captcha import solve_captcha
 from urllib.parse import urlparse, urlunparse
+import sys
 
 def remove_query_params(url):
     # Parse the URL
@@ -204,14 +204,11 @@ def give_consent(driver:AntiDetectDriver):
     
     wait_till_accounts_page(driver)
         
-
 def create_firefox(data):
             
             
             try:
                 service = Service(executable_path=GeckoDriverManager().install())
-                options = Options()
-                options.add_argument("--start-maximized")
 
                 proxy = data.get('proxy') 
                 if proxy:
@@ -219,7 +216,6 @@ def create_firefox(data):
                     driver = AntiDetectFirefoxDriverSeleniumWire(
                                                 service=service,
                                                 seleniumwire_options=selwireOptions, 
-                                                options=options,
                                             )
                 
                 
@@ -227,14 +223,26 @@ def create_firefox(data):
                 else:
                     driver = AntiDetectFirefoxDriver(
                                                 service=service,
-                                                options=options,
                                             )
+                driver.maximize_window()
                 return driver
+            except ValueError as e:
+                if "You have to add GH_TOKEN".lower() in str(e).lower():
+                    print(e)
+                    print('Visit ')
+                    sys.exit(1)
+                    # return create_firefox(data)
+
+                else:
+                    traceback.print_exc()
+                    print('Failed to open Firefox. Retrying...')
+                    time.sleep(1)
+                    return create_firefox(data)
             except:
-              traceback.print_exc()
-              print('Failed to open Firefox. Retrying...')
-              time.sleep(1)
-              return create_firefox(data)
+                traceback.print_exc()
+                print('Failed to open Firefox. Retrying...')
+                time.sleep(1)
+                return create_firefox(data)
             
 
 

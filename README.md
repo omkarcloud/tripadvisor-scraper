@@ -81,7 +81,6 @@ Note:
   ![Outlook Account](https://raw.githubusercontent.com/omkarcloud/outlook-account-generator/master/images/profiles.png)
 
   2. This Bot requires Firefox, as firefox is able to bypass Microsoft's Anti-Detection Measures. If you don't have Firefox, download it from the Mozilla website [here](https://www.mozilla.org/en-US/firefox/new/).
-  
 
 ## 🤔 FAQs
 
@@ -151,7 +150,6 @@ The bot, when provided with a CapSolver key, will run upto 3 accounts in paralle
 ---
 
 Also, Special thanks to [Diego](https://github.com/diegoooooooooooooooo) for integrating Captcha Solving functionality, saving all of us time and effort 😌.
-
 
 ### ❓ How to View All Created Accounts?
 
@@ -455,6 +453,7 @@ You may choose to explore the following questions based on your interests:
 3. [How to Get Unread Emails?](https://github.com/omkarcloud/outlook-account-generator/blob/master/advanced.md#-how-to-get-unread-emails)
 4. [How to Get Spam Emails Along with Primary Emails?](https://github.com/omkarcloud/outlook-account-generator/blob/master/advanced.md#-how-to-get-spam-emails-along-with-primary-emails)
 5. [How to Use Proxies for Account Creation?](https://github.com/omkarcloud/outlook-account-generator/blob/master/advanced.md#-how-to-use-proxies-for-account-creation)
+6. [I am facing Errors?](https://github.com/omkarcloud/outlook-account-generator/blob/master/advanced.md#-how-i-am-facing-errors)
 
 #### For Knowledge
 

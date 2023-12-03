@@ -72,7 +72,23 @@ Chrome was getting detected, and we were facing the following problems:
 
 So, we used Firefox, which doesn't cause these issues, and Captchas are much easier to solve.
 
+### ❓ I am facing Errors?
 
+If you encounter the error `API Rate limit exceeded. You have to add GH_TOKEN`, which is common in Ubuntu, follow these steps:
+
+1. Get a GitHub Token by following [these instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token). Your token will look something like `ghp_3fMk7naX9EypRQlG4jHsUoF6Zc1TbYvW8AeP`. It's a bit tedious, but you're just one step away from creating Outlook accounts.
+2. Paste the following code into `main.py`. Replace `your_github_token_here` with your GitHub token:
+   ```python
+   from src import Outlook
+   import os
+
+   love_it_star_it = '''Love It? Star It! ⭐ https://github.com/omkarcloud/outlook-account-generator/'''
+
+   os.environ['GH_TOKEN'] = "your_github_token_here"
+
+   Outlook.create_accounts()
+   ```
+3. Run `python main.py` and you are good to go.
 
 ### ❓ Is the Tool Safe for Account Creation?
 Absolutely. It's trusted by thousands of developers globally for creating Outlook accounts.
