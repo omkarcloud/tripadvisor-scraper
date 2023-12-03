@@ -3,6 +3,7 @@ import traceback
 
 from capsolver import UnknownError
 from botasaurus.ip_utils import find_ip_details
+from selenium.webdriver.firefox.options import Options
 import time
 from botasaurus import *
 from selenium.webdriver.firefox.service import Service
@@ -209,6 +210,8 @@ def create_firefox(data):
             
             try:
                 service = Service(executable_path=GeckoDriverManager().install())
+                options = Options()
+                options.add_argument("--start-maximized")
 
                 proxy = data.get('proxy') 
                 if proxy:
@@ -216,6 +219,7 @@ def create_firefox(data):
                     driver = AntiDetectFirefoxDriverSeleniumWire(
                                                 service=service,
                                                 seleniumwire_options=selwireOptions, 
+                                                options=options,
                                             )
                 
                 
@@ -223,6 +227,7 @@ def create_firefox(data):
                 else:
                     driver = AntiDetectFirefoxDriver(
                                                 service=service,
+                                                options=options,
                                             )
                 return driver
             except:
