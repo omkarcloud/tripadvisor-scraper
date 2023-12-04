@@ -28,6 +28,14 @@
 
 ---
 
+## 👉 Explore Our Other Awesome Products
+
+- ✅ [Botasaurus](https://github.com/omkarcloud/botasaurus): The All-in-One Web Scraping Framework with Anti-Detection, Parallelization, Asynchronous, and Caching Superpowers.
+
+- ✅ [Google Maps Scraper](https://github.com/omkarcloud/google-maps-scraper): Find thousands of new customers personal phone, email, LinkedIn, Twitter and grow your business exponentially.
+
+---
+
 ⚡ Create Unlimited Accounts for Free! ⚡
 
 👋 Hello, I am the Outlook Account Generator, a powerful tool designed to automate the process of creating Outlook email accounts. 
