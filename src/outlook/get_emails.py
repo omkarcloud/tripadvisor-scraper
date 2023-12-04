@@ -23,7 +23,7 @@ def convert_to_utc(time_str):
 def toiso(date):
     return date.isoformat() 
 
-def perform_get_emails(driver:AntiDetectDriver, received=None, max=None, is_unread=None):
+def perform_get_emails(driver:AntiDetectDriver, received=None, max=None, is_unread=None, exclude_outlook_team_emails=True):
 
     def is_received_date_before_now(received_date_str, now_utc=None, ):
         # Parse the received_date string into a datetime object
@@ -200,8 +200,10 @@ def perform_get_emails(driver:AntiDetectDriver, received=None, max=None, is_unre
         conv = convs.pop(0)
 
         email_detail = get_email_detail(conv)
-        
-        if "Outlook" not in email_detail['sender']["name"]:
+        is_outlook_email = "Outlook" in email_detail['sender']["name"]
+        if is_outlook_email and exclude_outlook_team_emails:
+            pass
+        else:
             if received and is_received_date_before_now_for_email(received, email_detail):
                 break
             
@@ -262,10 +264,11 @@ def get_emails(driver:AntiDetectDriver, data):
     
     unread = data['unread']
     with_spam = data['with_spam']
+    exclude_outlook_team_emails = data['exclude_outlook_team_emails']
 
     # els = []
 
-    els  = perform_get_emails(driver, received=now_utc, max=data['max'], is_unread=unread)    
+    els  = perform_get_emails(driver, received=now_utc, max=data['max'], is_unread=unread, exclude_outlook_team_emails=exclude_outlook_team_emails)    
 
     if with_spam:
         mx = data['max']
@@ -274,5 +277,5 @@ def get_emails(driver:AntiDetectDriver, data):
 
         open_junk_mail(driver, username, spy_emails=True)
 
-        els  = els + perform_get_emails(driver, received=now_utc, max=mx, is_unread=unread)
+        els  = els + perform_get_emails(driver, received=now_utc, max=mx, is_unread=unread,exclude_outlook_team_emails=exclude_outlook_team_emails)    
     return els

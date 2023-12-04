@@ -26,6 +26,7 @@ class Outlook:
         Creates Outlook email accounts.
 
         :param count: Number of accounts to be created. Defaults to 1.
+        :param key: Capsolver Api Key for solving captchas automatically. Defaults to None.
         :param proxies: Optional proxy server or list of proxy servers to be used for account creation.
         """
         if isinstance(proxies, str):
@@ -167,13 +168,15 @@ class Outlook:
         data ={"username":username, "emails":emails, "get_random_delay": get_random_delay, "proxy":proxy} 
         send_emails(data)
     @staticmethod
-    def get_latest_email_for_verification(username: str, received=AgoObject.JustNow, with_spam=True, proxy: Optional[str] = None) -> Optional[Dict[str, str]]:
+    def get_latest_email_for_verification(username: str, received=AgoObject.JustNow, with_spam=True, exclude_outlook_team_emails=True, proxy: Optional[str] = None) -> Optional[Dict[str, str]]:
         """
         Retrieves the latest email for verification from the specified account.
 
-        :param username: The username of the account.
-        :param received: Time filter for received emails.
-        :param proxy: Optional proxy server for retrieving the email.
+        :param username: The username of the account. (str)
+        :param received: Time filter for received emails, can be datetime, timedelta or string. Default is JustNow. (recieved 2 minutes ago)
+        :param with_spam: Include spam emails. Default is True. (bool)
+        :param exclude_outlook_team_emails: Whether to exclude emails from Outlook team. Default is True. (bool)
+        :param proxy: Optional proxy server for retrieving the email. (str, optional)
         :return: A dictionary containing details of the latest email or None if no email is found.
         """
         username = clean_username(username)
@@ -181,7 +184,7 @@ class Outlook:
             ensure_unique_ip(username)
         attempts = 4
         while attempts > 0:
-            latest_email = Outlook.get_latest_email(username, received=received, with_spam=with_spam, proxy=proxy)
+            latest_email = Outlook.get_latest_email(username, received=received, with_spam=with_spam, exclude_outlook_team_emails=exclude_outlook_team_emails, proxy=proxy)
             if latest_email:
                 return latest_email
             time.sleep(10)  # Wait for 10 seconds before retrying
@@ -189,50 +192,61 @@ class Outlook:
         return None
 
     @staticmethod
-    def get_latest_email(username: str, received=None, with_spam=False, proxy: Optional[str] = None) -> Dict[str, str]:
+    def get_latest_email(username: str, received=None, with_spam=False, exclude_outlook_team_emails=False, proxy: Optional[str] = None) -> Dict[str, str]:
         """
         Retrieves the latest email from the specified account.
 
-        :param username: The username of the account.
-        :param proxy: Optional proxy server for retrieving the email.
+        :param username: The username of the account. (str)
+        :param received: Time filter for received emails. Default is None meaning No Filters. (Ago or None)
+        :param with_spam: Include spam emails. Default is False. (bool)
+        :param exclude_outlook_team_emails: Whether to exclude emails from Outlook team. Default is False. (bool)
+        :param proxy: Optional proxy server for retrieving the email. (str, optional)
         :return: A dictionary containing details of the latest email.
         """
         username = clean_username(username)
         if not proxy:
             ensure_unique_ip(username)
-        email = Outlook.get_emails(username, received=received,with_spam=with_spam, max=1, proxy=proxy)
+        email = Outlook.get_emails(username, received=received, with_spam=with_spam, exclude_outlook_team_emails=exclude_outlook_team_emails, max=1, proxy=proxy)
         if len(email) == 0:
             return None
         return email[0]
 
     @staticmethod
-    def get_unread_emails(username: str, received=None, max=None,  with_spam=False, proxy: Optional[str] = None) -> List[Dict[str, str]]:
+    def get_unread_emails(username: str, received=None, max=None, with_spam=False, exclude_outlook_team_emails=False, proxy: Optional[str] = None) -> List[Dict[str, str]]:
         """
         Retrieves unread emails from the specified account. Please note that this method will mark the unread emails as read.
 
-        :param username: The username of the account.
-        :param proxy: Optional proxy server for retrieving the emails.
+        :param username: The username of the account. (str)
+        :param received: Time filter for received emails. Default is None meaning No Filters. (Ago or None)
+        :param max: Maximum number of emails to retrieve. Default is None. (int or None)
+        :param with_spam: Include spam emails. Default is False. (bool)
+        :param exclude_outlook_team_emails: Whether to exclude emails from Outlook team. Default is False. (bool)
+        :param proxy: Optional proxy server for retrieving the emails. (str, optional)
         :return: A list of dictionaries, each containing details of an email.
         """
         username = clean_username(username)
         if not proxy:
             ensure_unique_ip(username)
-        data ={"username":username, "received":received, "max":max, "unread": True, "proxy":proxy, "with_spam":with_spam} 
+        data = {"username": username, "received": received, "max": max, "unread": True, "with_spam": with_spam, "exclude_outlook_team_emails": exclude_outlook_team_emails, "proxy": proxy}
         return get_emails(data)
 
     @staticmethod
-    def get_emails(username: str, received=None, max=None, with_spam=False, proxy: Optional[str] = None) -> List[Dict[str, str]]:
+    def get_emails(username: str, received=None, max=None, with_spam=False, exclude_outlook_team_emails=False, proxy: Optional[str] = None) -> List[Dict[str, str]]:
         """
         Retrieves emails from the specified account.
 
-        :param username: The username of the account.
-        :param proxy: Optional proxy server for retrieving the emails.
+        :param username: The username of the account. (str)
+        :param received: Time filter for received emails. Default is None meaning No Filters. (Ago or None)
+        :param max: Maximum number of emails to retrieve. Default is None. (int or None)
+        :param with_spam: Include spam emails. Default is False. (bool)
+        :param exclude_outlook_team_emails: Whether to exclude emails from Outlook team. Default is False. (bool)
+        :param proxy: Optional proxy server for retrieving the emails. (str, optional)
         :return: A list of dictionaries, each containing details of an email.
         """
         username = clean_username(username)
         if not proxy:
             ensure_unique_ip(username)
-        data ={"username":username, "received":received, "max":max, "unread" :None, "proxy":proxy, "with_spam":with_spam} 
+        data = {"username": username, "received": received, "max": max, "unread": None, "with_spam": with_spam, "exclude_outlook_team_emails": exclude_outlook_team_emails, "proxy": proxy}
         return get_emails(data)
 
 
@@ -242,6 +256,7 @@ class Outlook:
         Allows manually opening outlook for a given account.
 
         :param username: The username of the account to check.
+        :param proxy: Optional proxy server for opening Outlook. (str, optional)
         """
         username = clean_username(username)
         

@@ -43,7 +43,7 @@ def load_outlook(driver:AntiDetectDriver, username, spy_emails):
             account = bt.Profile.get_profile(username)  
             login_outlook(driver, account['password'])
             print("logged in")
-            return load_outlook(driver, account)
+            return load_outlook(driver, account, spy_emails)
 
 def open_junk_mail(driver:AntiDetectDriver, username, spy_emails):
     # driver.get_by_current_page_referrer("https://outlook.live.com/mail/0/junkemail")

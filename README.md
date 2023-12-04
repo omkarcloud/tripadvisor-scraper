@@ -1,4 +1,4 @@
-![Outlook Account Generator Demo](https://raw.githubusercontent.com/outlook-account-generator/master/images/outlook-account-generator-demo.gif)
+![Outlook Account Generator Demo](https://raw.githubusercontent.com/outlook-account-generator/master/images/outlook-generator-demo.gif)
 
 
 <div align="center" style="margin-top: 0;">
@@ -119,13 +119,13 @@ Please note that you need to repeat this process after every 3 accounts. We will
 
 Yes, you can use Captcha Solvers like CapSolver to automatically solve captchas, saving yourself time and effort.
 
-![Captcha Solved](https://raw.githubusercontent.com/outlook-account-generator/master/images/outlook-account-generator-demo.gif)
+![Captcha Solved](https://raw.githubusercontent.com/outlook-account-generator/master/images/outlook-generator-demo.gif)
 
 To set up automatic Captcha solving, follow these steps:
 
 1. Create a CapSolver account at [capsolver.com](https://dashboard.capsolver.com/passport/register).
 
-  ![Sign Up](https://raw.githubusercontent.com/outlook-account-generator/master/images/captcha-sign-up.png)
+  ![Sign Up](https://raw.githubusercontent.com/outlook-account-generator/master/images/capsolver-sign-up.png)
 
 2. Add funds to your CapSolver account using PayPal, cryptocurrencies, or other payment methods. Note that the minimum deposit is $6, and additional taxes (around 12% for most countries) will apply.
 
@@ -143,7 +143,7 @@ To set up automatic Captcha solving, follow these steps:
 
 5. Now, Run `python main.py` and the captchas will be automatically solved.
 
-  ![Captcha Solved](https://raw.githubusercontent.com/outlook-account-generator/master/images/outlook-account-generator-demo.gif)
+  ![Captcha Solved](https://raw.githubusercontent.com/outlook-account-generator/master/images/outlook-generator-demo.gif)
 
 The bot, when provided with a CapSolver key, will run upto 3 accounts in parallel. We limit running accounts to a maximum of 3 in parallel, as running more leads to detection.
 
@@ -164,7 +164,7 @@ print(accounts)
 ```
 
 ### ❓ How to Get the Latest Received Email?
-
+<!-- 
 To get emails, you need first have some emails in your inbox.
 
 So, Start by sending an email from your personal email to one of the accounts you created, which will have an address like `username@outlook.com`. 
@@ -175,7 +175,7 @@ Subject: Agenda for Team Meeting
 Body: What is the agenda for the upcoming meeting on Monday?
 ```
 
-After sending the email,
+After sending the email, -->
 
 Use the `Outlook.get_latest_email` method as follows:
 
@@ -344,8 +344,8 @@ To send an email, you can use the `Outlook.send_email` method. Replace the `to` 
 username = "username123"
 
 to = "my-email@gmail.com" # For testing, replace with your personal email
-subject = "Product Roadmap Discussion"
-body = "We will discuss the product roadmap."
+subject = "Agenda for Team Meeting"
+body = "We will discuss the product roadmap in Meeting."
 
 Outlook.send_email(username, to, subject, body)
 ```
