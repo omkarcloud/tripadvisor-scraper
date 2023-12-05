@@ -131,7 +131,7 @@ Yes, you can use Captcha Solvers like CapSolver to automatically solve captchas,
 
 To set up automatic Captcha solving, follow these steps:
 
-1. Create a CapSolver account at [capsolver.com](https://dashboard.capsolver.com/passport/register).
+1. Create a CapSolver account at [capsolver.com](https://dashboard.capsolver.com/passport/register?inviteCode=lvdYBC4sYKRm).
 
   ![Sign Up](https://raw.githubusercontent.com/omkarcloud/outlook-account-generator/master/images/capsolver-sign-up.png)
 
