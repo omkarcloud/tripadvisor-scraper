@@ -76,7 +76,7 @@ So, we used Firefox, which doesn't cause these issues, and Captchas are much eas
 
 If you encounter the error `API Rate limit exceeded. You have to add GH_TOKEN`, which is common in Ubuntu, follow these steps:
 
-1. Get a GitHub Token by following [these instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token). Your token will look something like `ghp_3fMk7naX9EypRQlG4jHsUoF6Zc1TbYvW8AeP`. It's a bit tedious, but you're just one step away from creating Outlook accounts.
+1. Get a GitHub Token by following [these instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token). Your token will look something like `ghp_3fMk7naX9EypRQlG4jHsUoF6Zc1TbYvW8AeP`. It's a bit tedious I know, but you're just one step away from creating Outlook accounts.
 2. Paste the following code into `main.py`. Replace `your_github_token_here` with your GitHub token:
    ```python
    from src import Outlook

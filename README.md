@@ -90,7 +90,7 @@ Note:
 
   2. This Bot requires Firefox, as firefox is able to bypass Microsoft's Anti-Detection Measures. If you don't have Firefox, download it from the Mozilla website [here](https://www.mozilla.org/en-US/firefox/new/).
 
-  3. For users on Mac/Linux, please be aware that the bot may experience some instability due to the implementation of webdriver-manager's Firefox Installer on Mac/Linux. If you encounter any issues, we recommend switching to a Windows device for a smoother experience.
+  3. For users on Mac/Linux, please be aware that the bot may experience some instability due to the implementation of `webdriver-manager's` Firefox Installer on Mac/Linux. If you encounter any issues, then borrow a Windows PC from family or friends and run the Bot. (It's a bit inconvenient I know, but you're just this step away from creating Outlook accounts.)
 
 ## 🤔 FAQs
 
