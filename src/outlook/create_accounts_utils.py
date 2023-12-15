@@ -313,7 +313,7 @@ def solvecaptcha_with_captcha_solver(driver:AntiDetectDriver, proxy = None, capt
 
     
     try:
-        token = solve_captcha("B7D8911C-5CC8-A9A3-35B0-554ACEE604DA",  "https://signup.live.com/?lic=1", "https://client-api.arkoselabs.com",blob, getua(driver), proxy, capsolver_apikey)
+        token = solve_captcha("B7D8911C-5CC8-A9A3-35B0-554ACEE604DA",  "https://iframe.arkoselabs.com", "https://client-api.arkoselabs.com",blob, getua(driver), proxy, capsolver_apikey)
     except UnknownError:
         return DETECTED
     except Exception as e:
