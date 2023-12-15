@@ -7,7 +7,7 @@ def solve_captcha(websitePublicKey, websiteURL, funcaptchaApiJSSubdomain, blob_d
         data = {
                         "type":"FunCaptchaTaskProxyLess", 
                         "websitePublicKey":  websitePublicKey,
-                        "websiteURL": websiteURL,
+                        "websiteURL": "https://iframe.arkoselabs.com",
                         "funcaptchaApiJSSubdomain": funcaptchaApiJSSubdomain,
                         "data": blob_data,
                         'userAgent': useragent,
