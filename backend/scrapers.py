@@ -16,7 +16,7 @@ def split_task(data):
     tasks = []
     for query in data['search_queries']:
         task = data.copy()
-        task['search_queries'] = query
+        task['search_queries'] = clean_search_string(query)
         tasks.append(task)
     return tasks
 
