@@ -139,7 +139,7 @@ Kindly follow these steps to use our Rapid API and easily get the tripadvisor pr
 
 ![api-key](https://raw.githubusercontent.com/omkarcloud/tripadvisor-scraper/master/images/api-key.png)
 
-The first 400 listings are generously free to scrape with the API. After that, you can upgrade to the Pro Plan to scrape 1,000 listings for $4, which is a really great price, considering that the data is 101% accurate, fresh, and comprehensive with 45+ fields.
+The first 200 requests are free with the API. After that, you can upgrade to the Pro Plan to scrape 10000 listings for $16, which is a really great price, considering that the data is 101% accurate, fresh, and comprehensive with 45+ fields.
 
 ### ❓ What if I Don't Get Value from It?
 
