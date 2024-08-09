@@ -56,7 +56,7 @@ function getInput(controls) {
                     const ls = data['search_queries'].filter(isNotEmpty)
 
                     if (ls.length && !ls.every(query => validUrls.includes(query.trim().toLowerCase()))) {
-                        return 'To get different listings, please enter your Rapid API Key. You can use the starter plan, which offers a 200 monthly requests.'
+                        return 'To get different listings, please enter your Rapid API Key. You can use the starter plan, which offers 200 monthly requests.'
                     }
                 } 
 

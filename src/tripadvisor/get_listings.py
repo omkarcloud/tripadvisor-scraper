@@ -44,7 +44,7 @@ def do_request(data, retry_count=3):
                 return DontCache({"data": None, "error": FAILED_DUE_TO_UNKNOWN_ERROR})
         if response.status_code == 404:
             print(f"Not Found for ", data, response_data )
-            return DontCache({"data": None, "error": response_data.get("message", "")})
+            return DontCache({"data": None, "error": "No Results for this query"})
         return {
             "data": convert_unicode_dict_to_ascii_dict(response_data),
             "error": None,
@@ -86,8 +86,3 @@ def get_listings(data: dict, metadata):
     return do_request(
         data,
     )
-
-# python -m src.tripadvisor.get_listings
-if __name__ == "__main__":
-    x = get_listings({'endpoint': '/hotels/detail', 'id': "208453"}, metadata={"key":"e78ae5d201mshf878ec8fec0a188p12c911jsn78c12c161b78"})
-    print(x)

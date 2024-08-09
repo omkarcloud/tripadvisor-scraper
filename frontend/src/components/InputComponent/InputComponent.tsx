@@ -7,7 +7,7 @@ import {
 } from '@elastic/eui'
 
 import { EuiForm } from '@elastic/eui'
-
+import Toast from '../../utils/cogo-toast'
 import { Control, WithChooseOptions, createControls } from 'botasaurus-controls'
 import { useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
@@ -297,30 +297,60 @@ function getInitialData(scraper_name, input_js_hash, controls) {
   return savedData ? JSON.parse(savedData) : defaultData
 }
 
-const ScraperFormContainer = ({ selectedScraper }) => {
+
+function getLastScraper(scrapers) {
+  if (typeof window === 'undefined') {
+    return scrapers[0];
+  }
+
+  const input_scraper = localStorage.getItem('input_scraper');
+  
+  if (input_scraper) {
+    const selectedScraper = scrapers.find(
+      (scraper) => scraper.scraper_name === input_scraper
+    );  
+    if (selectedScraper) {
+      return selectedScraper;
+    }
+  }
+  return scrapers[0];
+}
+
+function createInitialData(selectedScraper: any) {
+  const initial_data = getInitialData(
+    selectedScraper.scraper_name,
+    selectedScraper.input_js_hash,
+    createControls(selectedScraper.input_js)
+  )
+  return {
+    "data": initial_data,
+    "selectedScraper": selectedScraper
+  }
+}
+
+const ScraperFormContainer = ({ scrapers }) => {
   const [submitAttempted, setSubmitAttempted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  
+  const [{data, selectedScraper }, setData] = useState(() =>{
+    const selectedScraper =  getLastScraper(scrapers)
+    return createInitialData(selectedScraper)
+  }
+    
+  )
   const controls = useMemo(
     () => createControls(selectedScraper.input_js),
-    [selectedScraper]
+    [selectedScraper.scraper_name]
   )
-  const [data, setData] = useState(() =>
-    getInitialData(
-      selectedScraper.scraper_name,
-      selectedScraper.input_js_hash,
-      controls
-    )
-  )
-
   const handleDataChange = (id, value) => {
     setData(prevData => {
-      const newData = { ...prevData, [id]: value }
+      const newData = { ...prevData.data, [id]: value }
       localStorage.setItem(
         `input_${selectedScraper.scraper_name}_${selectedScraper.input_js_hash}`,
         JSON.stringify(newData)
       )
-      return newData
+      return {...prevData, data:newData} 
     })
   }
   const router = useRouter()
@@ -355,8 +385,17 @@ const ScraperFormContainer = ({ selectedScraper }) => {
       }).finally(() => setIsSubmitting(false))
 
       const result = response.data
-      const outputId = Array.isArray(result) ? result[0].id : result.id
-      pushToRoute(router, `/output/${outputId}`)
+      const isarr = Array.isArray(result)
+      if (isarr && result.length === 0) {
+        Toast.error('No Tasks were created.')
+      }else {
+        const outputId = isarr ? result[0].id : result.id
+        if (outputId) {
+          pushToRoute(router, `/output/${outputId}`)
+        } else {
+          console.error("failed", result)
+        }
+      }
     } else {
       const rs = { ...accords }
 
@@ -377,49 +416,46 @@ const ScraperFormContainer = ({ selectedScraper }) => {
     return <EmptyInputs />
   }
   return (
-    <EuiForm
-      isInvalid={submitAttempted && !isEmptyObject(validationResult)}
-      invalidCallout="none"
-      component="form"
-      onSubmit={handleSubmit}>
-      <NextOnlyFields
-        onReset={() => {
-          const dd = getDefaultData(controls)
-          localStorage.setItem(
-            `input_${selectedScraper.scraper_name}_${selectedScraper.input_js_hash}`,
-            JSON.stringify(dd)
-          )
-          setData(dd)
-        }}
-        accords={accords}
-        onToggle={onToggle}
-        validationResult={validationResult}
-        controls={controls}
-        data={data}
-        onDataChange={handleDataChange}
-        onSubmit={handleSubmit}
-        isSubmitting={isSubmitting}
-        submitAttempted={submitAttempted}
-      />
-    </EuiForm>
-  )
-}
-
-
-const ScraperContainer = ({ scrapers }) => {
-  const [selectedScraper, setSelectedScraper] = useState(scrapers[0])
-
-  return (
     <>
-      {scrapers.length <= 1 ? null : (
+      {scrapers.length <= 1 || typeof window === 'undefined' ? null : (
         <ScraperSelector
           scrapers={scrapers}
           selectedScraper={selectedScraper}
-          onSelectScraper={setSelectedScraper}
+          onSelectScraper={(x)=>{
+            localStorage.setItem(
+              `input_scraper`,
+              x.scraper_name
+            )
+              setData(createInitialData(x))
+          }}
+        />)}
+      <EuiForm
+        isInvalid={submitAttempted && !isEmptyObject(validationResult)}
+        invalidCallout="none"
+        component="form"
+        onSubmit={handleSubmit}>
+        <NextOnlyFields
+          onReset={() => {
+            const dd = getDefaultData(controls)
+            localStorage.setItem(
+              `input_${selectedScraper.scraper_name}_${selectedScraper.input_js_hash}`,
+              JSON.stringify(dd)
+            )
+            setData(x=>({...x, data:dd}))
+          }}
+          accords={accords}
+          onToggle={onToggle}
+          validationResult={validationResult}
+          controls={controls}
+          data={data}
+          onDataChange={handleDataChange}
+          onSubmit={handleSubmit}
+          isSubmitting={isSubmitting}
+          submitAttempted={submitAttempted}
         />
-      )}
-      <ScraperFormContainer selectedScraper={selectedScraper} />
+      </EuiForm>
     </>
+
   )
 }
 
@@ -428,7 +464,7 @@ const InputComponent = ({ scrapers }) => {
     return <EmptyScraper />
   }
 
-  return <ScraperContainer scrapers={scrapers} />
+  return <ScraperFormContainer scrapers={scrapers} />
 }
 
 export default InputComponent

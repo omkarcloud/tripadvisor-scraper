@@ -95,3 +95,4 @@ export const OutputContainerWithBottomPadding = ({ children , className=""}) => 
 export const TabWrapper = ({ children }) => {
   return <div className="mt-4">{children}</div>
 }
+

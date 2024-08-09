@@ -532,3 +532,4 @@ export const globalStyles = css`
       min-height: 50vh;
   }
   `
+

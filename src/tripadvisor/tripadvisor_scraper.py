@@ -29,10 +29,14 @@ def perform_query(search_query, max_results, api_key, enable_detailed_extraction
 
         while True:
             result = get_listings({"endpoint": f"/{endpoint}/list", "query": search_query, "page": str(page)}, metadata=metadata)
-            if result.get('error'):
+            
+            has_error = result.get('error')            
+            if result is None:
+                return [{"error": 'No Results for this query'}]
+            if has_error:
                 if output:
                     return [*output, {"id": result['error']}]
-                return {"error": result['error']}
+                return [{"error": result['error']}]
             result = result['data']
             items = result['results']
             
@@ -44,7 +48,10 @@ def perform_query(search_query, max_results, api_key, enable_detailed_extraction
                 items = get_listings(items, metadata=metadata)
                 has_seen_error = False
                 for item in items:
-                    if item.get('error'):
+                    if item is None:
+                        output.append({"id": 'No Results for this query'})
+                        has_seen_error = True
+                    elif item.get('error'):
                         output.append({"id": item['error']})
                         has_seen_error = True
                     else:

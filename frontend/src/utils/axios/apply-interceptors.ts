@@ -3,12 +3,11 @@ import { AxiosInstance } from 'axios'
 import cogoToast from 'cogo-toast-react-17-fix'
 import Toast from '../cogo-toast'
 
-import { JSObject } from '@omkar111111/utils/types'
 import Router from 'next/router'
 
 function applyInterceptors(AxiosInstance: AxiosInstance) {
   const map = new Map()
-  function showLoading(config: JSObject, message: string) {
+  function showLoading(config: any, message: string) {
     const hideFn = cogoToast.loading(message, {
       hideAfter: 0,
       position: 'bottom-right',
@@ -16,7 +15,7 @@ function applyInterceptors(AxiosInstance: AxiosInstance) {
     map.set(config, hideFn)
   }
 
-  function hideLoading(config: JSObject) {
+  function hideLoading(config: any) {
     const hidefn = map.get(config)
     if (hidefn) {
       hidefn()
@@ -74,14 +73,18 @@ function applyInterceptors(AxiosInstance: AxiosInstance) {
     error => {
       hideLoading(error.config)
       let isRedirected = redirectIfShouldRedirect(error.response)
-      if (error.config.redirectToSignInOn404 && is404(error.response)) {
+      if (error.config?.redirectToSignInOn404 && is404(error.response)) {
         Router.push('/auth/sign-in')
         isRedirected = true
       }
-      if (error.config.silenceError) {
+      if (error.config?.silenceError) {
         return Promise.reject(error)
       } else {
         if (!isRedirected) {
+          // fetch request abortion
+          if (error.message === 'canceled'){
+            return Promise.reject(error)
+          }
           handleAxiosError(error)
         }
         return Promise.reject(error)
