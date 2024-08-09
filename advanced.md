@@ -27,6 +27,15 @@ Note that it's important to regularly interact with the Gitpod environment, such
 
 If you don't want to click every 30 minutes, then we encourage you to install Python and Node.js on your PC and run it locally.
 
+### ❓ How to Update the Scraper to the Latest Version?
+
+To update the scraper, run these commands in the root directory:
+
+```bash
+git pull
+python3 -m pip install --upgrade bota botasaurus botasaurus-api botasaurus-requests botasaurus-driver botasaurus-proxy-authentication botasaurus-server
+```
+
 ### ❓ Need More Help or Have Additional Questions?
 
 For further help, feel free to reach out to us through:

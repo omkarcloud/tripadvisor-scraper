@@ -188,6 +188,7 @@ Having read this page, you have all the knowledge needed to effectively use the 
 You may choose to read the following questions based on your interests:
 
 1. [I Don't Have Python, or I'm Facing Errors When Setting Up the Scraper on My PC. How to Solve It?](https://github.com/omkarcloud/tripadvisor-scraper/blob/master/advanced.md#-i-dont-have-python-or-im-facing-errors-when-setting-up-the-scraper-on-my-pc-how-to-solve-it)
+2. [How to Update the Scraper to the Latest Version?](https://github.com/omkarcloud/tripadvisor-scraper/blob/master/advanced.md#-how-to-update-the-scraper-to-the-latest-version)
 
 ### ❓ Need More Help or Have Additional Questions?
 
