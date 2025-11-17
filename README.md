@@ -1,12 +1,12 @@
 ## Disclaimer for Tripadvisor Scraper Project
 
-> This Tripadvisor Scraper is provided for educational and research purposes only. By using this Tripadvisor Scraper, you agree to comply with local and international laws regarding data scraping and privacy. The authors and contributors are not responsible for any misuse of this software. This tool should not be used to violate the rights of others, for unethical purposes, or to use data in an unauthorized or illegal manner.
+> This Tripadvisor Scraper is provided for educational and research purposes only. By using this Tripadvisor Scraper, you agree to comply with local and international laws regarding data scraping and privacy. The authors and contributors are not responsible for any misuse of this software. This tool should not be used to violate the rights of others, or for unethical purposes.
 
 We take the concerns of the Tripadvisor Scraper Project very seriously. For any concerns, please contact Chetan Jain at [chetan@omkar.cloud](mailto:chetan@omkar.cloud). We will promptly reply to your emails.
 
 # Tripadvisor Scraper
 
-Extract Tripadvisor data—hotels, restaurants, ratings, reviews, contact info—into clean Excel files in seconds.
+Extract Tripadvisor data—hotels, restaurants, Things To Do, Cruises, reviews, contact info—into clean Excel files in seconds.
 
 ## 🎥 Watch Tripadvisor Scraper in Action (60-Second Demo)
 
