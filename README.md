@@ -2,16 +2,18 @@
 
 # TripAdvisor Scraper API
 
-REST API to get reviews, search hotels/restaurants/attractions, browse listings, and get hotel details from TripAdvisor. Supports 45+ locales and 145+ currencies.
+REST API to comprehensively get reviews, search hotels/restaurants/attractions, browse listings, and get hotel details from TripAdvisor. Detailed Data and Supports 45+ locales and 145+ currencies.
 
-## Features
+Get any TripAdvisor data via this well developed API.
+
+## Key Features
 
 - Get reviews with ratings, trip type, reviewer profiles, and photos
 - Search and list hotels, restaurants, attractions, and cruises
 - Get detailed property data (amenities, hours, pricing, photos, rating breakdowns)
 - Filter by star rating, traveler type, date range, cuisine, and more
 - Supports 45+ locales and 145+ currencies
-- 5,000 requests/month on free tier
+- **5,000 requests/month on free tier**
 - Example Response:
 ```json
 {
@@ -33,7 +35,11 @@ REST API to get reviews, search hotels/restaurants/attractions, browse listings,
 
 ## Get API Key
 
-Create an account at [omkar.cloud](https://www.omkar.cloud/auth/sign-up?redirect=/api-key) to get your API key, and use it in requests. 5,000 requests are free every month, and it takes 1 minute to [create an account](https://www.omkar.cloud/auth/sign-up?redirect=/api-key).
+Create an account at [omkar.cloud](https://www.omkar.cloud/auth/sign-up?redirect=/api-key) to get your API key.
+
+It takes just 2 minutes to sign up. You get 5,000 free requests every month—more than enough for most users to get detailed TripAdvisor data without paying a dime.
+
+This is a well built product, and your search for the best TripAdvisor Scraper API ends right here. 
 
 ## Quick Start
 
