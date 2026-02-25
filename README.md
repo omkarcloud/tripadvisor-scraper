@@ -13,7 +13,7 @@ Get any TripAdvisor data via this well developed API.
 - Get detailed property data (amenities, hours, pricing, photos, rating breakdowns)
 - Filter by star rating, traveler type, date range, cuisine, and more
 - Supports 45+ locales and 145+ currencies
-- **5,000 requests/month on free tier**
+- **1,000 requests/month on free tier**
 - Example Response:
 ```json
 {
@@ -37,7 +37,7 @@ Get any TripAdvisor data via this well developed API.
 
 Create an account at [omkar.cloud](https://www.omkar.cloud/auth/sign-up?redirect=/api-key) to get your API key.
 
-It takes just 2 minutes to sign up. You get 5,000 free requests every month—more than enough for most users to get detailed TripAdvisor data without paying a dime.
+It takes just 2 minutes to sign up. You get 1,000 free requests every month—more than enough for most users to get detailed TripAdvisor data without paying a dime.
 
 This is a well built product, and your search for the best TripAdvisor Scraper API ends right here. 
 
@@ -1201,10 +1201,10 @@ No. The API handles all of that. You make a simple GET request and get clean JSO
 
 | Plan | Price | Requests/Month |
 |------|-------|----------------|
-| Free | $0 | 5,000 |
-| Starter | $25 | 100,000 |
-| Grow | $75 | 1,000,000 |
-| Scale | $150 | 10,000,000 |
+| Free | $0 | 1,000 |
+| Starter | $16 | 3,000 |
+| Growth | $48 | 15,000 |
+| Scale | $148 | 75,000 |
 
 ## Questions? We have answers.
 
