@@ -998,6 +998,155 @@ print(response.json())
 
 ---
 
+### Cruise Details
+
+```
+GET https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/cruises/detail
+```
+
+#### Parameters
+
+| Parameter | Required | Default | Description |
+|-----------|----------|---------|-------------|
+| `query` | Yes | — | TripAdvisor Cruise URL, cruise ship name, or entity ID. |
+| `locale` | No | `en-US` | Localization code. |
+
+#### Example
+
+```python
+import requests
+
+response = requests.get(
+    "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/cruises/detail",
+    params={"query": "https://www.tripadvisor.com/Cruise_Review-d15691817-Reviews-Seabourn_Ovation"},
+    headers={"API-Key": "YOUR_API_KEY"}
+)
+
+print(response.json())
+```
+
+#### Response
+
+<details>
+<summary>Sample Response (click to expand)</summary>
+
+```json
+{
+  "tripadvisor_entity_id": 15691817,
+  "type": "cruise_ship",
+  "name": "Seabourn Ovation",
+  "link": "https://www.tripadvisor.com/Cruise_Review-d15691817-Reviews-Seabourn_Ovation",
+  "cruise_line": "Seabourn Cruise Line",
+  "departs_from": ["Barbados", "Copenhagen", "Dover", "Genoa", "Miami", "..."],
+  "sails_to": ["Baltic Sea", "Canada & New England", "Caribbean - Eastern", "..."],
+  "rating": 4,
+  "reviews": 67,
+  "passenger_capacity": 600,
+  "crew_count": 450,
+  "passenger_to_crew_ratio": 1.33,
+  "passenger_to_space_ratio": 67.25,
+  "launch_year": "2018",
+  "refurbish_year": null,
+  "currency_code": "USD",
+  "featured_image": "https://media-cdn.tripadvisor.com/media/photo-m/1280/15/3b/29/d8/seabourn-ovation-ta-listings.jpg",
+  "image_count": 967,
+  "images": [
+    {"media_id": 373780398, "image_link": "https://media-cdn.tripadvisor.com/media/photo-m/1280/16/47/6f/ae/penthouse-spa-suite.jpg"},
+    "... 19 more"
+  ],
+  "photo_albums": [
+    {"id": 107, "title": "Traveler", "photo_count": 53, "thumbnail": "https://media-cdn.tripadvisor.com/..."},
+    {"id": 62759, "title": "Common Areas", "photo_count": 357, "thumbnail": "https://media-cdn.tripadvisor.com/..."},
+    {"id": 62758, "title": "Dining and Bars", "photo_count": 334, "thumbnail": "https://media-cdn.tripadvisor.com/..."},
+    "... 2 more"
+  ],
+  "cabin_summary": [
+    {"cabin_type": "suite", "cabin_count": 300, "min_size_sqft": 246, "max_size_sqft": 989, "max_passenger_capacity": 6, "connected_rooms": 68, "accessible_rooms": 8}
+  ],
+  "dining": [
+    {"name": "The Grill by Thomas Keller", "cuisine": "American", "count": 1, "requires_additional_fees": false},
+    {"name": "The Colonnade", "cuisine": "Casual", "count": 1, "requires_additional_fees": false},
+    {"name": "Sushi", "cuisine": "Japanese", "count": 1, "requires_additional_fees": false},
+    "... 7 more"
+  ],
+  "activities": [
+    {"name": "Fitness Center", "count": 1, "requires_additional_fees": false},
+    {"name": "Hot Tubs", "count": 5, "requires_additional_fees": false},
+    {"name": "Spa & Wellness", "count": 1, "requires_additional_fees": true},
+    "... 16 more"
+  ],
+  "entertainment": [
+    {"name": "Casino", "count": 1, "requires_additional_fees": true},
+    {"name": "Grand Salon", "count": 1, "requires_additional_fees": false}
+  ],
+  "decks": [
+    {
+      "level": 5,
+      "floor_plan_image_link": "https://cruise-static.tacdn.com/ships/deck-plans/0cee08bfae689a5cdfb589b48c8d2302.png",
+      "cabin_types": [{"name": "Veranda Suite", "sub_category": "V2", "color": "#D7B5A3", "is_accessible": false}]
+    },
+    "... 9 more"
+  ],
+  "itinerary_count": 116,
+  "itineraries": [
+    {
+      "id": 212326,
+      "title": "7-DAY YACHTSMAN'S CARIBBEAN",
+      "duration_nights": 7,
+      "cruise_line": "Seabourn Cruise Line",
+      "destination": "Caribbean - Eastern",
+      "departure_port": "St. Maarten",
+      "lowest_priced_sailing_id": 2014294,
+      "ports": [
+        {"day": 1, "port_name": "St. Maarten", "port_id": 147346},
+        {"day": 2, "port_name": "Virgin Gorda", "port_id": 147358},
+        "... 6 more"
+      ],
+      "sailings": [
+        {
+          "sailing_id": 2014294,
+          "departure_date": "2026-03-28",
+          "currency": "USD",
+          "suite_cabin": {
+            "min_price": 4474.0,
+            "max_price": 5332.0,
+            "count": 3,
+            "vendors": [
+              {"vendor_id": 216, "vendor_name": "PanacheCruises", "current_price": 4474.0, "highest_price": 5332.0, "is_featured_deal": false},
+              "... 2 more"
+            ]
+          }
+        }
+      ]
+    },
+    "... 9 more"
+  ],
+  "rating_distribution": {"1": 6, "2": 6, "3": 6, "4": 10, "5": 39},
+  "review_keywords": [],
+  "original_language_distribution": {
+    "en": {"language_name": "English", "reviews": 65},
+    "es": {"language_name": "Spanish", "reviews": 1},
+    "de": {"language_name": "German", "reviews": 1}
+  },
+  "initial_reviews": [
+    {
+      "review_id": 1048660796,
+      "title": "Ovation",
+      "text": "An unforgettable 14-day Caribbean cruise on the Seabourn Ovation...",
+      "rating": 5,
+      "language": "en",
+      "trip": {"stay_date": "2026-01-31"},
+      "reviewer": {"name": "Deb w", "username": "dwK5907IA", "contribution_count": 19}
+    },
+    "... 4 more"
+  ]
+}
+```
+
+</details>
+
+---
+
 ### Location Reviews
 
 ```
