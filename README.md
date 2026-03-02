@@ -1147,6 +1147,90 @@ print(response.json())
 
 ---
 
+### Cruise Sailing Pricing
+
+```
+GET https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/cruises/sailing-pricing
+```
+
+#### Parameters
+
+| Parameter | Required | Default | Description |
+|-----------|----------|---------|-------------|
+| `sailing_id` | Yes | — | Sailing ID (from `/cruises/list` or `/cruises/detail` itinerary sailings). |
+| `currency` | No | `USD` | Currency code for prices. |
+| `locale` | No | `en-US` | Localization code. |
+
+#### Example
+
+```python
+import requests
+
+response = requests.get(
+    "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/cruises/sailing-pricing",
+    params={"sailing_id": "2014294"},
+    headers={"API-Key": "YOUR_API_KEY"}
+)
+
+print(response.json())
+```
+
+#### Response
+
+<details>
+<summary>Sample Response (click to expand)</summary>
+
+```json
+{
+  "sailing_id": 2014294,
+  "departure_date": null,
+  "currency": "USD",
+  "suite_cabin": {
+    "min_price": 3655.0,
+    "max_price": 5218.0,
+    "count": 4,
+    "vendors": [
+      {
+        "vendor_id": 216,
+        "vendor_name": "PanacheCruises",
+        "deal_link": "https://www.cruisecritic.com/redirect/vendor-redirect/...",
+        "current_price": 3655.0,
+        "highest_price": 5088.0,
+        "is_featured_deal": false
+      },
+      {
+        "vendor_id": 31,
+        "vendor_name": "Cruises.com",
+        "deal_link": "https://www.cruisecritic.com/redirect/vendor-redirect/...",
+        "current_price": 3749.0,
+        "highest_price": 5218.0,
+        "is_featured_deal": false
+      },
+      {
+        "vendor_id": 80,
+        "vendor_name": "CruisesOnly.com",
+        "deal_link": "https://www.cruisecritic.com/redirect/vendor-redirect/...",
+        "current_price": 3749.0,
+        "highest_price": 5218.0,
+        "is_featured_deal": false
+      },
+      {
+        "vendor_id": 228,
+        "vendor_name": "Seabourn",
+        "deal_link": "https://www.cruisecritic.com/redirect/vendor-redirect/...",
+        "current_price": 4249.0,
+        "highest_price": 5218.0,
+        "is_featured_deal": false
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+---
+
 ### Location Reviews
 
 ```
