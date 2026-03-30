@@ -45,12 +45,19 @@ Watch the complete API walkthrough:
 ### Video Chapters
 
 00:00 - [Introduction to the TripAdvisor Scraper](https://www.youtube.com/watch?v=rxUfocVrajo&t=0s)
+
 00:41 - [Practical Use Cases for the Scraper](https://www.youtube.com/watch?v=rxUfocVrajo&t=41s)
+
 01:11 - [How to Get Started: Account Creation and API Key](https://www.youtube.com/watch?v=rxUfocVrajo&t=71s)
+
 01:32 - [Demonstration: Scraping Attraction Details (Disneyland)](https://www.youtube.com/watch?v=rxUfocVrajo&t=132s)
+
 02:32 - [Demonstration: Scraping Reviews](https://www.youtube.com/watch?v=rxUfocVrajo&t=232s)
+
 03:18 - [Demonstration: Listing City Attractions (Paris)](https://www.youtube.com/watch?v=rxUfocVrajo&t=318s)
+
 04:05 - [Key Benefits](https://www.youtube.com/watch?v=rxUfocVrajo&t=405s)
+
 04:55 - [Support & Contact Information](https://www.youtube.com/watch?v=rxUfocVrajo&t=455s)
 
 ## Get API Key
