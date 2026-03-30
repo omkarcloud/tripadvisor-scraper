@@ -1436,7 +1436,7 @@ No. The API handles all of that. You make a simple GET request and get clean JSO
 |------|-------|----------------|
 | Free | $0 | 1,000 |
 | Starter | $16 | 3,000 |
-| Growth | $48 | 15,000 |
+| Grow | $48 | 15,000 |
 | Scale | $148 | 75,000 |
 
 ## Questions? We have answers.
