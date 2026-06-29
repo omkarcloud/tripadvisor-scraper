@@ -1,5 +1,8 @@
 # TripAdvisor Scraper API
 
+REST API to comprehensively get reviews, search hotels/restaurants/attractions, browse listings, and get hotel details from TripAdvisor. Detailed Data and Supports 45+ locales and 145+ currencies.
+
+Get any TripAdvisor data via this well developed API.
 
 ## ▶️ Video Tutorial
 
@@ -27,11 +30,6 @@ Watch the complete API walkthrough:
 04:05 - [Key Benefits](https://www.youtube.com/watch?v=rxUfocVrajo&t=405s)
 
 04:55 - [Support & Contact Information](https://www.youtube.com/watch?v=rxUfocVrajo&t=455s)
-
-## About
-REST API to comprehensively get reviews, search hotels/restaurants/attractions, browse listings, and get hotel details from TripAdvisor. Detailed Data and Supports 45+ locales and 145+ currencies.
-
-Get any TripAdvisor data via this well developed API.
 
 ## Key Features
 
