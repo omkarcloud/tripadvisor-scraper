@@ -1,5 +1,3 @@
-![TripAdvisor Scraper Featured Image](https://raw.githubusercontent.com/omkarcloud/tripadvisor-scraper/master/tripadvisor-scraper-featured-image.png)
-
 # TripAdvisor Scraper API
 
 REST API to comprehensively get reviews, search hotels/restaurants/attractions, browse listings, and get hotel details from TripAdvisor. Detailed Data and Supports 45+ locales and 145+ currencies.
