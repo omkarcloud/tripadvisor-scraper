@@ -4,6 +4,33 @@ REST API to comprehensively get reviews, search hotels/restaurants/attractions, 
 
 Get any TripAdvisor data via this well developed API.
 
+## Key Features
+
+- Get reviews with ratings, trip type, reviewer profiles, and photos
+- Search and list hotels, restaurants, attractions, and cruises
+- Get detailed property data (amenities, hours, pricing, photos, rating breakdowns)
+- Filter by star rating, traveler type, date range, cuisine, and more
+- Supports 45+ locales and 145+ currencies
+- **100 requests/month on free tier**
+- Example Response:
+```json
+{
+  "review_id": "940716685",
+  "title": "Great experience with the family",
+  "text": "We visited in December and had an amazing time. The park was beautifully decorated for the holidays...",
+  "rating": 5,
+  "published_date": "2025-01-15",
+  "trip_type": "Family",
+  "travel_date": "2024-12",
+  "url": "https://www.tripadvisor.com/ShowUserReviews-g29092-d103346-r940716685-Disneyland_Park.html",
+  "user": {
+    "username": "TravelMom2024",
+    "review_count": 42,
+    "location": "Los Angeles, CA"
+  }
+}
+```
+
 ## ▶️ Video Tutorial
 
 Watch the complete API walkthrough: 
@@ -31,32 +58,6 @@ Watch the complete API walkthrough:
 
 04:55 - [Support & Contact Information](https://www.youtube.com/watch?v=rxUfocVrajo&t=455s)
 
-## Key Features
-
-- Get reviews with ratings, trip type, reviewer profiles, and photos
-- Search and list hotels, restaurants, attractions, and cruises
-- Get detailed property data (amenities, hours, pricing, photos, rating breakdowns)
-- Filter by star rating, traveler type, date range, cuisine, and more
-- Supports 45+ locales and 145+ currencies
-- **100 requests/month on free tier**
-- Example Response:
-```json
-{
-  "review_id": "940716685",
-  "title": "Great experience with the family",
-  "text": "We visited in December and had an amazing time. The park was beautifully decorated for the holidays...",
-  "rating": 5,
-  "published_date": "2025-01-15",
-  "trip_type": "Family",
-  "travel_date": "2024-12",
-  "url": "https://www.tripadvisor.com/ShowUserReviews-g29092-d103346-r940716685-Disneyland_Park.html",
-  "user": {
-    "username": "TravelMom2024",
-    "review_count": 42,
-    "location": "Los Angeles, CA"
-  }
-}
-```
 ## Get API Key
 
 Create an account at [omkar.cloud](https://www.omkar.cloud/auth/sign-up?redirect=/api-key) to get your API key.
