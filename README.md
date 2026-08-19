@@ -1,92 +1,107 @@
-# TripAdvisor Scraper API
+<p align="center">
+  <img src="https://raw.githubusercontent.com/omkarcloud/botasaurus/master/images/mascot.png" alt="tripadvisor scraper" />
+</p>
+<div align="center" style="margin-top: 0;">
+  <h1>✨ TripAdvisor Scraper 🤖</h1>
+  <p><strong>Scrape TripAdvisor hotels, restaurants, attractions, and cruises — with reviews, ratings, rankings, prices, full details, and each property's emails, phones, and social profiles. Clean JSON, no blocks, no proxies.</strong></p>
+</div>
+<em>
+  <h5 align="center">(Programming Language - Python 3)</h5>
+</em>
+<p align="center">
+  <a href="#">
+    <img alt="tripadvisor-scraper forks" src="https://img.shields.io/github/forks/omkarcloud/tripadvisor-scraper?style=for-the-badge" />
+  </a>
+  <a href="#">
+    <img alt="Repo stars" src="https://img.shields.io/github/stars/omkarcloud/tripadvisor-scraper?style=for-the-badge&color=yellow" />
+  </a>
+</p>
+<p align="center">
+  <img src="https://views.whatilearened.today/views/github/omkarcloud/tripadvisor-scraper.svg" width="80px" height="28px" alt="View" />
+</p>
 
-REST API to comprehensively get reviews, search hotels/restaurants/attractions, browse listings, and get hotel details from TripAdvisor. Detailed Data and Supports 45+ locales and 145+ currencies.
+TripAdvisor Scraper turns TripAdvisor into clean JSON, pulled live — no blocks, no proxies to manage. Search hotels, restaurants, and attractions by name, list every property in a city with rankings and prices, pull full property details, browse cruises and sailing prices, and paginate every review — all via one API.
 
-Get any TripAdvisor data via this well developed API.
+**New:** every hotel, restaurant, and attraction also comes with its **website contacts** — emails, phone numbers, social profiles, and the technologies it runs, crawled from the property's own website. TripAdvisor lists at most one phone and website per property; the contact crawl typically finds far more, each with source pages and an official/unofficial flag.
 
-## Key Features
+Reviews come back with rating, trip type, dates, language, owner responses, and reviewer profiles; listings carry ratings, review counts, award badges, rankings, prices, coordinates, and photos.
 
-- Get reviews with ratings, trip type, reviewer profiles, and photos
-- Search and list hotels, restaurants, attractions, and cruises
-- Get detailed property data (amenities, hours, pricing, photos, rating breakdowns)
-- Filter by star rating, traveler type, date range, cuisine, and more
-- Supports 45+ locales and 145+ currencies
-- **100 requests/month on free tier**
-- Example Response:
+It works across **45+ locales and 145+ currencies** via `locale` and `currency` — so you get localized results and prices in the currency you need.
+
+- **Rated Excellent — 4.6 based on 25 reviews** on [Trustpilot](https://www.trustpilot.com/review/omkar.cloud). Our open source work is sponsored by [1000+ devs on GitHub](https://github.com/sponsors/omkarcloud).
+
+[![Try the TripAdvisor Scraper API in the live playground — free, no signup](https://img.shields.io/badge/%E2%96%B6%20Playground-Run%20a%20live%20request%2C%20free-brightgreen?style=for-the-badge)](https://www.omkar.cloud/tools/tripadvisor-scraper-api/playground?utm_source=github&utm_medium=cpc&utm_content=badge)
+
+[![Free Plan: 200 requests per month](https://img.shields.io/badge/Free%20tier-200%20requests%2Fmonth-blue?style=for-the-badge)](#pricing)
+
+The same scraper is also available on **Apify** and **RapidAPI**:
+
+[![Run on Apify](https://img.shields.io/badge/Run%20on-Apify-blue)](https://apify.com/omkar-cloud/tripadvisor-scraper) [![Run on RapidAPI](https://img.shields.io/badge/Run%20on-RapidAPI-blue?logo=rapidapi)](https://rapidapi.com/Chetan11dev/api/tripadvisor-scraper)
+
+## Example: A Hotel — With Its Website Contacts
+
+One request to the hotel details API returns the full profile **plus the contacts found on the hotel's own website**:
+
+```
+GET https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/hotels/detail?query=Swissotel Chicago
+```
+
 ```json
 {
-  "review_id": "940716685",
-  "title": "Great experience with the family",
-  "text": "We visited in December and had an amazing time. The park was beautifully decorated for the holidays...",
-  "rating": 5,
-  "published_date": "2025-01-15",
-  "trip_type": "Family",
-  "travel_date": "2024-12",
-  "url": "https://www.tripadvisor.com/ShowUserReviews-g29092-d103346-r940716685-Disneyland_Park.html",
-  "user": {
-    "username": "TravelMom2024",
-    "review_count": 42,
-    "location": "Los Angeles, CA"
-  }
+  "tripadvisor_entity_id": 114581,
+  "name": "Swissotel Chicago",
+  "link": "https://www.tripadvisor.com/Hotel_Review-g35805-d114581-Reviews-Swissotel_Chicago-Chicago_Illinois.html",
+  "rating": 4.3,
+  "reviews": 6034,
+  "hotel_class": 4,
+  "ranking": { "current_rank": 30, "total": 205, "text": "#30 of 205 hotels in Chicago" },
+  "website": "https://www.swissotel.com/hotels/chicago/",
+  "website_contacts": {
+    "domain": "swissotel.com",
+    "emails": [
+      { "value": "chicago@swissotel.com", "sources": ["https://www.swissotel.com/hotels/chicago/"], "is_likely_official": true }
+    ],
+    "phones": [
+      { "value": "+13125650565", "sources": ["https://www.swissotel.com/hotels/chicago/"], "is_likely_official": true }
+    ],
+    "instagrams": [
+      { "value": "https://www.instagram.com/swissotelchicago", "is_likely_official": true }
+    ],
+    "facebooks": [
+      { "value": "https://www.facebook.com/SwissotelChicago", "is_likely_official": true }
+    ],
+    "technologies": [
+      { "name": "Cloudflare", "categories": ["CDN"] },
+      { "name": "Google Analytics", "categories": ["Analytics"] }
+    ]
+  },
+  "phone": "+1 312-565-0565",
+  "address": "323 East Wacker Drive, Chicago, IL 60601",
+  "coordinates": { "latitude": 41.88671, "longitude": -87.61969 },
+  "amenities": ["Pool", "Free Wifi", "Fitness Center", "Bar/Lounge", "Restaurant"]
 }
 ```
 
-## ▶️ Video Tutorial
+*Trimmed for readability — the full response also has the rating distribution, AI review summary, review keywords, photo gallery, room tips, FAQs, nearby entities, and booking offers.*
 
-Watch the complete API walkthrough: 
+The `website` and `phone` are what TripAdvisor itself lists. **`website_contacts` goes further:** we crawl the hotel's own website with our open-source **[Website Email Contact Scraper](https://github.com/omkarcloud/website-email-contact-scraper)** and return every email, phone number, social profile, and technology found on it — each with source pages and an official/unofficial flag. It's on all three detail endpoints (hotels, restaurants, attractions); set the crawl depth with `website_contacts_crawl_mode` (`homepage` default, `deep`, or `off`).
 
-[![TripAdvisor Scraper API Walkthrough](https://raw.githubusercontent.com/omkarcloud/tripadvisor-scraper/master/tripadvisor-scraper-youtube-video-preview.png)](https://www.youtube.com/watch?v=rxUfocVrajo)
+**[Run this exact request in the Playground — no signup, no key →](https://www.omkar.cloud/tools/tripadvisor-scraper-api/playground?utm_source=github&utm_medium=cpc&utm_content=example)**
 
-### Why Watch This 5-Minute Video?
-- Learn to extract attraction details, reviews, and city lists using the best TripAdvisor Scraper API on the market.
+The playground comes prefilled with this request and runs it against the live API in your browser. The JSON it returns is identical to what the API returns.
 
-### Video Chapters
+## Start Getting Data in Minutes
 
-00:00 - [Introduction to the TripAdvisor Scraper](https://www.youtube.com/watch?v=rxUfocVrajo&t=0s)
-
-00:41 - [Practical Use Cases for the Scraper](https://www.youtube.com/watch?v=rxUfocVrajo&t=41s)
-
-01:11 - [How to Get Started: Account Creation and API Key](https://www.youtube.com/watch?v=rxUfocVrajo&t=71s)
-
-01:32 - [Demonstration: Scraping Attraction Details (Disneyland)](https://www.youtube.com/watch?v=rxUfocVrajo&t=132s)
-
-02:32 - [Demonstration: Scraping Reviews](https://www.youtube.com/watch?v=rxUfocVrajo&t=232s)
-
-03:18 - [Demonstration: Listing City Attractions (Paris)](https://www.youtube.com/watch?v=rxUfocVrajo&t=318s)
-
-04:05 - [Key Benefits](https://www.youtube.com/watch?v=rxUfocVrajo&t=405s)
-
-04:55 - [Support & Contact Information](https://www.youtube.com/watch?v=rxUfocVrajo&t=455s)
-
-## Get API Key
-
-Create an account at [omkar.cloud](https://www.omkar.cloud/auth/sign-up?redirect=/api-key) to get your API key.
-
-It takes just 2 minutes to sign up. You get 100 free requests every month—more than enough for most users to get detailed TripAdvisor data without paying a dime.
-
-This is a well built product, and your search for the best TripAdvisor Scraper API ends right here. 
-
-## Quick Start
-
-```bash
-curl -X GET "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/hotels/search?query=Swissotel%20Chicago" \
-  -H "API-Key: YOUR_API_KEY"
-```
-
-## Quick Start (Python)
-
-```bash
-pip install requests
-```
+Python and Node.js integration examples are available for every endpoint in the playground, so you can get TripAdvisor data in minutes instead of days.
 
 ```python
 import requests
 
-# Search for hotels
+# List every hotel in a city, ranked, with prices
 response = requests.get(
-    f"{base_url}/hotels/search",
-    params={"query": "Swissotel Chicago"},
-    headers={"API-Key": api_key}
+    "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/hotels/list",
+    params={"query": "New York City", "page": "1"},
+    headers={"API-Key": "YOUR_API_KEY"},
 )
 
 print(response.json())
@@ -94,67 +109,76 @@ print(response.json())
 
 ## API Reference
 
-### Hotel Search
+All endpoints are GET requests against `https://tripadvisor-scraper-api.omkar.cloud`, authenticated with the `API-Key` header, returning JSON.
+
+Every endpoint takes a `locale` (default `en-US`, 45+ supported); the list endpoints also take a `currency` (default `USD`, 145+ supported). The three entity families — **Hotels**, **Restaurants**, **Attractions** — each follow the same `search → list → detail` shape; **Cruises** and **Reviews** round it out.
+
+The `query` on search, list, detail, and reviews endpoints accepts a **location name**, a **TripAdvisor URL**, or an **entity ID** — use whichever you have.
+
+### Location Reviews
+
+▶ [Try it live in the Playground →](https://www.omkar.cloud/tools/tripadvisor-scraper-api/playground?utm_source=github&utm_medium=cpc&utm_content=endpoint-reviews)
 
 ```
-GET https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/hotels/search
+GET https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/reviews?query=126260
 ```
 
-#### Parameters
+Paginate every review for any hotel, restaurant, attraction, or cruise — 20 per page — with filters.
 
 | Parameter | Required | Default | Description |
 |-----------|----------|---------|-------------|
-| `query` | Yes | — | Search text (e.g., `new york`, `Swissotel Chicago`). |
+| `query` | Yes | — | Location name, TripAdvisor URL, or entity ID. |
+| `page` | No | `1` | Page number. |
+| `sort_by` | No | `most_recent` | `most_recent`, `detailed_reviews`. |
+| `rating_is` | No | — | Star ratings, comma-separated (e.g. `4,5`). |
+| `since` | No | — | Only reviews on or after this date (`YYYY-MM-DD`). |
+| `traveler_type` | No | — | `business`, `couples`, `family`, `friends`, `solo` (comma-separated). |
+| `months_of_visit` | No | — | Months the traveler visited (comma-separated). |
+| `keyword` | No | — | Keyword to match in review title or body. |
 | `locale` | No | `en-US` | Localization code. |
-
-#### Example
-
-```python
-import requests
-
-response = requests.get(
-    "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/hotels/search",
-    params={"query": "new york"},
-    headers={"API-Key": "YOUR_API_KEY"}
-)
-
-print(response.json())
-```
-
-#### Response
 
 <details>
 <summary>Sample Response (click to expand)</summary>
 
 ```json
 {
-  "count": 4,
+  "count": 6657,
+  "per_page": 20,
+  "current_page": 1,
+  "total_pages": 333,
+  "next": "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/reviews?query=126260&page=2",
+  "previous": null,
   "results": [
     {
-      "tripadvisor_entity_id": 60763,
-      "name": "New York City",
-      "link": "https://www.tripadvisor.com/Hotels-g60763-New_York_City_New_York-Hotels.html",
-      "place_type": "CITY",
-      "is_tripadvisor_entity": false,
-      "featured_image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/c5/7c/68/caption.jpg",
-      "coordinates": {
-        "latitude": 40.713238,
-        "longitude": -74.00584
+      "review_id": 1073681759,
+      "review_link": "https://www.tripadvisor.com/ShowUserReviews-g60763-d126260-r1073681759-Lotte_New_York_Palace-New_York_City_New_York.html",
+      "title": "Would not stay again",
+      "text": "Items stolen from room, incidentals amount very high $600 only received $115 back...",
+      "rating": 1,
+      "subratings": [],
+      "like_count": 0,
+      "language": "en",
+      "is_translated": false,
+      "owner_response": null,
+      "trip": { "trip_type": null, "stay_date": "2026-08-31" },
+      "reviewer": {
+        "reviewer_id": "D3AA4EBE6B09E7177A080FC1762FBE5D",
+        "name": "whyteclair",
+        "profile_link": "https://www.tripadvisor.com/Profile/whyteclair",
+        "contribution_count": 6,
+        "is_verified": false
       },
-      "parent_location": {
-        "tripadvisor_entity_id": 28953,
-        "name": "New York"
-      },
-      "other_links": {
-        "root": "https://www.tripadvisor.com/Tourism-g60763-New_York_City_New_York-Vacations.html",
-        "attractions": "https://www.tripadvisor.com/Attractions-g60763-Activities-New_York_City_New_York.html",
-        "restaurants": "https://www.tripadvisor.com/Restaurants-g60763-New_York_City_New_York.html",
-        "hotels": "https://www.tripadvisor.com/Hotels-g60763-New_York_City_New_York-Hotels.html",
-        "vacation_rentals": "https://www.tripadvisor.com/VacationRentals-g60763-Reviews-New_York_City_New_York-Vacation_Rentals.html"
-      }
-    },
-    ...
-  ]
+      "images": [],
+      "created_at_date": "2026-08-17",
+      "published_at_date": "2026-08-18"
+    }
+  ],
+  "location": {
+    "tripadvisor_entity_id": 126260,
+    "name": "Lotte New York Palace",
+    "link": "https://www.tripadvisor.com/Hotel_Review-d126260-Reviews-Lotte_New_York_Palace.html",
+    "place_type": "hotel"
+  }
 }
 ```
 
@@ -162,46 +186,32 @@ print(response.json())
 
 ---
 
-### Hotel List
+### Hotels
 
 ```
-GET https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/hotels/list
+GET /tripadvisor/hotels/search?query=new+york
+GET /tripadvisor/hotels/list?query=New+York+City
+GET /tripadvisor/hotels/detail?query=114581
 ```
 
-#### Parameters
+- **Search** resolves a query into matching locations (cities and hotels), each with entity ID, coordinates, and cross-links to that place's hotels/restaurants/attractions. Takes `query` (required) and `locale`.
+- **List** returns every hotel in a city, ranked, 30 per page — with rating, review count, price and price range, award badges, ranking, hotel class, style scores, address, coordinates, subratings, and a review snippet.
+- **Detail** returns the full hotel profile. Takes `query` (required), `locale`, and **`website_contacts_crawl_mode`** (`homepage` default / `deep` / `off`) — which crawls the hotel's own website and adds `website_contacts` (emails, phones, social profiles, technologies) just below `website`. List also takes `page`, `check_in_date`, `check_out_date`, `rooms`, `adults`, `min_rating`, `is_5_star`, `awards`, and `currency`.
 
-| Parameter | Required | Default | Description |
+| List parameter | Required | Default | Description |
 |-----------|----------|---------|-------------|
-| `query` | Yes | — | City name, TripAdvisor URL, or entity ID. |
+| `query` | Yes | — | City name, location URL, or entity ID. |
 | `page` | No | `1` | Page number (30 hotels per page). |
-| `check_in_date` | No | — | Check-in date (`YYYY-MM-DD`). |
-| `check_out_date` | No | — | Check-out date (`YYYY-MM-DD`). |
-| `rooms` | No | `1` | Number of rooms. |
-| `adults` | No | `2` | Number of adults. |
-| `min_rating` | No | — | Minimum rating: `2`, `3`, `4`, `5`. |
-| `is_5_star` | No | — | Filter for 5-star hotels: `true`, `false`. |
-| `awards` | No | — | Filter: `travelers_choice`, `travelers_choice_best_of_the_best`. |
+| `check_in_date` / `check_out_date` | No | — | Stay dates (`YYYY-MM-DD`) for live prices. |
+| `rooms` / `adults` | No | `1` / `2` | Occupancy for pricing. |
+| `min_rating` | No | — | `2`, `3`, `4`, `5`. |
+| `is_5_star` | No | — | `true` for 5-star hotels only. |
+| `awards` | No | — | `travelers_choice`, `travelers_choice_best_of_the_best`. |
 | `currency` | No | `USD` | Currency code. |
 | `locale` | No | `en-US` | Localization code. |
 
-#### Example
-
-```python
-import requests
-
-response = requests.get(
-    "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/hotels/list",
-    params={"query": "new york", "page": "1"},
-    headers={"API-Key": "YOUR_API_KEY"}
-)
-
-print(response.json())
-```
-
-#### Response
-
 <details>
-<summary>Sample Response (click to expand)</summary>
+<summary>Sample Response — Hotel List (click to expand)</summary>
 
 ```json
 {
@@ -209,203 +219,32 @@ print(response.json())
   "per_page": 30,
   "current_page": 1,
   "total_pages": 34,
-  "next": "https://tripadvisor-scraper-api.omkar.cloud/hotels/list?query=60763&page=2",
+  "next": "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/hotels/list?query=60763&page=2",
   "previous": null,
   "results": [
     {
       "tripadvisor_entity_id": 23448880,
       "name": "Motto by Hilton New York City Chelsea",
       "link": "https://www.tripadvisor.com/Hotel_Review-g60763-d23448880-Reviews-Motto_by_Hilton_New_York_City_Chelsea-New_York_City_New_York.html",
-      "description": "Modern NYC hotel with a central location and breathtaking views of landmarks like the Statue of Liberty and Empire State Building. Stylish, clean rooms with great amenities and comfortable beds. Highly rated bar, restaurant, and outdoor spaces. Friendly staff and excellent service.",
+      "description": "Modern NYC hotel with a central location and breathtaking views of landmarks...",
       "rating": 4.8,
       "reviews": 1758,
-      "website": "https://www.tripadvisor.com/Commerce?p=TABAIndependentHotels&src=207825639&geo=23448880...",
       "phone": "1 (855) 605-0316",
-      "email": null,
-      "featured_image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/31/be/a9/38/exterior.jpg",
-      "award": {
-        "award_name": "Travelers Choice",
-        "year": 2025,
-        "award_type": "travelers_choice"
-      },
-      "ranking": {
-        "current_rank": 25,
-        "total": 770,
-        "text": "#23 of 517 hotels in New York City"
-      },
+      "featured_image": "https://cdn.tripadvisor.com/media/photo-o/31/be/a9/38/exterior.jpg",
+      "award": { "award_name": "Travelers Choice", "year": 2025, "award_type": "travelers_choice" },
+      "ranking": { "current_rank": 25, "total": 770, "text": "#23 of 517 hotels in New York City" },
       "hotel_class": 3.5,
-      "hotel_styles": [
-        {
-          "name": "Business",
-          "rank": 3,
-          "rating": 4.66
-        },
-        {
-          "name": "Modern",
-          "rank": 4,
-          "rating": 4.71
-        },
-        {
-          "name": "City View",
-          "rank": 4,
-          "rating": 4.66
-        }
-      ],
       "address": "113 West 24th Street, New York City, NY 10001",
-      "detailed_address": {
-        "street1": "113 West 24th Street",
-        "street2": null,
-        "city": "New York City",
-        "state": "New York",
-        "country": "United States",
-        "country_code": "US",
-        "postal_code": "10001",
-        "address": "113 West 24th Street, New York City, NY 10001"
-      },
-      "coordinates": {
-        "latitude": 40.74406,
-        "longitude": -73.99294
-      },
+      "coordinates": { "latitude": 40.74406, "longitude": -73.99294 },
       "price": 203,
-      "price_range": {
-        "min": 203,
-        "max": 805
-      },
-      "containing_neighborhoods": [
-        {
-          "tripadvisor_entity_id": 15565668,
-          "name": "Tenderloin"
-        },
-        {
-          "tripadvisor_entity_id": 7102343,
-          "name": "Chelsea"
-        }
-      ],
-      "parent_location": {
-        "tripadvisor_entity_id": 60763,
-        "name": "New York City"
-      },
-      "booking_offers": null,
+      "price_range": { "min": 203, "max": 805 },
+      "parent_location": { "tripadvisor_entity_id": 60763, "name": "New York City" },
       "subratings": {
-        "location": 4.72,
-        "cleanliness": 4.62,
-        "service": 4.78,
-        "value": 4.54,
-        "sleep_quality": 4.88,
-        "rooms": 4.9,
-        "food": 4.68
-      },
-      "review_snippet": {
-        "review_id": 884782464,
-        "title": "Great hotel, great location!",
-        "snippet_text": "Hotel staff were friendly and eager to accommodate, bar/restaurant was comfy and fun and offered delicious options, and the room was clean and wonderfully modest.",
-        "rating": 5
+        "location": 4.72, "cleanliness": 4.62, "service": 4.78, "value": 4.54,
+        "sleep_quality": 4.88, "rooms": 4.9, "food": 4.68
       },
       "is_ad": false
-    },
-    ...
-  ],
-  "suggested_hotels": []
-}
-```
-
-</details>
-
----
-
-### Hotel Details
-
-```
-GET https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/hotels/detail
-```
-
-#### Parameters
-
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| `query` | Yes | — | TripAdvisor Hotel URL, hotel name, or entity ID. |
-| `locale` | No | `en-US` | Localization code. |
-
-#### Example
-
-```python
-import requests
-
-response = requests.get(
-    "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/hotels/detail",
-    params={"query": "114581"},
-    headers={"API-Key": "YOUR_API_KEY"}
-)
-
-print(response.json())
-```
-
-#### Response Fields
-
-Response redacted due to too long length. Please make an HTTP request to retrieve the full hotel details.
-
----
-
-### Restaurant Search
-
-```
-GET https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/restaurants/search
-```
-
-#### Parameters
-
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| `query` | Yes | — | Search text (e.g., `new york`, `Piccola Cucina, New York`). |
-| `locale` | No | `en-US` | Localization code. |
-
-#### Example
-
-```python
-import requests
-
-response = requests.get(
-    "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/restaurants/search",
-    params={"query": "new york"},
-    headers={"API-Key": "YOUR_API_KEY"}
-)
-
-print(response.json())
-```
-
-#### Response
-
-<details>
-<summary>Sample Response (click to expand)</summary>
-
-```json
-{
-  "count": 5,
-  "results": [
-    {
-      "tripadvisor_entity_id": 60763,
-      "name": "New York City",
-      "link": "https://www.tripadvisor.com/Restaurants-g60763-New_York_City_New_York.html",
-      "place_type": "CITY",
-      "is_tripadvisor_entity": false,
-      "featured_image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/c5/7c/68/caption.jpg",
-      "coordinates": {
-        "latitude": 40.713238,
-        "longitude": -74.00584
-      },
-      "parent_location": {
-        "tripadvisor_entity_id": 28953,
-        "name": "New York"
-      },
-      "other_links": {
-        "root": "https://www.tripadvisor.com/Tourism-g60763-New_York_City_New_York-Vacations.html",
-        "attractions": "https://www.tripadvisor.com/Attractions-g60763-Activities-New_York_City_New_York.html",
-        "restaurants": "https://www.tripadvisor.com/Restaurants-g60763-New_York_City_New_York.html",
-        "hotels": "https://www.tripadvisor.com/Hotels-g60763-New_York_City_New_York-Hotels.html",
-        "vacation_rentals": "https://www.tripadvisor.com/VacationRentals-g60763-Reviews-New_York_City_New_York-Vacation_Rentals.html"
-      }
-    },
-    ...
+    }
   ]
 }
 ```
@@ -414,42 +253,20 @@ print(response.json())
 
 ---
 
-### Restaurant List
+### Restaurants
 
 ```
-GET https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/restaurants/list
+GET /tripadvisor/restaurants/search?query=new+york
+GET /tripadvisor/restaurants/list?query=New+York+City
+GET /tripadvisor/restaurants/detail?query=Piccola+Cucina,+New+York
 ```
 
-#### Parameters
-
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| `query` | Yes | — | City name, TripAdvisor URL, or entity ID. |
-| `page` | No | `1` | Page number (30 restaurants per page). |
-| `min_rating` | No | — | Minimum rating: `3`, `4`, `5`. |
-| `establishment_types` | No | — | Filter: `restaurants`, `quick_bites`, `coffee_tea`, `bakeries`, `dessert`, `bars_pubs`, etc. |
-| `meal_types` | No | — | Filter: `breakfast`, `brunch`, `lunch`, `dinner`. |
-| `currency` | No | `USD` | Currency code. |
-| `locale` | No | `en-US` | Localization code. |
-
-#### Example
-
-```python
-import requests
-
-response = requests.get(
-    "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/restaurants/list",
-    params={"query": "new york", "establishment_types": "restaurants"},
-    headers={"API-Key": "YOUR_API_KEY"}
-)
-
-print(response.json())
-```
-
-#### Response
+- **Search** resolves a query into matching locations. Takes `query` (required) and `locale`.
+- **List** returns every restaurant in a city, 30 per page — with rating, review count, phone, menu link, cuisines, price range, opening hours, review snippets, reservation providers, and delivery flags. Takes `query` (required), `page`, `min_rating` (`3`/`4`/`5`), `establishment_types` (`restaurants`, `quick_bites`, `coffee_tea`, `bakeries`, `dessert`, `bars_pubs`, …), `meal_types` (`breakfast`, `brunch`, `lunch`, `dinner`), and `locale`.
+- **Detail** returns the full restaurant profile. Takes `query` (required), `locale`, and **`website_contacts_crawl_mode`** (`homepage` default / `deep` / `off`) — which crawls the restaurant's own website and adds `website_contacts` (emails, phones, social profiles, technologies).
 
 <details>
-<summary>Sample Response (click to expand)</summary>
+<summary>Sample Response — Restaurant List (click to expand)</summary>
 
 ```json
 {
@@ -457,7 +274,7 @@ print(response.json())
   "per_page": 30,
   "current_page": 1,
   "total_pages": 334,
-  "next": "https://tripadvisor-scraper-api.omkar.cloud/restaurants/list?query=60763&establishment_types=restaurants&page=2",
+  "next": "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/restaurants/list?query=60763&page=2",
   "previous": null,
   "results": [
     {
@@ -467,66 +284,16 @@ print(response.json())
       "rating": 4.3,
       "reviews": 2546,
       "phone": "+1 212-297-9177",
-      "featured_image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/26/d6/40/87/poterhouse-steak.jpg",
-      "award": {
-        "award_name": "Travelers Choice",
-        "year": 2025,
-        "award_type": "travelers_choice"
-      },
-      "address": {
-        "address": "52 East 41st Street, New York City, NY 10017",
-        "country": "United States",
-        "country_code": "US",
-        "postal_code": "10017"
-      },
-      "coordinates": {
-        "latitude": 40.75174,
-        "longitude": -73.97906
-      },
+      "menu_link": "https://benjaminsteakhouse.com/nyc/our-menus/",
+      "award": { "award_name": "Travelers Choice", "year": 2025, "award_type": "travelers_choice" },
+      "address": { "address": "52 East 41st Street, New York City, NY 10017", "country_code": "US", "postal_code": "10017" },
+      "coordinates": { "latitude": 40.75174, "longitude": -73.97906 },
       "price_range": "$",
-      "parent_location": {
-        "tripadvisor_entity_id": 60763,
-        "name": "New York City"
-      },
       "is_open_now": true,
-      "status_text": "Open now",
-      "hours": [
-        {
-          "day": "Monday",
-          "times": [
-            { "open": "07:00", "close": "11:15" },
-            { "open": "11:30", "close": "15:45" },
-            { "open": "16:00", "close": "22:00" }
-          ]
-        },
-        ...
-      ],
-      "cuisines": [
-        "Steakhouse",
-        "Seafood"
-      ],
-      "establishment_types": [
-        {
-          "tag_id": 10591,
-          "name": "Restaurants"
-        }
-      ],
-      "review_snippets": [
-        {
-          "snippet_text": "They portion for each person at the table, so each of us had half a lobster,...",
-          "review_link": "https://www.tripadvisor.com/ShowUserReviews-g60763-d655719-r918895952-Benjamin_Steakhouse-New_York_City_New_York.html"
-        }
-      ],
-      "reservation_providers": [
-        {
-          "provider_id": "15910",
-          "provider_name": "OpenTable",
-          "has_timeslots": true
-        }
-      ],
+      "cuisines": ["Steakhouse", "Seafood"],
+      "establishment_types": [{ "tag_id": 10591, "name": "Restaurants" }],
       "has_reservation": true,
-      "has_delivery": false,
-      "is_ad": true
+      "has_delivery": false
     }
   ]
 }
@@ -536,143 +303,20 @@ print(response.json())
 
 ---
 
-### Restaurant Details
+### Attractions
 
 ```
-GET https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/restaurants/detail
+GET /tripadvisor/attractions/search?query=new+york
+GET /tripadvisor/attractions/list?query=New+York+City
+GET /tripadvisor/attractions/detail?query=Central+Park,+New+York
 ```
 
-#### Parameters
-
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| `query` | Yes | — | TripAdvisor Restaurant URL, restaurant name, or entity ID. |
-| `locale` | No | `en-US` | Localization code. |
-
-#### Example
-
-```python
-import requests
-
-response = requests.get(
-    "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/restaurants/detail",
-    params={"query": "Piccola Cucina, New York"},
-    headers={"API-Key": "YOUR_API_KEY"}
-)
-
-print(response.json())
-```
-
-#### Response Fields
-
-Response redacted due to too long length. Please make an HTTP request to retrieve the full restaurant details.
-
----
-
-### Attraction Search
-
-```
-GET https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/attractions/search
-```
-
-#### Parameters
-
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| `query` | Yes | — | Search text (e.g., `new york`, `Disneyland Park, California`). |
-| `locale` | No | `en-US` | Localization code. |
-
-#### Example
-
-```python
-import requests
-
-response = requests.get(
-    "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/attractions/search",
-    params={"query": "new york"},
-    headers={"API-Key": "YOUR_API_KEY"}
-)
-
-print(response.json())
-```
-
-#### Response
+- **Search** resolves a query into matching locations. Takes `query` (required) and `locale`.
+- **List** returns every attraction in a city, 30 per page — with rating, review count, categories, award badges, description, neighborhood, ticket/tour links, and experiences count. Takes `query` (required), `page`, `good_for` (`good_for_kids`, `good_for_couples`, `free_entry`, `hidden_gems`, `adventurous`, …), `min_rating`, `awards`, `currency`, and `locale`.
+- **Detail** returns the full attraction profile. Takes `query` (required), `locale`, and **`website_contacts_crawl_mode`** (`homepage` default / `deep` / `off`) — which crawls the attraction's own website and adds `website_contacts` (emails, phones, social profiles, technologies).
 
 <details>
-<summary>Sample Response (click to expand)</summary>
-
-```json
-{
-  "count": 3,
-  "results": [
-    {
-      "tripadvisor_entity_id": 60763,
-      "name": "New York City",
-      "link": "https://www.tripadvisor.com/Attractions-g60763-Activities-New_York_City_New_York.html",
-      "place_type": "CITY",
-      "is_tripadvisor_entity": false,
-      "featured_image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/c5/7c/68/caption.jpg",
-      "coordinates": {
-        "latitude": 40.713238,
-        "longitude": -74.00584
-      },
-      "parent_location": {
-        "tripadvisor_entity_id": 28953,
-        "name": "New York"
-      },
-      "other_links": {
-        "root": "https://www.tripadvisor.com/Tourism-g60763-New_York_City_New_York-Vacations.html",
-        "attractions": "https://www.tripadvisor.com/Attractions-g60763-Activities-New_York_City_New_York.html",
-        "restaurants": "https://www.tripadvisor.com/Restaurants-g60763-New_York_City_New_York.html",
-        "hotels": "https://www.tripadvisor.com/Hotels-g60763-New_York_City_New_York-Hotels.html",
-        "vacation_rentals": "https://www.tripadvisor.com/VacationRentals-g60763-Reviews-New_York_City_New_York-Vacation_Rentals.html"
-      }
-    },
-    ...
-  ]
-}
-```
-
-</details>
-
----
-
-### Attractions List
-
-```
-GET https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/attractions/list
-```
-
-#### Parameters
-
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| `query` | Yes | — | City name, TripAdvisor URL, or entity ID. |
-| `page` | No | `1` | Page number (30 attractions per page). |
-| `good_for` | No | — | Filter: `good_for_kids`, `good_for_couples`, `free_entry`, `hidden_gems`, `adventurous`, etc. |
-| `min_rating` | No | — | Minimum rating: `2`, `3`, `4`, `5`. |
-| `awards` | No | — | Filter: `travelers_choice`, `travelers_choice_best_of_the_best`. |
-| `currency` | No | `USD` | Currency code. |
-| `locale` | No | `en-US` | Localization code. |
-
-#### Example
-
-```python
-import requests
-
-response = requests.get(
-    "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/attractions/list",
-    params={"query": "new york"},
-    headers={"API-Key": "YOUR_API_KEY"}
-)
-
-print(response.json())
-```
-
-#### Response
-
-<details>
-<summary>Sample Response (click to expand)</summary>
+<summary>Sample Response — Attractions List (click to expand)</summary>
 
 ```json
 {
@@ -680,45 +324,25 @@ print(response.json())
   "per_page": 30,
   "current_page": 1,
   "total_pages": 270,
-  "next": "https://tripadvisor-scraper-api.omkar.cloud/attractions/list?query=60763&page=2",
+  "next": "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/attractions/list?query=60763&page=2",
   "previous": null,
   "results": [
     {
       "tripadvisor_entity_id": 105127,
       "name": "Central Park",
-      "description": "For more than 150 years, visitors have flocked to Central Park's 843 green acres in the heart of Manhattan. Since 1980, the Park has been managed by the Central Park Conservancy, in partnership with the public. Central Park is open 6 am to 1 am daily. Visit the official website of Central Park to learn more about Park happenings and activities and to learn how you to help Central Park!",
+      "description": "For more than 150 years, visitors have flocked to Central Park's 843 green acres...",
       "neighborhood": "Central Park",
       "link": "https://www.tripadvisor.com/Attraction_Review-g60763-d105127-Reviews-Central_Park-New_York_City_New_York.html",
       "rating": 4.7,
       "reviews": 134359,
       "categories": [
-        {
-          "id": 11160,
-          "name": "Points of Interest & Landmarks"
-        },
-        {
-          "id": 11092,
-          "name": "Parks"
-        }
+        { "id": 11160, "name": "Points of Interest & Landmarks" },
+        { "id": 11092, "name": "Parks" }
       ],
-      "award": {
-        "award_name": "Travelers Choice Best of the Best",
-        "year": "2025",
-        "award_type": "travelers_choice_best_of_the_best"
-      },
-      "featured_image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2f/c4/c8/4b/caption.jpg",
-      "pricing_text": null,
-      "commerce": {
-        "tickets_link": null,
-        "tours_link": "https://www.tripadvisor.com/Attraction_Products-g60763-d105127-Central_Park-New_York_City_New_York.html"
-      },
-      "experiences": {
-        "experiences_link": "https://www.tripadvisor.com/Attraction_Products-g60763-d105127-Central_Park-New_York_City_New_York.html",
-        "experiences_count": 144
-      },
-      "review_snippet": null
-    },
-    ...
+      "award": { "award_name": "Travelers Choice Best of the Best", "year": "2025", "award_type": "travelers_choice_best_of_the_best" },
+      "featured_image": "https://cdn.tripadvisor.com/media/photo-o/2f/c4/c8/4b/caption.jpg",
+      "experiences": { "experiences_count": 144 }
+    }
   ]
 }
 ```
@@ -727,145 +351,32 @@ print(response.json())
 
 ---
 
-### Attraction Details
+### Cruises
 
 ```
-GET https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/attractions/detail
+GET /tripadvisor/cruises                                  # 19 destinations, no params
+GET /tripadvisor/cruises/list?destination_name=Caribbean
+GET /tripadvisor/cruises/detail?query=Seabourn+Ovation
+GET /tripadvisor/cruises/sailing-pricing?sailing_id=2014294
 ```
 
-#### Parameters
-
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| `query` | Yes | — | TripAdvisor Attraction URL, attraction name, or entity ID. |
-| `locale` | No | `en-US` | Localization code. |
-
-#### Example
-
-```python
-import requests
-
-response = requests.get(
-    "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/attractions/detail",
-    params={"query": "Central Park, New York"},
-    headers={"API-Key": "YOUR_API_KEY"}
-)
-
-print(response.json())
-```
-
-#### Response Fields
-
-Response redacted due to too long length. Please make an HTTP request to retrieve the full attraction details.
-
----
-
-### Cruise Destinations
-
-```
-GET https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/cruises
-```
-
-No additional parameters required. Returns all available cruise destinations.
-
-#### Example
-
-```python
-import requests
-
-response = requests.get(
-    "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/cruises",
-    headers={"API-Key": "YOUR_API_KEY"}
-)
-
-print(response.json())
-```
-
-#### Response
+- **Cruise Destinations** lists all 19 cruise destinations with their entity IDs. No parameters.
+- **Cruise List** returns cruises for a destination, 20 per page — each with ship (capacity, crew, amenities, rating, reasons to pick/skip), departure/arrival ports, day-by-day itinerary, and sailings with prices. Takes `destination_name` (required), `page`, `departure_date` (`YYYY-MM`), `min_price`/`max_price`, `cruise_length` (`3-5`, `6-9`, `10-14`, `15`), `cabin_type` (`inside`, `outside`, `balcony`, `suite`), `sort_by` (`popularity`, `departure_date`, `price`, `cruise_length`, `cruise_ship`), `currency`, and `locale`.
+- **Cruise Details** returns the full ship profile — cabins, dining, activities, decks, itineraries, rating distribution, and initial reviews. Takes `query` (required) and `locale`.
+- **Cruise Sailing Pricing** returns per-cabin-type prices from multiple vendors for a specific sailing. Takes `sailing_id` (required), `currency`, and `locale`.
 
 <details>
-<summary>Sample Response (click to expand)</summary>
+<summary>Sample Response — Cruise Destinations (click to expand)</summary>
 
 ```json
 {
   "count": 19,
   "results": [
-    {
-      "tripadvisor_entity_id": 147237,
-      "name": "Caribbean"
-    },
-    {
-      "tripadvisor_entity_id": 147414,
-      "name": "Bahamas"
-    },
-    {
-      "tripadvisor_entity_id": 150768,
-      "name": "Mexico"
-    },
-    {
-      "tripadvisor_entity_id": 28923,
-      "name": "Alaska"
-    },
-    {
-      "tripadvisor_entity_id": 147255,
-      "name": "Bermuda"
-    },
-    {
-      "tripadvisor_entity_id": 153339,
-      "name": "Canada"
-    },
-    {
-      "tripadvisor_entity_id": 14114078,
-      "name": "Mediterranean"
-    },
-    {
-      "tripadvisor_entity_id": 6,
-      "name": "Africa"
-    },
-    {
-      "tripadvisor_entity_id": 12,
-      "name": "Antarctica"
-    },
-    {
-      "tripadvisor_entity_id": 2,
-      "name": "Asia"
-    },
-    {
-      "tripadvisor_entity_id": 255055,
-      "name": "Australia"
-    },
-    {
-      "tripadvisor_entity_id": 291958,
-      "name": "Central America"
-    },
-    {
-      "tripadvisor_entity_id": 294211,
-      "name": "China"
-    },
-    {
-      "tripadvisor_entity_id": 4,
-      "name": "Europe"
-    },
-    {
-      "tripadvisor_entity_id": 28932,
-      "name": "Hawaii"
-    },
-    {
-      "tripadvisor_entity_id": 670819,
-      "name": "Indian Ocean"
-    },
-    {
-      "tripadvisor_entity_id": 21,
-      "name": "Middle East"
-    },
-    {
-      "tripadvisor_entity_id": 13,
-      "name": "South America"
-    },
-    {
-      "tripadvisor_entity_id": 8,
-      "name": "South Pacific"
-    }
+    { "tripadvisor_entity_id": 147237, "name": "Caribbean" },
+    { "tripadvisor_entity_id": 147414, "name": "Bahamas" },
+    { "tripadvisor_entity_id": 28923, "name": "Alaska" },
+    { "tripadvisor_entity_id": 14114078, "name": "Mediterranean" },
+    { "tripadvisor_entity_id": 4, "name": "Europe" }
   ]
 }
 ```
@@ -874,599 +385,82 @@ print(response.json())
 
 ---
 
-### Cruise List
+### Supported Locales
 
-```
-GET https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/cruises/list
-```
+`da-DK`, `de-AT`, `de-CH`, `de-DE`, `en-AU`, `en-CA`, `en-GB`, `en-IE`, `en-IN`, `en-NZ`, `en-US`, `es-AR`, `es-CO`, `es-ES`, `es-MX`, `es-PE`, `fr-BE`, `fr-CA`, `fr-CH`, `fr-FR`, `it-IT`, `ja-JP`, `ko-KR`, `nl-BE`, `nl-NL`, `pt-BR`, `pt-PT`, `ru-RU`, `sv-SE`, `tr-TR`, `zh-CN`, `zh-TW`, and more — 45+ locales, plus 145+ currency codes on the list endpoints.
 
-#### Parameters
-
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| `destination_name` | Yes | — | Destination: `Caribbean`, `Alaska`, `Mediterranean`, `Europe`, etc. (19 destinations). |
-| `page` | No | `1` | Page number (20 cruises per page). |
-| `departure_date` | No | — | Departure month (`YYYY-MM`). |
-| `min_price` | No | — | Minimum price filter. |
-| `max_price` | No | — | Maximum price filter. |
-| `cruise_length` | No | — | Duration: `3-5`, `6-9`, `10-14`, `15`. |
-| `cabin_type` | No | — | Filter: `inside`, `outside`, `balcony`, `suite`. |
-| `sort_by` | No | `popularity` | Sort: `popularity`, `departure_date`, `price`, `cruise_length`, `cruise_ship`. |
-| `currency` | No | `USD` | Currency code. |
-| `locale` | No | `en-US` | Localization code. |
-
-#### Example
-
-```python
-import requests
-
-response = requests.get(
-    "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/cruises/list",
-    params={"destination_name": "Caribbean"},
-    headers={"API-Key": "YOUR_API_KEY"}
-)
-
-print(response.json())
-```
-
-#### Response
-
-<details>
-<summary>Sample Response (click to expand)</summary>
-
-```json
-{
-  "count": 504,
-  "per_page": 20,
-  "current_page": 1,
-  "total_pages": 26,
-  "next": "https://tripadvisor-scraper-api.omkar.cloud/cruises/list?destination_name=Caribbean&page=2",
-  "previous": null,
-  "results": [
-    {
-      "cruise_id": 177986,
-      "cruise_title": "7 NIGHT Bahamas CRUISE",
-      "duration_nights": 7,
-      "cruise_company": {
-        "cruise_company_id": 80,
-        "cruise_company_name": "MSC Cruises",
-        "tripadvisor_entity_id": 17391445,
-        "company_cruises_link": "https://www.tripadvisor.com/Cruises-a_cl.17391445-MSC-Cruises",
-        "icon_link": "https://images.r.cruisecritic.com/cruise-lines/msc_cruises_smallicon.png"
-      },
-      "ship": {
-        "ship_id": 996,
-        "ship_name": "MSC Meraviglia",
-        "tripadvisor_entity_id": 15691636,
-        "tripadvisor_entity_link": "https://www.tripadvisor.com/Cruise_Review-d15691636-Reviews-MSC_Meraviglia",
-        "launch_year": 2017,
-        "passenger_capacity": 4475,
-        "crew_size": 1536,
-        "amenities": [
-          "New ship",
-          "Mega ship",
-          "Bowling alley",
-          "Dance club",
-          "Indoor pool",
-          "Multiple restaurants",
-          "Specialty restaurants",
-          "Thermal suite",
-          "Vibrant nightlife"
-        ],
-        "reviews": 489,
-        "rating": 3,
-        "review_snippets": [
-          {
-            "review_id": 1024876027,
-            "review_link": "https://www.tripadvisor.com/ShowUserReviews-g1-d15691636-r1024876027-MSC_Meraviglia-World.html",
-            "text": "Family vacation",
-            "rating": 3,
-            "reviewer_id": "E2BB5CD88E2EFFC15902EE7F21F6CA73"
-          }
-        ],
-        "reasons_to_pick": [
-          "You want a cutting-edge family cruise with European flair",
-          "You like nonstop activities with round-the-clock fun for all",
-          "You want dozens of different bars, lounges and restaurants"
-        ],
-        "reasons_to_skip": [
-          "You don't want cruise catering to European tastes first",
-          "You dislike announcements made in up to six different languages"
-        ]
-      },
-      "destination": {
-        "destination_id": 118,
-        "destination_name": "Bahamas",
-        "destination_seo_name": "the Bahamas",
-        "destination_image_link": "https://images.r.cruisecritic.com/destinations/rewrite_bahamas.jpg"
-      },
-      "departure_port": {
-        "port_id": 152,
-        "port_name": "New York (Brooklyn, Red Hook)",
-        "ancestors": [
-          { "name": "New York  - All" },
-          { "name": "U.S.A. - East Coast" }
-        ]
-      },
-      "arrival_port": {
-        "port_id": 152,
-        "port_name": "New York (Brooklyn, Red Hook)"
-      },
-      "itinerary": [
-        { "day": 1, "port_name": "New York (Brooklyn, Red Hook)", "tripadvisor_entity_id": 48473 },
-        { "day": 2, "port_name": "Cruising", "tripadvisor_entity_id": null },
-        { "day": 3, "port_name": "Port Canaveral (Orlando)", "tripadvisor_entity_id": 34574 },
-        { "day": 4, "port_name": "Nassau", "tripadvisor_entity_id": 147416 },
-        { "day": 5, "port_name": "Ocean Cay MSC Marine Reserve", "tripadvisor_entity_id": null },
-        { "day": 6, "port_name": "Cruising", "tripadvisor_entity_id": null },
-        { "day": 7, "port_name": "Cruising", "tripadvisor_entity_id": null },
-        { "day": 8, "port_name": "New York (Brooklyn, Red Hook)", "tripadvisor_entity_id": 48473 }
-      ],
-      "sailings": {
-        "count": 1,
-        "lowest_priced_sailing_id": 2004472,
-        "featured_deal_sailing_id": 2004472,
-        "results": [
-          {
-            "sailing_id": 2004472,
-            "departure_date": "2025-12-07"
-          }
-        ]
-      }
-    },
-    ...
-  ]
-}
-```
-
-</details>
-
----
-
-### Cruise Details
-
-```
-GET https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/cruises/detail
-```
-
-#### Parameters
-
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| `query` | Yes | — | TripAdvisor Cruise URL, cruise ship name, or entity ID. |
-| `locale` | No | `en-US` | Localization code. |
-
-#### Example
-
-```python
-import requests
-
-response = requests.get(
-    "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/cruises/detail",
-    params={"query": "https://www.tripadvisor.com/Cruise_Review-d15691817-Reviews-Seabourn_Ovation"},
-    headers={"API-Key": "YOUR_API_KEY"}
-)
-
-print(response.json())
-```
-
-#### Response
-
-<details>
-<summary>Sample Response (click to expand)</summary>
-
-```json
-{
-  "tripadvisor_entity_id": 15691817,
-  "type": "cruise_ship",
-  "name": "Seabourn Ovation",
-  "link": "https://www.tripadvisor.com/Cruise_Review-d15691817-Reviews-Seabourn_Ovation",
-  "cruise_line": "Seabourn Cruise Line",
-  "departs_from": ["Barbados", "Copenhagen", "Dover", "Genoa", "Miami", "..."],
-  "sails_to": ["Baltic Sea", "Canada & New England", "Caribbean - Eastern", "..."],
-  "rating": 4,
-  "reviews": 67,
-  "passenger_capacity": 600,
-  "crew_count": 450,
-  "passenger_to_crew_ratio": 1.33,
-  "passenger_to_space_ratio": 67.25,
-  "launch_year": "2018",
-  "refurbish_year": null,
-  "currency_code": "USD",
-  "featured_image": "https://media-cdn.tripadvisor.com/media/photo-m/1280/15/3b/29/d8/seabourn-ovation-ta-listings.jpg",
-  "image_count": 967,
-  "images": [
-    {"media_id": 373780398, "image_link": "https://media-cdn.tripadvisor.com/media/photo-m/1280/16/47/6f/ae/penthouse-spa-suite.jpg"},
-    "... 19 more"
-  ],
-  "photo_albums": [
-    {"id": 107, "title": "Traveler", "photo_count": 53, "thumbnail": "https://media-cdn.tripadvisor.com/..."},
-    {"id": 62759, "title": "Common Areas", "photo_count": 357, "thumbnail": "https://media-cdn.tripadvisor.com/..."},
-    {"id": 62758, "title": "Dining and Bars", "photo_count": 334, "thumbnail": "https://media-cdn.tripadvisor.com/..."},
-    "... 2 more"
-  ],
-  "cabin_summary": [
-    {"cabin_type": "suite", "cabin_count": 300, "min_size_sqft": 246, "max_size_sqft": 989, "max_passenger_capacity": 6, "connected_rooms": 68, "accessible_rooms": 8}
-  ],
-  "dining": [
-    {"name": "The Grill by Thomas Keller", "cuisine": "American", "count": 1, "requires_additional_fees": false},
-    {"name": "The Colonnade", "cuisine": "Casual", "count": 1, "requires_additional_fees": false},
-    {"name": "Sushi", "cuisine": "Japanese", "count": 1, "requires_additional_fees": false},
-    "... 7 more"
-  ],
-  "activities": [
-    {"name": "Fitness Center", "count": 1, "requires_additional_fees": false},
-    {"name": "Hot Tubs", "count": 5, "requires_additional_fees": false},
-    {"name": "Spa & Wellness", "count": 1, "requires_additional_fees": true},
-    "... 16 more"
-  ],
-  "entertainment": [
-    {"name": "Casino", "count": 1, "requires_additional_fees": true},
-    {"name": "Grand Salon", "count": 1, "requires_additional_fees": false}
-  ],
-  "decks": [
-    {
-      "level": 5,
-      "floor_plan_image_link": "https://cruise-static.tacdn.com/ships/deck-plans/0cee08bfae689a5cdfb589b48c8d2302.png",
-      "cabin_types": [{"name": "Veranda Suite", "sub_category": "V2", "color": "#D7B5A3", "is_accessible": false}]
-    },
-    "... 9 more"
-  ],
-  "itinerary_count": 116,
-  "itineraries": [
-    {
-      "id": 212326,
-      "title": "7-DAY YACHTSMAN'S CARIBBEAN",
-      "duration_nights": 7,
-      "cruise_line": "Seabourn Cruise Line",
-      "destination": "Caribbean - Eastern",
-      "departure_port": "St. Maarten",
-      "lowest_priced_sailing_id": 2014294,
-      "ports": [
-        {"day": 1, "port_name": "St. Maarten", "port_id": 147346},
-        {"day": 2, "port_name": "Virgin Gorda", "port_id": 147358},
-        "... 6 more"
-      ],
-      "sailings": [
-        {
-          "sailing_id": 2014294,
-          "departure_date": "2026-03-28",
-          "currency": "USD",
-          "suite_cabin": {
-            "min_price": 4474.0,
-            "max_price": 5332.0,
-            "count": 3,
-            "vendors": [
-              {"vendor_id": 216, "vendor_name": "PanacheCruises", "current_price": 4474.0, "highest_price": 5332.0, "is_featured_deal": false},
-              "... 2 more"
-            ]
-          }
-        }
-      ]
-    },
-    "... 9 more"
-  ],
-  "rating_distribution": {"1": 6, "2": 6, "3": 6, "4": 10, "5": 39},
-  "review_keywords": [],
-  "original_language_distribution": {
-    "en": {"language_name": "English", "reviews": 65},
-    "es": {"language_name": "Spanish", "reviews": 1},
-    "de": {"language_name": "German", "reviews": 1}
-  },
-  "initial_reviews": [
-    {
-      "review_id": 1048660796,
-      "title": "Ovation",
-      "text": "An unforgettable 14-day Caribbean cruise on the Seabourn Ovation...",
-      "rating": 5,
-      "language": "en",
-      "trip": {"stay_date": "2026-01-31"},
-      "reviewer": {"name": "Deb w", "username": "dwK5907IA", "contribution_count": 19}
-    },
-    "... 4 more"
-  ]
-}
-```
-
-</details>
-
----
-
-### Cruise Sailing Pricing
-
-```
-GET https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/cruises/sailing-pricing
-```
-
-#### Parameters
-
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| `sailing_id` | Yes | — | Sailing ID (from `/cruises/list` or `/cruises/detail` itinerary sailings). |
-| `currency` | No | `USD` | Currency code for prices. |
-| `locale` | No | `en-US` | Localization code. |
-
-#### Example
-
-```python
-import requests
-
-response = requests.get(
-    "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/cruises/sailing-pricing",
-    params={"sailing_id": "2014294"},
-    headers={"API-Key": "YOUR_API_KEY"}
-)
-
-print(response.json())
-```
-
-#### Response
-
-<details>
-<summary>Sample Response (click to expand)</summary>
-
-```json
-{
-  "sailing_id": 2014294,
-  "departure_date": null,
-  "currency": "USD",
-  "suite_cabin": {
-    "min_price": 3655.0,
-    "max_price": 5218.0,
-    "count": 4,
-    "vendors": [
-      {
-        "vendor_id": 216,
-        "vendor_name": "PanacheCruises",
-        "deal_link": "https://www.cruisecritic.com/redirect/vendor-redirect/...",
-        "current_price": 3655.0,
-        "highest_price": 5088.0,
-        "is_featured_deal": false
-      },
-      {
-        "vendor_id": 31,
-        "vendor_name": "Cruises.com",
-        "deal_link": "https://www.cruisecritic.com/redirect/vendor-redirect/...",
-        "current_price": 3749.0,
-        "highest_price": 5218.0,
-        "is_featured_deal": false
-      },
-      {
-        "vendor_id": 80,
-        "vendor_name": "CruisesOnly.com",
-        "deal_link": "https://www.cruisecritic.com/redirect/vendor-redirect/...",
-        "current_price": 3749.0,
-        "highest_price": 5218.0,
-        "is_featured_deal": false
-      },
-      {
-        "vendor_id": 228,
-        "vendor_name": "Seabourn",
-        "deal_link": "https://www.cruisecritic.com/redirect/vendor-redirect/...",
-        "current_price": 4249.0,
-        "highest_price": 5218.0,
-        "is_featured_deal": false
-      }
-    ]
-  }
-}
-```
-
-</details>
-
----
-
-### Location Reviews
-
-```
-GET https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/reviews
-```
-
-#### Parameters
-
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| `query` | Yes | — | TripAdvisor URL, entity ID, or location name. |
-| `page` | No | `1` | Page number (30 reviews per page). |
-| `rating_is` | No | — | Filter by star ratings: `1`, `2`, `3`, `4`, `5` (comma-separated). |
-| `since` | No | — | Only reviews on or after this date (`YYYY-MM-DD`). |
-| `traveler_type` | No | — | Filter: `business`, `couples`, `family`, `friends`, `solo`. |
-| `months_of_visit` | No | — | Filter by visit month: `jan`, `feb`, ... `dec`. |
-| `keyword` | No | — | Search within review text. |
-| `sort_by` | No | `most_recent` | Sort: `most_recent`, `detailed_reviews`. |
-| `lang` | No | — | Language filter: `en`, `es`, `fr`, etc. |
-| `locale` | No | `en-US` | Localization code (45+ supported). |
-
-#### Example
-
-```python
-import requests
-
-response = requests.get(
-    "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/reviews",
-    params={"query": "Disneyland Park, California", "rating_is": "4,5"},
-    headers={"API-Key": "YOUR_API_KEY"}
-)
-
-print(response.json())
-```
-
-#### Response
-
-<details>
-<summary>Sample Response (click to expand)</summary>
-
-```json
-{
-  "count": 24317,
-  "per_page": 20,
-  "current_page": 1,
-  "total_pages": 1216,
-  "next": "https://tripadvisor-scraper-api.omkar.cloud/reviews?query=https%3A%2F%2Fwww.tripadvisor.com%2FAttraction_Review-g29092-d103346-Reviews-Disneyland_Park-Anaheim_California.html&page=2",
-  "previous": null,
-  "results": [
-    {
-      "review_id": 1039040048,
-      "review_link": "https://www.tripadvisor.com/ShowUserReviews-g29092-d103346-r1039040048-Disneyland_Park-Anaheim_California.html",
-      "title": "Lightning Lane Is a Complete Rip-Off — Not Worth It",
-      "text": "Lightning Lane Is a Complete Rip-Off — Not Worth It\n\nThe Lightning Lane system at Disneyland has become one of the most disappointing and misleading parts of the entire experience...",
-      "review_tip": "Avoid the cash grabbing lightning",
-      "rating": 3,
-      "subratings": [],
-      "like_count": 1,
-      "language": "en",
-      "is_translated": false,
-      "original_language": "en",
-      "owner_response": null,
-      "trip": {
-        "trip_type": "family",
-        "stay_date": "2025-11-30"
-      },
-      "reviewer": {
-        "reviewer_id": "4D3D3860D8DE40C9EDBD9FE37AF2547A",
-        "name": "HBlas",
-        "profile_link": "https://www.tripadvisor.com/Profile/HBlas",
-        "username": "HBlas",
-        "avatar": null,
-        "contribution_count": 24,
-        "hometown": {
-          "tripadvisor_entity_id": 152773,
-          "location_name": "Puebla",
-          "location_name_detailed": "Puebla, Mexico"
-        },
-        "is_verified": false
-      },
-      "images": [],
-      "created_at_date": "2025-11-15",
-      "published_at_date": "2025-11-14"
-    }
-  ],
-  "rating_distribution": {
-    "1": 1047,
-    "2": 1181,
-    "3": 2463,
-    "4": 5661,
-    "5": 17943
-  },
-  "original_language_distribution": {
-    "en": { "language_name": "English", "reviews": 24224 },
-    "es": { "language_name": "Spanish", "reviews": 1493 },
-    "ja": { "language_name": "Japanese", "reviews": 404 },
-    "fr": { "language_name": "French", "reviews": 203 },
-    "it": { "language_name": "Italian", "reviews": 292 },
-    "de": { "language_name": "German", "reviews": 166 },
-    "pt": { "language_name": "Portuguese", "reviews": 1119 },
-    "ru": { "language_name": "Russian", "reviews": 88 },
-    "ko": { "language_name": "Korean", "reviews": 42 },
-    ...
-  },
-  "review_keywords": [
-    "happiest place on earth",
-    "space mountain",
-    "disney world",
-    "indiana jones",
-    "haunted mansion",
-    "small world",
-    "pirates of the caribbean",
-    "fast pass",
-    "magical place",
-    "main street",
-    "cast members",
-    "popular rides",
-    "jungle cruise",
-    "california adventure",
-    "wait times",
-    "off season",
-    "happy place",
-    "star wars",
-    "love disney",
-    "fastpass system"
-  ],
-  "location": {
-    "tripadvisor_entity_id": 103346,
-    "name": "Disneyland Park",
-    "link": "https://www.tripadvisor.com/Hotel_Review-d103346-Reviews-Disneyland_Park.html",
-    "reviews": 0,
-    "rating": null,
-    "place_type": "hotel"
-  }
-}
-```
-
-</details>
-
-## Error Handling
-
-```python
-response = requests.get(
-    "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor/reviews",
-    params={"query": "Disneyland Park, California"},
-    headers={"API-Key": "YOUR_API_KEY"}
-)
-
-if response.status_code == 200:
-    data = response.json()
-elif response.status_code == 401:
-    # Invalid API key
-    pass
-elif response.status_code == 429:
-    # Rate limit exceeded
-    pass
-```
-
-## FAQs
-
-### What data does the API return?
-
-**Reviews** return title, full text, star rating, published date, trip type, travel date, reviewer profile (username, avatar, location, review count), review photos, and management responses. Also includes language breakdown and keyword distribution across all reviews.
-
-**List endpoints** (hotels, restaurants, attractions) return name, rating, review count, ranking, price range, location, photos, award badges (Travelers' Choice, etc.), and category tags.
-
-**Detail endpoints** return comprehensive property data — full description, contact info, hours, all photos, amenities, rating distribution (5-star breakdown), price levels, and booking links.
-
-All in structured JSON. Ready to use in your app.
-
-### How accurate is the data?
-
-Data is pulled directly from TripAdvisor in real time. Ratings, review counts, pricing, and availability reflect what's on TripAdvisor right now. Not cached. Not stale.
-
-### Can I search by URL, location name, or entity ID?
-
-All three. Every endpoint that takes a `query` parameter accepts:
-- **TripAdvisor URL**: `https://www.tripadvisor.com/Hotel_Review-g35805-d114581-Reviews-Swissotel_Chicago.html`
-- **Location name**: `Swissotel Chicago`
-- **Entity ID**: `114581`
-
-Use whichever is most convenient. The API resolves all formats.
-
-### What's the difference between List and Detail endpoints?
-
-**List endpoints** (`/hotels/list`, `/restaurants/list`, `/attractions/list`) return paginated listings for a city or region — 30 results per page with summary data for each.
-
-**Detail endpoints** (`/hotels/detail`, `/restaurants/detail`, `/attractions/detail`) return comprehensive data for a single property — full descriptions, all photos, amenities, rating breakdowns, hours, and more.
-
-Use List to discover and browse. Use Detail to deep-dive into a specific property.
-
-### What review filters are available?
-
-The Reviews endpoint supports star rating (`rating_is=4,5`), date range (`since=2025-01-01`), traveler type (`business`, `couples`, `family`, `friends`, `solo`), visit month, keyword search within review text, language filter, and sort order. All filters are combinable.
-
-### Do I need to handle proxies or CAPTCHAs?
-
-No. The API handles all of that. You make a simple GET request and get clean JSON back. No proxy rotation, no CAPTCHA solving, no HTML parsing.
-
-## Rate Limits
+## Pricing
 
 | Plan | Price | Requests/Month |
 |------|-------|----------------|
-| Free | $0 | 100 |
-| Grow | $48 | 15,000 |
-| Scale | $148 | 75,000 |
+| Free | $0 | 200 |
+| Starter | $16 | 20,000 |
+| Grow | $48 | 100,000 |
+| Scale | $148 | 400,000 |
 
-## Questions? We have answers.
+1 API call = 1 request
 
-Reach out anytime. We will solve your query within 1 working day.
+Free Plan Available — [create your API key →](https://www.omkar.cloud/auth/sign-up?redirect=/api-key&utm_source=github&utm_medium=cpc&utm_content=pricing-signup). No credit card for the free tier.
+
+## FAQs
+
+### Can I try the API before signing up?
+
+Yes. The playground runs live requests in your browser — free, no account, no API key. [Try it in the Playground →](https://www.omkar.cloud/tools/tripadvisor-scraper-api/playground?utm_source=github&utm_medium=cpc&utm_content=faq)
+
+### How does the API find property emails, phone numbers, and social profiles?
+
+TripAdvisor lists at most one phone and website per property. We go further: on the hotel, restaurant, and attraction **detail** endpoints, the property's own website is crawled by our open-source **[Website Email Contact Scraper](https://github.com/omkarcloud/website-email-contact-scraper)**, and every email, phone number, social profile, and technology it finds comes back as `website_contacts`, each with the source pages and an `is_likely_official` flag. Control the crawl depth with `website_contacts_crawl_mode` (`homepage` default, `deep`, or `off`).
+
+Want the same contact extraction for any website, free? **[Get the Website Email Contact Scraper on GitHub →](https://github.com/omkarcloud/website-email-contact-scraper)**
+
+### How do I get every review for a place?
+
+Call Location Reviews (`GET /tripadvisor/reviews?query=126260`) with a location name, TripAdvisor URL, or entity ID. It returns 20 reviews per page with a `next` link, and filters for `rating_is`, `since`, `traveler_type`, `months_of_visit`, `keyword`, and `sort_by`.
+
+### How do I find hotels, restaurants, or attractions in a city?
+
+Use the Search endpoint to resolve a place name into its entity ID, then pass that ID (or the city name) into the matching List endpoint. List returns every property ranked, 30 per page, with a `next` link to walk through all pages.
+
+### Does it work for non-English regions and other currencies?
+
+Yes. Pass `locale` (45+ supported, e.g. `en-GB`, `fr-FR`, `de-DE`, `ja-JP`, `pt-BR`) and, on list endpoints, `currency` (145+ codes). You'll get localized results and prices in the currency you choose.
+
+### How fresh is the data?
+
+Data is pulled from TripAdvisor in real time. Every API call fetches live data — not cached or stale results. Ratings, review counts, rankings, and prices reflect what's on TripAdvisor right now.
+
+### Will I get blocked or need proxies?
+
+No. We handle the scraping infrastructure — you call a normal REST API and never touch TripAdvisor directly, so there are no proxies, headless browsers, or CAPTCHAs on your side.
+
+### Can I pass a URL instead of a name?
+
+Yes. Search, list, detail, and reviews endpoints accept a location name, a full TripAdvisor URL, or an entity ID — use whichever you have.
+
+## More Travel & Data Scrapers: Airbnb & Google Maps
+
+- **[Airbnb Scraper API](https://github.com/omkarcloud/airbnb-scraper)** — the same clean JSON for Airbnb: search any location, list every home with live nightly prices, and pull full room details with amenities, house rules, and host profiles across 67 country sites. Cross-reference hotels against short-term rentals.
+
+- **[Google Maps Scraper (3,100+ GitHub Stars)](https://github.com/omkarcloud/google-maps-scraper)** — need tens of thousands of leads? Type a niche and a city ("dentists in New York") and get every matching business as a ready-to-call lead list — name, address, phone, website, emails, rating, and reviews. The free tier alone pulls up to 100K leads a month.
+
+- **[Website Email Contact Scraper](https://github.com/omkarcloud/website-email-contact-scraper)** — **Free and open source.** Point it at any website and get every email, phone number, and social profile on it, each with source pages and an official/unofficial flag.
+
+## Support
+
+Built by developers, for developers — when you reach out, you talk to the engineers who built the API, not a support script. Message us anytime and we'll solve your query within 1 working day.
+
 
 [![Contact Us on WhatsApp about TripAdvisor Scraper](https://raw.githubusercontent.com/omkarcloud/assets/master/images/whatsapp-us.png)](https://api.whatsapp.com/send?phone=918178804274&text=I%20have%20a%20question%20about%20the%20TripAdvisor%20Scraper%20API.)
 
-[![Contact Us on Email about TripAdvisor Scraper](https://raw.githubusercontent.com/omkarcloud/assets/master/images/ask-on-email.png)](mailto:happy.to.help@omkar.cloud?subject=TripAdvisor%20Scraper%20API%20Question)
+Email: [happy.to.help@omkar.cloud](mailto:happy.to.help@omkar.cloud?subject=TripAdvisor%20Scraper%20API%20Question)
+
+[![Email Us about TripAdvisor Scraper](https://raw.githubusercontent.com/omkarcloud/assets/master/images/ask-on-email.png)](mailto:happy.to.help@omkar.cloud?subject=TripAdvisor%20Scraper%20API%20Question)
+
+## Love It? Star It! ⭐
+
+From one developer to another: If the TripAdvisor Scraper API saved you time, please [star the repo](https://github.com/omkarcloud/tripadvisor-scraper).
+
+Here's why it matters: most developers judge a scraper by its stars before trying it. Your star helps the next developer — someone deciding whether the TripAdvisor data here is real and reliable — try it with confidence.
+
+It takes only 1 second, and means the world to me.
